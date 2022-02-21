@@ -3,12 +3,18 @@
  */
 package nexts;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import net.skylix.nexts.terminal.Renderer;
 
 public class LibraryTest {
-    @Test public void someLibraryMethodReturnsTrue() {
-        Library classUnderTest = new Library();
-        assertTrue("someLibraryMethod should return 'true'", classUnderTest.someLibraryMethod());
+    /**
+     * This is the main method for the class
+     * @param args Arguments that came from the command line interface
+     */
+    public static void main(String[] args) {
+        System.out.println("This is some example usage: " + args.toString());
+        Renderer.render(new String[]{"hello", "world"});
+
+        Renderer.moveCursor(-1, -1);
+        Renderer.render(new String[] { "Over", "Write" });
     }
 }
