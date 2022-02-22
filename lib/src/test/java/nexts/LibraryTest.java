@@ -3,7 +3,9 @@
  */
 package nexts;
 
-import net.skylix.nexts.terminal.Renderer;
+import net.skylix.nexts.terminal.color.Color;
+import net.skylix.nexts.terminal.color.ColorNames;
+import net.skylix.nexts.terminal.color.ColorSettings;
 
 public class LibraryTest {
     /**
@@ -11,10 +13,16 @@ public class LibraryTest {
      * @param args Arguments that came from the command line interface
      */
     public static void main(String[] args) {
-        System.out.println("This is some example usage: " + args.toString());
-        Renderer.render(new String[]{"hello", "world"});
+        Color red = new Color(new ColorSettings() {{
+            bold = true;
+            intense = true;
+            underline = true;
+            color = ColorNames.RED;
+        }});
 
-        Renderer.moveCursor(-1, -1);
-        Renderer.render(new String[] { "Over", "Write" });
+        System.out.println("This is some example usage: " + args.toString());
+        String redText = "This text should be " + red.apply("RED") + ", Cool Right?";
+
+        System.out.println(redText);
     }
 }
