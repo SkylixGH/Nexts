@@ -20,12 +20,17 @@ public class ColorSettings {
     public boolean intense = false;
 
     /**
-     * Whether the color modifier should be applied to the text background
+     * Whether the background color should be intense
      */
-    public boolean applyToBackground = false;
+    public boolean backgroundIntense = false;
 
     /**
      * The color for the text
      */
     public ColorNames color = ColorNames.NONE;
+
+    /**
+     * The color for the background
+     */
+    public ColorNames backgroundColor = ColorNames.NONE;
 }
