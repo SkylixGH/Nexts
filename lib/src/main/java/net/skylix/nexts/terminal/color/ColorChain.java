@@ -15,6 +15,24 @@ public class ColorChain {
         return bold(true);
     }
 
+    public ColorChain underline(boolean enable) {
+        settings.underline = enable;
+        return this;
+    }
+
+    public ColorChain underline() {
+        return underline(true);
+    }
+
+    public ColorChain intense(boolean enable) {
+        settings.intense = enable;
+        return this;
+    }
+
+    public ColorChain intense() {
+        return intense(true);
+    }
+
     /**
      * Apply the current modifier properties
      * @param text The text to apply the modifiers to

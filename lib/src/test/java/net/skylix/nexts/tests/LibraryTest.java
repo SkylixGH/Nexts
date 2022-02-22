@@ -5,15 +5,17 @@ import net.skylix.nexts.terminal.color.ColorChain;
 import net.skylix.nexts.terminal.color.ColorNames;
 import net.skylix.nexts.terminal.color.ColorSettings;
 
+import java.util.Arrays;
+
 public class LibraryTest {
     /**
      * This is the main method for the class
      * @param args Arguments that came from the command line interface
      */
     public static void main(String[] args) {
-        System.out.println("This is some example usage: " + args.toString());
-        String redText = "This text should be " + new ColorChain().bold().cyan().blackBk().apply("RED") + ", Cool Right?";
+        System.out.println("This is some example usage: " + Arrays.toString(args));
+        ColorChain logoColor = new ColorChain().white().underline().blackBk();
 
-        System.out.println(redText);
+        System.out.println(logoColor.apply("This is a test"));
     }
 }
