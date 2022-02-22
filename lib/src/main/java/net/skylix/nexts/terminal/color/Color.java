@@ -11,7 +11,7 @@ public class Color {
 
     /**
      * Create a CLI text colorization tool
-     * @param settings Other settings for the text
+     * @param settings Settings for the text
      */
     public Color(ColorSettings settings) {
         this.settings = settings;

@@ -5,7 +5,7 @@ public class Terminal {
      * Log a message indicating some information
      * @param text The text to log out
      */
-    public static void log(String[] ...text) {
-
+    public static Terminal log(String[] ...text) {
+        return null;
     }
 }
