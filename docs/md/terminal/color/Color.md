@@ -53,21 +53,11 @@ Get the text background color index for use in ANSI text colorization.
    - `color` ([`ColorNames`](./ColorNames.md)) The name of the color.
    - `intense` (`boolean`) Whether the color is intense or not.
 
-# Public Method ``
- - Static: ``.
- - Return ``.
- - Parameters
-   - `` (``) .
+# Public Method `updateSettings`
 
-# Public Method ``
- - Static: ``.
- - Return ``.
- - Parameters
-   - `` (``) .
+Update the color settings.
 
-# Public Method ``
- - Static: ``.
- - Return ``.
+ - Static: `false`.
+ - Return `void`.
  - Parameters
-   - `` (``) .
-
+   - `settings` ([`ColorSettings`](./ColorSettings.md)) The new color settings.
