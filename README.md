@@ -1,4 +1,4 @@
-<h1 align="center">N e x t s</h1>
+<img align="center" src="docs/nexts-wallpaper.png">
 <p style="color: #555;" align="center">The ultimate Java framework!</p>
 
 
