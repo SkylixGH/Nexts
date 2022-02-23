@@ -33,6 +33,15 @@ public class ColorChain {
         return intense(true);
     }
 
+    public ColorChain intenseBackground(boolean enable) {
+        settings.intenseBackground = enable;
+        return this;
+    }
+
+    public ColorChain intenseBackground() {
+        return intenseBackground(true);
+    }
+
     /**
      * Apply the current modifier properties
      * @param text The text to apply the modifiers to
