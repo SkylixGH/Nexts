@@ -10,5 +10,8 @@
 	"exports": {
 		"import": "./build/module.mjs",
 		"require": "./build/common.cjs"
+	},
+	"bin": {
+		"nexts": "./build/module.mjs"
 	}
 }
