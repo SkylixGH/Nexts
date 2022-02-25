@@ -9,7 +9,16 @@ import fs from 'fs/promises'
 import fsSync from 'fs'
 import logger from '@nexts-stack/logger'
 import crashError from './crashError'
+import typescript from 'typescript'
+import cacheWrite from '../manager/cacheWrite'
+import UserConfig from './UserConfig'
 
+/**
+ * Read the project config
+ * @param relativeCWDPath The path to the project root relative to the CWD.
+ * @param relativeCWDConfigPath The path to the config relative to the CWD.
+ * @returns Nothing.
+ */
 export default async function readConfig(relativeCWDPath: string, relativeCWDConfigPath: string) {
 	let configFileName = relativeCWDConfigPath
 
@@ -34,20 +43,45 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 		process.exit(1)
 	}
 
-	let projectPackageJSON = {}
+	let configCached = ''
+
+	if (configFileName.endsWith('.ts')) {
+		try {
+			configCached = typescript.transpileModule(configString, {
+				compilerOptions: {
+					target: typescript.ScriptTarget.ESNext,
+					module: typescript.ModuleKind.ESNext,
+				},
+			}).outputText
+		} catch (error) {
+			logger.error(`Failed to load typescript based configuration from '${rawConfigPath}', the following error was produced:`)
+			crashError(error)
+
+			process.exit(1)
+		}
+
+		await cacheWrite(relativeCWDPath, './configs/nexts.mjs', configCached)
+	} else {
+		await cacheWrite(relativeCWDPath, './configs/nexts.js', configString)
+	}
+
+	let configModule: any
 
 	try {
-		projectPackageJSON = JSON.parse(await fs.readFile(path.join(relativeCWDPath, 'package.json'), 'utf8'))
+		let configModulePath = path.join(process.cwd(), relativeCWDPath, '.nexts/configs/nexts.mjs');
+
+		if (process.platform === 'win32') {
+			configModulePath = 'file:///' + configModulePath
+		}
+
+		console.log(configModulePath)
+		configModule = await import(configModulePath)
 	} catch (error) {
-		logger.error(`Failed to load package.json from '${relativeCWDPath}', the following error was produced:`)
+		logger.error(`Failed to load configuration from '${rawConfigPath}', the following error was produced:`)
 		crashError(error)
 
 		process.exit(1)
 	}
 
-	if (configFileName.endsWith('.ts')) {
-
-	} else {
-
-	}
+	return configModule.default
 }

@@ -40,5 +40,6 @@ export default function compileCMD(program: Argv<Flags>) {
 			logger.log('Checking environment for compilation')
 
 			const config = await readConfig(argv.path, argv.config)
+			console.log(config);
 		})
 }
