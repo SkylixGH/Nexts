@@ -1,0 +1,58 @@
+name: 🪲 Bug Report
+description: File a bug report
+title: "[bug] "
+labels: [ "bug", "triage" ]
+assignees:
+  - sudo-carson
+  - XFaonAE
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please ensure you've completed all of the following.
+      options:
+        - label: I agree to follow the [Code of Conduct](https://github.com/skylixgh/nexo/blob/main/CODE_OF_CONDUCT.md)
+          required: true
+        - label: I have searched the [issue tracker](https://github.com/skylixgh/nexo/issues) for a similar bug report and none exists
+          required: true
+  - type: dropdown
+    id: modules
+    attributes:
+      label: Module(s)
+      description: What Nexo module is the bug occurring with?
+      multiple: true
+      options:
+        - "@nexo-stack/cli"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Module versions
+      description: What versions of the module(s) are you using?
+      placeholder: "@nexo-stack/cli: v1.2.3, ..."
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug description
+      description: "Describe the bug in as much detail as possible: expected behavior, actual behavior, last known working version, etc."
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Additional info
+  - type: input
+    id: platform
+    attributes:
+      label: Platform/OS
+      description: List the operating system(s) this bug occurs on if it is platform-specific.
+      placeholder: "Windows 11, Ubuntu 20.04"
+  - type: 

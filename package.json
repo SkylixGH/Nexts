@@ -1,0 +1,22 @@
+{
+	"type": "module",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.12.1",
+		"@typescript-eslint/parser": "^5.12.1",
+		"esbuild": "^0.14.23",
+		"eslint": "^8.9.0",
+		"eslint-config-google": "^0.14.0",
+		"eslint-plugin-react": "^7.28.0"
+	},
+	"scripts": {
+		"version:sync": "node ./scripts/version-sync.js",
+		"build:watch": "node ./scripts/build-watch.js"
+	},
+	"dependencies": {
+		"esBuild": "npm:esbuild@^0.14.23"
+	}
+}

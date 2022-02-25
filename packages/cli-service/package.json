@@ -1,0 +1,11 @@
+{
+	"name": "@nexts-stack/cli-service",
+	"version": "1.0.0-dev",
+	"main": "./build/common.cjs",
+	"type": "module",
+	"types": "./build/types/index.d.ts",
+	"exports": {
+		"import": "./build/module.mjs",
+		"require": "./build/common.cjs"
+	}
+}
