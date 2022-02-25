@@ -1,7 +1,13 @@
 #!/usr/bin/env node
 
-import logger from '@nexts-stack/logger';
+import yargs from 'yargs';
+import {hideBin} from 'yargs/helpers';
+import compileCMD from './commands/compileCMD';
 
-logger.log('Hello world!');
-logger.error('Hello world!');
-logger.success('Hello world!');
+const program = yargs(hideBin(process.argv));
+program.scriptName('nexts');
+
+compileCMD(program);
+
+program.demandCommand();
+program.parse();

@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
 function formatLog(prefix: string, message: string) {
-  console.log(`${chalk.hex('#999')('[')}${prefix}${chalk.hex('#999')(']')}: ${message}`);
+	console.log(`${chalk.hex('#999')('[')}${prefix}${chalk.hex('#999')(']')}: ${message}`);
 }
 
 export function log(text: string) {
@@ -17,14 +17,14 @@ export function error(text: string) {
 }
 
 export function success(text: string) {
-	formatLog(chalk.hex('#55FF55')('Success'), text);
+	formatLog(chalk.hex('#50FFAB')('Success'), text);
 }
 
 const logger = {
-  log,
-  warn,
-  error,
-  success,
+	log,
+	warn,
+	error,
+	success,
 };
 
 export default logger;
