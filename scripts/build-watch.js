@@ -30,6 +30,8 @@ projects.paths.forEach(async (project) => {
 		cwd: project
 	}));
 
+	info(`[Debug] ${project} -> ${dependencies.join(', ')}`);
+
 	builders.push(esBuild.build({
 		format: 'cjs',
 		outfile: path.join(project, "./build/common.cjs"),
@@ -37,7 +39,22 @@ projects.paths.forEach(async (project) => {
 		target: 'ESNext',
 		entryPoints: [ path.join(project, 'src/index.ts') ],
 		incremental: true,
-		external: Object.keys(dependencies ?? {}),
-		sourcemap: true
+		external: dependencies,
+		sourcemap: true,
+		watch: true,
+		platform: 'node',
+	}));
+
+	builders.push(esBuild.build({
+		format: 'esm',
+		outfile: path.join(project, "./build/module.mjs"),
+		bundle: true,
+		target: 'ESNext',
+		entryPoints: [ path.join(project, 'src/index.ts') ],
+		incremental: true,
+		external: dependencies,
+		sourcemap: true,
+		watch: true,
+		platform: 'node',
 	}));
 });
