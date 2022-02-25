@@ -17,7 +17,7 @@ import UserConfig from './UserConfig'
  * Read the project config
  * @param relativeCWDPath The path to the project root relative to the CWD.
  * @param relativeCWDConfigPath The path to the config relative to the CWD.
- * @returns Nothing.
+ * @returns A promise containing the config.
  */
 export default async function readConfig(relativeCWDPath: string, relativeCWDConfigPath: string) {
 	let configFileName = relativeCWDConfigPath
@@ -68,13 +68,12 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 	let configModule: any
 
 	try {
-		let configModulePath = path.join(process.cwd(), relativeCWDPath, '.nexts/configs/nexts.mjs');
+		let configModulePath = path.join(process.cwd(), relativeCWDPath, '.nexts/configs/nexts.mjs')
 
 		if (process.platform === 'win32') {
 			configModulePath = 'file:///' + configModulePath
 		}
 
-		console.log(configModulePath)
 		configModule = await import(configModulePath)
 	} catch (error) {
 		logger.error(`Failed to load configuration from '${rawConfigPath}', the following error was produced:`)
@@ -83,5 +82,5 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 		process.exit(1)
 	}
 
-	return configModule.default
+	return configModule.default as UserConfig
 }

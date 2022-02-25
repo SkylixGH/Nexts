@@ -1,6 +1,7 @@
 import {Argv} from 'yargs'
 import logger from '@nexts-stack/logger'
 import readConfig from '../misc/readConfig'
+import getAppPackages from '../manager/getAppPackages'
 
 /**
  * CLI command flags
@@ -36,10 +37,20 @@ export default function compileCMD(program: Argv<Flags>) {
 				default: './',
 				describe: 'Path to the project.',
 			},
+			watch: {
+				type: 'boolean',
+				default: false,
+				describe: 'Watch for changes and compile on the fly.',
+			},
 		}, async (argv) => {
 			logger.log('Checking environment for compilation')
 
 			const config = await readConfig(argv.path, argv.config)
-			console.log(config);
+			logger.log('Fetching sub projects')
+			const projects = await getAppPackages(argv.path, config)
+
+			console.log(projects)
+
+
 		})
 }

@@ -12,18 +12,21 @@ export default {
 			path: './apps/desktop',
 			description: 'This is a desktop app',
 			keywords: ['desktop', 'app'],
+			name: 'My Desktop App',
 		},
 		{
 			type: 'mobile',
 			path: './apps/mobile',
 			description: 'This is a mobile app',
 			keywords: ['mobile', 'app'],
+			name: 'My Mobile App',
 		},
 		{
 			type: 'node',
 			path: './apps/server',
 			description: 'This is a server app',
 			keywords: ['server', 'app'],
+			name: 'My Server App',
 		},
 	],
 	packages: [
