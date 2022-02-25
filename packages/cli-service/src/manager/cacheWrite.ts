@@ -1,7 +1,7 @@
-import logger from '@nexts-stack/logger';
-import fs from 'fs/promises';
-import path from 'path';
-import crashError from '../misc/crashError';
+import logger from '@nexts-stack/logger'
+import fs from 'fs/promises'
+import path from 'path'
+import crashError from '../misc/crashError'
 
 /**
  * Write a cache record

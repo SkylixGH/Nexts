@@ -21,6 +21,33 @@ export default async function getAppPackages(relativeCWDPath: string, config: Us
 			logger.error(`The app called '${app.name}' doesn't exist at path '${app.path}'`)
 			process.exit(1)
 		}
+
+		if (fsSync.lstatSync(path.join(process.cwd(), relativeCWDPath, app.path)).isFile()) {
+			logger.error(`The app called '${app.name}' leads to a file, but a directory path was expected`)
+			process.exit(1)
+		}
+	})
+
+	result.packages.forEach((pkg) => {
+		if (!fsSync.existsSync(path.join(process.cwd(), relativeCWDPath, pkg.path))) {
+			logger.error(`The package called '${pkg.name}' doesn't exist at path '${pkg.path}'`)
+			process.exit(1)
+		}
+
+		if (!fsSync.existsSync(path.join(process.cwd(), relativeCWDPath, pkg.path, pkg.main))) {
+			logger.error(`The package called '${pkg.name}' has a main entry script that doesn't exist at '${path.join(pkg.path, pkg.main)}'`)
+			process.exit(1)
+		}
+
+		if (fsSync.lstatSync(path.join(process.cwd(), relativeCWDPath, pkg.path)).isFile()) {
+			logger.error(`The package called '${pkg.name}' leads to a file, but a directory path was expected`)
+			process.exit(1)
+		}
+
+		if (fsSync.lstatSync(path.join(process.cwd(), relativeCWDPath, pkg.path, pkg.main)).isDirectory()) {
+			logger.error(`The package called '${pkg.name}' has a main entry that leads to a directory, a file path was expected`)
+			process.exit(1)
+		}
 	})
 
 	return result

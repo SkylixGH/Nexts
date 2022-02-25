@@ -1,1 +1,1 @@
-console.log('Worlds');
+console.log('Worlds')
