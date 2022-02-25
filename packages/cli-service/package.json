@@ -4,14 +4,11 @@
 	"main": "./build/common.cjs",
 	"type": "module",
 	"types": "./build/types/index.d.ts",
+	"dependencies": {
+		"@nexts-stack/logger": "*"
+	},
 	"exports": {
 		"import": "./build/module.mjs",
 		"require": "./build/common.cjs"
-	},
-	"bin": {
-		"nexts": "./build/module.mjs"
-	},
-	"dependencies": {
-		"@nexts-stack/logger": "*"
 	}
 }
