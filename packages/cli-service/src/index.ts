@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-import yargs from 'yargs';
-import {hideBin} from 'yargs/helpers';
-import compileCMD from './commands/compileCMD';
+import yargs from 'yargs'
+import {hideBin} from 'yargs/helpers'
+import compileCMD from './commands/compileCMD'
 
-const program = yargs(hideBin(process.argv));
-program.scriptName('nexts');
 
-compileCMD(program);
+const program = yargs(hideBin(process.argv))
+program.scriptName('nexts')
 
-program.demandCommand();
-program.parse();
+compileCMD(program as any)
+
+program.demandCommand()
+program.parse()

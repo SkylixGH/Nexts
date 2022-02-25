@@ -24,13 +24,17 @@
 		"indent": ["error", "tab"],
 		"no-tabs": "off",
 		"max-len": ["error", { "code": 200 }],
-		// Allow missing JSDoc param types invalid-jsdoc
+		"semi": ["error", "never"],
 		"valid-jsdoc": ["error", {
 			"requireReturn": true,
 			"requireParamDescription": true,
 			"requireReturnDescription": true,
 			"requireParamType": false,
-			"requireReturnType": false
+			"requireReturnType": false,
+			"prefer": {
+				"return": "returns",
+				"param": "param"
+			}
 		}]
     }
 }
