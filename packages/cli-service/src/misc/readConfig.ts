@@ -23,11 +23,31 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 	}
 
 	const rawConfigPath = path.join(process.cwd(), relativeCWDPath, configFileName)
+	let configString: string
 
 	try {
-		const configString = await fs.readFile(rawConfigPath, 'utf8')
+		configString = await fs.readFile(rawConfigPath, 'utf8')
 	} catch (error) {
 		logger.error(`Failed to load configuration file from '${rawConfigPath}', the following error was produced:`)
 		crashError(error)
+
+		process.exit(1)
+	}
+
+	let projectPackageJSON = {}
+
+	try {
+		projectPackageJSON = JSON.parse(await fs.readFile(path.join(relativeCWDPath, 'package.json'), 'utf8'))
+	} catch (error) {
+		logger.error(`Failed to load package.json from '${relativeCWDPath}', the following error was produced:`)
+		crashError(error)
+
+		process.exit(1)
+	}
+
+	if (configFileName.endsWith('.ts')) {
+
+	} else {
+
 	}
 }

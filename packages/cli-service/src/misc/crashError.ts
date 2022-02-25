@@ -9,6 +9,4 @@ export default function crashError(error: Error | any) {
 	error.stack.split('\n').forEach((line: string) => {
 		logger.error(line)
 	})
-
-	process.exit(1)
 }

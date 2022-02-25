@@ -29,6 +29,7 @@ export default function compileCMD(program: Argv<Flags>) {
 				type: 'string',
 				default: '*',
 				describe: 'Path to the config file.',
+				alias: 'c',
 			},
 			path: {
 				type: 'string',
