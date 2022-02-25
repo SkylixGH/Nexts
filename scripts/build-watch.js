@@ -1,4 +1,5 @@
 import { info } from './util/logger.js';
+import { exec } from 'child_process';
 import getProjects from './util/getProjects.js';
 import fs from 'fs/promises';
 import * as esBuild from 'esBuild';
@@ -8,6 +9,7 @@ info("Watch compiler");
 
 const projects = await getProjects();
 const builders = [];
+const tsc = [];
 
 projects.paths.forEach(async (project) => {
 	const packageFile = JSON.parse(await fs.readFile(path.join(project, 'package.json'), 'utf8'));
@@ -23,6 +25,10 @@ projects.paths.forEach(async (project) => {
 	};
 
 	fs.writeFile(path.join(project, 'package.json'), JSON.stringify(packageFile, null, '\t') + '\n', 'utf8');
+
+	tsc.push(exec('npx tsc --watch', {
+		cwd: project
+	}));
 
 	builders.push(esBuild.build({
 		format: 'cjs',
