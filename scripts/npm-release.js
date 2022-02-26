@@ -7,11 +7,18 @@ info('NPM Release')
 
 const projects = await getProjects()
 const npmExtraArgs = await cliGet('Extra NPM Arguments')
+const npmParams = ['publish', '--access', 'public']
 let projectIndex = 0
+
+if (npmExtraArgs && npmExtraArgs.length > 0) {
+	npmParams.push(...npmExtraArgs.split(' '))
+}
 
 const nextProject = () => {
 	const project = projects.paths[projectIndex]
-	const proc = spawn('npm' + (process.platform === 'win32' ? '.cmd' : ''), ['publish', '--access', 'public', npmExtraArgs.split(' ')], {cwd: project, stdio: 'inherit'})
+	info('Publishing: ' + projects.projects[projectIndex])
+
+	const proc = spawn('npm' + (process.platform === 'win32' ? '.cmd' : ''), npmParams, {cwd: project, stdio: 'inherit'})
 
 	proc.on('exit', () => {
 		projectIndex++

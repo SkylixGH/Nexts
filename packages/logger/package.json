@@ -1,6 +1,6 @@
 {
 	"name": "@nexts-stack/logger",
-	"version": "1.0.0-dev",
+	"version": "1.0.0-dev.1",
 	"main": "./build/common.cjs",
 	"type": "module",
 	"types": "./build/types/index.d.ts",
@@ -10,5 +10,9 @@
 	"exports": {
 		"import": "./build/module.mjs",
 		"require": "./build/common.cjs"
+	},
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org/",
+		"access": "public"
 	}
 }

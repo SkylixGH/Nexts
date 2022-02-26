@@ -1,6 +1,6 @@
 {
 	"name": "@nexts-stack/cli-service",
-	"version": "1.0.0-dev",
+	"version": "1.0.0-dev.1",
 	"main": "./build/common.cjs",
 	"type": "module",
 	"types": "./build/types/index.d.ts",
@@ -18,5 +18,9 @@
 	},
 	"bin": {
 		"nexts": "./build/module.mjs"
+	},
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org/",
+		"access": "public"
 	}
 }
