@@ -62,11 +62,6 @@ export default function compileCMD(program: Argv<Flags>) {
 			logger.log('Starting ESBuild compiler')
 
 			const generalESBuildConfig: BuildOptions = {
-				watch: argv.watch ? {
-					onRebuild: () => {
-						logger.log(`All (${maxBuilds}) projects will be rebuilt`)
-					},
-				} : false,
 				logLevel: 'silent',
 				jsx: 'preserve',
 				bundle: true,
@@ -84,6 +79,11 @@ export default function compileCMD(program: Argv<Flags>) {
 					entryPoints: [mainPathExact],
 					outfile: path.join(buildDirExact, 'dist.commonjs.cjs'),
 					format: 'cjs',
+					watch: argv.watch ? {
+						onRebuild: () => {
+							logger.log(`All (${maxBuilds}) projects will be rebuilt for CJS`)
+						},
+					} : false,
 				})
 
 				const esBuilderESM = await esBuild.build({
@@ -91,6 +91,11 @@ export default function compileCMD(program: Argv<Flags>) {
 					entryPoints: [mainPathExact],
 					outfile: path.join(buildDirExact, 'dist.esm.mjs'),
 					format: 'esm',
+					watch: argv.watch ? {
+						onRebuild: () => {
+							logger.log(`All (${maxBuilds}) projects will be rebuilt for ESM`)
+						},
+					} : false,
 				})
 
 				esBuilders.push(esBuilderCommon, esBuilderESM)
