@@ -1,6 +1,6 @@
 export default {
 	version: '1.0.0',
-	typescript: true,
+	typescript: false,
 	author: 'SkylixGH',
 	node: {
 		minVersion: '16.*',
