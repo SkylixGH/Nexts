@@ -134,7 +134,7 @@ export default function compileCMD(program: Argv<Flags>) {
 					format: 'cjs',
 					watch: argv.watch ? {
 						onRebuild: () => {
-							logger.log(`All (${maxBuilds}) projects will be rebuilt for CJS`)
+							logger.log(`All (${maxBuilds}) project(s) will be rebuilt for CJS`)
 						},
 					} : false,
 				})
@@ -146,7 +146,7 @@ export default function compileCMD(program: Argv<Flags>) {
 					format: 'esm',
 					watch: argv.watch ? {
 						onRebuild: () => {
-							logger.log(`All (${maxBuilds}) projects will be rebuilt for ESM`)
+							logger.log(`All (${maxBuilds}) project(s) will be rebuilt for ESM`)
 						},
 					} : false,
 				})
@@ -167,10 +167,14 @@ export default function compileCMD(program: Argv<Flags>) {
 					let spawnArgs = [] as string[]
 
 					if (argv.watch) {
-						logger.error('Cannot use watch compiler with typescript currently')
-						process.exit(1)
-
-						spawnArgs = ['no']
+						spawnArgs = [
+							'../../node_modules/typescript/bin/tsc',
+							'--watch',
+							'--emitDeclarationOnly',
+							'--declaration',
+							'--declarationDir',
+							path.join(process.cwd(), argv.path, `build`, pkg.name, 'types'),
+						]
 					} else {
 						spawnArgs = [
 							'../../node_modules/typescript/bin/tsc',
@@ -199,7 +203,9 @@ export default function compileCMD(program: Argv<Flags>) {
 					}
 
 					typescriptChild.on('exit', (code) => {
-						setTSDone()
+						if (!argv.watch) {
+							setTSDone()
+						}
 
 						if (tsFinished) {
 							tsBuildsFinished++
@@ -212,7 +218,6 @@ export default function compileCMD(program: Argv<Flags>) {
 							return
 						}
 
-						console.log(tsOutDataLog.split(''))
 						logger.error('The TypeScript processed seems to have crashed for an unknown reason')
 						logger.error('Spawn Args: ' + spawnArgs.join(' '))
 						logger.error('Spawn CWD: ' + path.join(process.cwd(), argv.path))
@@ -225,8 +230,27 @@ export default function compileCMD(program: Argv<Flags>) {
 					})
 
 					const onStandardMessage = (text: string) => {
-						tsOutDataLog += text
-						setTSDone()
+						// Used for debugging the TS compiler
+						// console.log(text.split(''))
+						// process.stdout.write(text)
+
+						if (!argv.watch) {
+							tsOutDataLog += text
+							setTSDone()
+
+							return
+						}
+
+						if (/Watching for file changes/.test(text) && !tsFinished) {
+							tsFinished = true
+							tsBuildsFinished++
+
+							if (tsBuildsFinished === maxBuilds) {
+								logger.success(`Successfully watching all (${maxBuilds}) projects for changes after ${getBootTime()}ms`)
+							}
+						} else if (/Watching for file changes/.test(text) && tsFinished) {
+							logger.log(`All (${maxBuilds}) project(s) will have their TypeScript declarations rebuild`)
+						}
 					}
 
 					typescriptChild.stdout.on('data', (d) => onStandardMessage(d.toString()))
