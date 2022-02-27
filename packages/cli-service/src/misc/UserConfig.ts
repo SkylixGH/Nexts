@@ -35,7 +35,7 @@ export default interface UserConfig {
 	/**
 	 * The project user/server applications
 	 */
-	apps: {
+	apps?: {
 		/**
 		 * The app's display name
 		 */
@@ -65,7 +65,7 @@ export default interface UserConfig {
 	/**
 	 * The project packages
 	 */
-	packages: {
+	packages?: {
 		/**
 		 * The package name
 		 */

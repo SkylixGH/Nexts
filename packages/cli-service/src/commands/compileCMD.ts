@@ -44,6 +44,7 @@ export default function compileCMD(program: Argv<Flags>) {
 				type: 'boolean',
 				default: false,
 				describe: 'Watch for changes and compile on the fly.',
+				alias: 'w',
 			},
 		}, async (argv) => {
 			const startTime = performance.now()
@@ -56,7 +57,7 @@ export default function compileCMD(program: Argv<Flags>) {
 			const config = await readConfig(argv.path, argv.config)
 			const projects = await getAppPackages(argv.path, config)
 			const esBuilders = [] as BuildResult[]
-			const maxBuilds = projects.packages.length
+			const maxBuilds = projects.packages?.length
 			let buildsStarted = 0
 
 			logger.log('Starting ESBuild compiler')
@@ -70,7 +71,7 @@ export default function compileCMD(program: Argv<Flags>) {
 				sourcemap: true,
 			}
 
-			for (const pkg of projects.packages) {
+			for (const pkg of projects.packages ?? []) {
 				const mainPathExact = path.join(process.cwd(), argv.path, pkg.path, pkg.main)
 				const buildDirExact = path.join(process.cwd(), argv.path, 'build', pkg.name)
 
