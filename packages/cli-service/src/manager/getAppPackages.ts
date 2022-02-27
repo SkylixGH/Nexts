@@ -80,6 +80,26 @@ export default async function getAppPackages(relativeCWDPath: string, config: Us
 			logger.error('This project uses TypeScript because it was enabled in your config, but TypeScript is not installed')
 			process.exit(1)
 		}
+
+		if (!pkg.main.endsWith('.ts') && !pkg.main.endsWith('.js')) {
+			logger.error(`The package called '${pkg.name}' has a main entry script that doesn't end with '.ts' or '.js'`)
+			process.exit(1)
+		}
+
+		if (config.typescript && !pkg.main.endsWith('.ts')) {
+			logger.error(`The package called '${pkg.name}' has a main entry script that doesn't end with '.ts'`)
+			process.exit(1)
+		}
+
+		if (pkg.main.endsWith('.ts') && path.basename(pkg.main).length === 3) {
+			logger.error(`The package called '${pkg.name}' has a main entry script that ends with '.ts' but doesn't have a name`)
+			process.exit(1)
+		}
+
+		if (pkg.main.endsWith('.js') && path.basename(pkg.main).length === 3) {
+			logger.error(`The package called '${pkg.name}' has a main entry script that ends with '.js' but doesn't have a name`)
+			process.exit(1)
+		}
 	})
 
 	return result

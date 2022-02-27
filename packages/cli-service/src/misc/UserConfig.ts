@@ -33,6 +33,21 @@ export default interface UserConfig {
 	},
 
 	/**
+	 * Formatting settings for the Nexts generator
+	 */
+	formatting?: {
+		/**
+		 * Generation settings for the dynamic package.json files
+		 */
+		package?: {
+			/**
+			 * The package file indent string
+			 */
+			indent?: string;
+		}
+	}
+
+	/**
 	 * The project user/server applications
 	 */
 	apps?: {
@@ -72,6 +87,11 @@ export default interface UserConfig {
 		name: string;
 
 		/**
+		 * The package organization
+		 */
+		org?: string;
+
+		/**
 		 * The path to the package root
 		 */
 		path: string;
@@ -84,11 +104,16 @@ export default interface UserConfig {
 		/**
 		 * The package description
 		 */
-		description: string;
+		description?: string;
 
 		/**
 		 * The package keywords
 		 */
-		keywords: string[];
+		keywords?: string[];
+
+		/**
+		 * The project license
+		 */
+		license?: string;
 	}[];
 }

@@ -8,6 +8,7 @@ import path from 'path'
 import {spawn} from 'child_process'
 import crashError from '../misc/crashError'
 import fsSync from 'fs'
+import fs from 'fs/promises'
 
 /**
  * CLI command flags
@@ -96,6 +97,30 @@ export default function compileCMD(program: Argv<Flags>) {
 						`Please make sure to have a tsconfig.json file in the root of the package.`,
 					].join(' '))
 					process.exit(1)
+				}
+
+				try {
+					const packageFile = {
+						name: `${pkg.org ? `@${pkg.org}/` : ''}${pkg.name}`,
+						version: config.version,
+						author: config.author,
+						main: pkg.main,
+						exports: {
+							require: path.join('../../build', pkg.name, 'dist.commonjs.cjs').replace(/\\/g, '/'),
+							import: path.join('../../build', pkg.name, 'dist.esm.mjs').replace(/\\/g, '/'),
+						},
+						...(config.typescript && {types: path.join('../../build', pkg.name, 'types/', pkg.main.slice(0, -2) + 'd.ts').replace(/\\/g, '/')}),
+						...(pkg.license && {license: pkg.license}),
+						...(pkg.description && {description: pkg.description}),
+						...(pkg.keywords && {keywords: pkg.keywords}),
+					}
+
+					await fs.writeFile(
+						path.join(process.cwd(), argv.path, 'packages', pkg.name, 'package.json'),
+						JSON.stringify(packageFile, null, config.formatting?.package?.indent ?? '\t') + '\n',
+					)
+				} catch (error) {
+					logger.error(`Failed to generate package file for ${pkg.name}`)
 				}
 
 				const esBuilderCommon = await esBuild.build({
