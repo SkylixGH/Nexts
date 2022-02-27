@@ -9,6 +9,7 @@ import {spawn} from 'child_process'
 import crashError from '../misc/crashError'
 import fsSync from 'fs'
 import fs from 'fs/promises'
+import {restartCLI} from '../index'
 
 /**
  * CLI command flags
@@ -65,6 +66,11 @@ export default function compileCMD(program: Argv<Flags>) {
 			let buildsStarted = 0
 			let tsBuildsFinished = 0
 			let loggedTSStarting = false
+
+			setTimeout(() => {
+				logger.log('Restarting...')
+				restartCLI()
+			}, 5000)
 
 			logger.log('Starting ESBuild compiler')
 
