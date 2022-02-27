@@ -63,6 +63,8 @@ export default function compileCMD(program: Argv<Flags>) {
 			const esBuilders = [] as BuildResult[]
 			const maxBuilds = projects.packages?.length
 			let buildsStarted = 0
+			let tsBuildsFinished = 0
+			let loggedTSStarting = false
 
 			logger.log('Starting ESBuild compiler')
 
@@ -100,6 +102,8 @@ export default function compileCMD(program: Argv<Flags>) {
 				}
 
 				try {
+					const dtsRelativeFileName = pkg.main.slice(0, -2) + 'd.ts'
+
 					const packageFile = {
 						name: `${pkg.org ? `@${pkg.org}/` : ''}${pkg.name}`,
 						version: config.version,
@@ -109,7 +113,7 @@ export default function compileCMD(program: Argv<Flags>) {
 							require: './' + path.join('../../build', pkg.name, 'dist.commonjs.cjs').replace(/\\/g, '/'),
 							import: './' + path.join('../../build', pkg.name, 'dist.esm.mjs').replace(/\\/g, '/'),
 						},
-						...(config.typescript && {types: './' + path.join('./../../build', pkg.name, 'types/', pkg.main.slice(0, -2) + 'd.ts').replace(/\\/g, '/')}),
+						...(config.typescript && {types: './' + path.join('./../../build', pkg.name, 'types/', dtsRelativeFileName).replace(/\\/g, '/')}),
 						...(pkg.license && {license: pkg.license}),
 						...(pkg.description && {description: pkg.description}),
 						...(pkg.keywords && {keywords: pkg.keywords}),
@@ -152,8 +156,11 @@ export default function compileCMD(program: Argv<Flags>) {
 
 				const getBootTime = () => Math.round(performance.now() - startTime)
 
-				if (buildsStarted === maxBuilds && config.typescript) {
-					logger.log('Starting TypeScript type generations')
+				if (config.typescript) {
+					if (!loggedTSStarting) {
+						logger.log('Starting TypeScript type generations')
+						loggedTSStarting = true
+					}
 
 					let tsFinished = false
 					let tsOutDataLog = ''
@@ -186,11 +193,7 @@ export default function compileCMD(program: Argv<Flags>) {
 					})
 
 					const setTSDone = () => {
-						if (
-							tsOutDataLog === '' ||
-							tsOutDataLog === '\n' ||
-							/^[\s\\s]+$/.test(tsOutDataLog)
-						) {
+						if (tsOutDataLog.split('').length == 0) {
 							tsFinished = true
 						}
 					}
@@ -199,10 +202,17 @@ export default function compileCMD(program: Argv<Flags>) {
 						setTSDone()
 
 						if (tsFinished) {
-							logger.success(`Finished compiling all (${maxBuilds}) projects in ${getBootTime()}`)
-							process.exit(0)
+							tsBuildsFinished++
 						}
 
+						if (tsFinished && tsBuildsFinished === maxBuilds) {
+							logger.success(`Finished compiling all (${maxBuilds}) projects in ${getBootTime()}`)
+							process.exit(0)
+						} else if (tsFinished && tsBuildsFinished !== maxBuilds) {
+							return
+						}
+
+						console.log(tsOutDataLog.split(''))
 						logger.error('The TypeScript processed seems to have crashed for an unknown reason')
 						logger.error('Spawn Args: ' + spawnArgs.join(' '))
 						logger.error('Spawn CWD: ' + path.join(process.cwd(), argv.path))

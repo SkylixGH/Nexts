@@ -33,7 +33,7 @@ export default {
         {
             path: './packages/api-interfaces',
             name: 'api-interfaces',
-            main: 'src/index.ts',
+            main: 'src/main/index.ts',
             description: 'This is a package for the API types',
             keywords: ['api', 'package'],
         },
