@@ -5,6 +5,9 @@ import logger from '@nexts-stack/logger'
 import readConfig from '../misc/readConfig'
 import getAppPackages from '../manager/getAppPackages'
 import path from 'path'
+import {spawn} from 'child_process'
+import crashError from '../misc/crashError'
+import fsSync from 'fs'
 
 /**
  * CLI command flags
@@ -75,6 +78,26 @@ export default function compileCMD(program: Argv<Flags>) {
 				const mainPathExact = path.join(process.cwd(), argv.path, pkg.path, pkg.main)
 				const buildDirExact = path.join(process.cwd(), argv.path, 'build', pkg.name)
 
+				if (!fsSync.existsSync(path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')) && config.typescript) {
+					logger.error([
+						'This project is using TypeScript as specified in the config,',
+						`but the package called ${pkg.name} does not have a tsconfig.json file.`,
+						'Please make sure to have a tsconfig.json file in the root of the package.',
+					].join(' '))
+					process.exit(1)
+				}
+
+				if (fsSync.lstatSync(path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')).isFile() && config.typescript) {
+					generalESBuildConfig.tsconfig = path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')
+				} else if (config.typescript) {
+					logger.error([
+						`The package called ${pkg.name} is using TypeScript as specified in the config,`,
+						`but tsconfig.json seems to be a directory but not a file.`,
+						`Please make sure to have a tsconfig.json file in the root of the package.`,
+					].join(' '))
+					process.exit(1)
+				}
+
 				const esBuilderCommon = await esBuild.build({
 					...generalESBuildConfig,
 					entryPoints: [mainPathExact],
@@ -106,6 +129,73 @@ export default function compileCMD(program: Argv<Flags>) {
 
 				if (buildsStarted === maxBuilds && config.typescript) {
 					logger.log('Starting TypeScript type generations')
+
+					let tsFinished = false
+					let tsOutDataLog = ''
+					let spawnArgs = [] as string[]
+
+					if (argv.watch) {
+						logger.error('Cannot use watch compiler with typescript currently')
+						process.exit(1)
+
+						spawnArgs = ['no']
+					} else {
+						spawnArgs = [
+							'../../node_modules/typescript/bin/tsc',
+							'--emitDeclarationOnly',
+							'--declaration',
+							'--declarationDir',
+							path.join(process.cwd(), argv.path, `build`, pkg.name, 'types'),
+						]
+					}
+
+					const typescriptChild = spawn(`node`, spawnArgs, {
+						cwd: path.join(process.cwd(), argv.path, 'packages', pkg.name),
+					})
+
+					typescriptChild.on('error', (error) => {
+						logger.error(`Failed to start TypeScript type generation`)
+						crashError(error)
+
+						process.exit(1)
+					})
+
+					const setTSDone = () => {
+						if (
+							tsOutDataLog === '' ||
+							tsOutDataLog === '\n' ||
+							/^[\s\\s]+$/.test(tsOutDataLog)
+						) {
+							tsFinished = true
+						}
+					}
+
+					typescriptChild.on('exit', (code) => {
+						setTSDone()
+
+						if (tsFinished) {
+							logger.success(`Finished compiling all (${maxBuilds}) projects in ${getBootTime()}`)
+							process.exit(0)
+						}
+
+						logger.error('The TypeScript processed seems to have crashed for an unknown reason')
+						logger.error('Spawn Args: ' + spawnArgs.join(' '))
+						logger.error('Spawn CWD: ' + path.join(process.cwd(), argv.path))
+
+						tsOutDataLog.split('\n').forEach((line) => {
+							logger.error(line)
+						})
+
+						process.exit(1)
+					})
+
+					const onStandardMessage = (text: string) => {
+						tsOutDataLog += text
+						setTSDone()
+					}
+
+					typescriptChild.stdout.on('data', (d) => onStandardMessage(d.toString()))
+					typescriptChild.stderr.on('data', (d) => onStandardMessage(d.toString()))
 				} else if (buildsStarted === maxBuilds) {
 					if (argv.watch) {
 						logger.success(`Successfully started watch compiler for all (${maxBuilds}) project(s) in ${getBootTime()}ms`)
