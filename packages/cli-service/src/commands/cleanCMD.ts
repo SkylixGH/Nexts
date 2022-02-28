@@ -1,4 +1,4 @@
-import {Argv} from 'yargs'
+import {Argv} from 'yargs';
 
 interface Flags {
 
@@ -19,5 +19,5 @@ export default function cleanCMD(program: Argv<Flags>) {
 			},
 		}, (argv) => {
 
-		})
+		});
 }

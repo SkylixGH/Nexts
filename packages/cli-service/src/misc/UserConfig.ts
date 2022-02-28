@@ -116,4 +116,4 @@ export default interface UserConfig {
 		 */
 		license?: string;
 	}[];
-}
+};;;;;;;;;;

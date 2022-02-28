@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 
 /**
  * Get all the projects
- * @return {Promise<{projects: *[], paths: *[]}>} The projects and their paths
+ * @returns {Promise<{projects: *[], paths: *[]}>} The projects and their paths
  */
 export default async function getProjects() {
 	const projectRoot = path.join(

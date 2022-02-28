@@ -24,7 +24,7 @@
 		"indent": ["error", "tab"],
 		"no-tabs": "off",
 		"max-len": ["error", { "code": 200 }],
-		"semi": ["error", "never"],
+		"semi": ["error", "always"],
 		"valid-jsdoc": ["error", {
 			"requireReturn": true,
 			"requireParamDescription": true,
