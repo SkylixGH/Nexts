@@ -30,4 +30,4 @@ jobs:
       working-directory: ./scripts/
       run: |
         npm i
-        node format.mjs
+        npm run code:format
