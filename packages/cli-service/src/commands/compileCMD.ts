@@ -9,7 +9,6 @@ import {spawn} from 'child_process'
 import crashError from '../misc/crashError'
 import fsSync from 'fs'
 import fs from 'fs/promises'
-import {restartCLI} from '../index'
 
 /**
  * CLI command flags
