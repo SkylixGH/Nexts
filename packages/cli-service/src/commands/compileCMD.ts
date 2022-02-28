@@ -169,6 +169,8 @@ export default function compileCMD(program: Argv<Flags>) {
 						spawnArgs = [
 							'../../node_modules/typescript/bin/tsc',
 							'--watch',
+							'--rootDir',
+							'./',
 							'--emitDeclarationOnly',
 							'--declaration',
 							'--declarationDir',
@@ -178,6 +180,8 @@ export default function compileCMD(program: Argv<Flags>) {
 						spawnArgs = [
 							'../../node_modules/typescript/bin/tsc',
 							'--emitDeclarationOnly',
+							'--rootDir',
+							'./',
 							'--declaration',
 							'--declarationDir',
 							path.join(process.cwd(), argv.path, `build`, pkg.name, 'types'),
@@ -201,7 +205,7 @@ export default function compileCMD(program: Argv<Flags>) {
 						}
 					}
 
-					typescriptChild.on('exit', (code) => {
+					typescriptChild.on('exit', () => {
 						if (!argv.watch) {
 							setTSDone()
 						}
