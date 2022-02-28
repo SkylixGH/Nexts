@@ -16,7 +16,8 @@
 	"scripts": {
 		"version:sync": "node ./scripts/version-sync.js",
 		"build:watch": "node ./scripts/build-watch.js",
-		"npm:release": "node ./scripts/npm-release.js"
+		"npm:release": "node ./scripts/npm-release.js",
+		"code:format": "node ./scripts/code-format.js"
 	},
 	"dependencies": {
 		"esBuild": "npm:esbuild@^0.14.23"
