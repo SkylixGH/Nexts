@@ -66,12 +66,6 @@ export default function compileCMD(program: Argv<Flags>) {
 			let buildsStarted = 0
 			let tsBuildsFinished = 0
 			let loggedTSStarting = false
-
-			setTimeout(() => {
-				logger.log('Restarting...')
-				restartCLI()
-			}, 5000)
-
 			logger.log('Starting ESBuild compiler')
 
 			const generalESBuildConfig: BuildOptions = {
@@ -218,7 +212,7 @@ export default function compileCMD(program: Argv<Flags>) {
 						}
 
 						if (tsFinished && tsBuildsFinished === maxBuilds) {
-							logger.success(`Finished compiling all (${maxBuilds}) projects in ${getBootTime()}`)
+							logger.success(`Finished compiling all (${maxBuilds}) project(s) in ${getBootTime()}`)
 							process.exit(0)
 						} else if (tsFinished && tsBuildsFinished !== maxBuilds) {
 							return
@@ -252,7 +246,7 @@ export default function compileCMD(program: Argv<Flags>) {
 							tsBuildsFinished++
 
 							if (tsBuildsFinished === maxBuilds) {
-								logger.success(`Successfully watching all (${maxBuilds}) projects for changes after ${getBootTime()}ms`)
+								logger.success(`Successfully watching all (${maxBuilds}) project(s) for changes after ${getBootTime()}ms`)
 							}
 						} else if (/Watching for file changes/.test(text) && tsFinished) {
 							logger.log(`All (${maxBuilds}) project(s) will have their TypeScript declarations rebuild`)
