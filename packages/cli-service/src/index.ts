@@ -3,6 +3,7 @@
 import yargs from 'yargs';
 import {hideBin} from 'yargs/helpers';
 import compileCMD from './commands/compileCMD';
+import cleanCMD from './commands/cleanCMD';
 
 /**
  * The CLI binary entry point.
@@ -13,6 +14,7 @@ export default function bin() {
 	program.scriptName('nexts');
 
 	compileCMD(program as any);
+	cleanCMD(program as any);
 
 	program.demandCommand();
 	program.parse();
