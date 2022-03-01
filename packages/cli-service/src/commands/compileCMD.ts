@@ -119,7 +119,7 @@ export default function compileCMD(program: Argv<Flags>) {
 					};
 
 					await fs.writeFile(
-						path.join(process.cwd(), argv.path, 'packages', pkg.name, 'package.json'),
+						path.join(process.cwd(), argv.path, pkg.path, 'package.json'),
 						JSON.stringify(packageFile, null, config.formatting?.package?.indent ?? '\t') + '\n',
 					);
 				} catch (error) {
