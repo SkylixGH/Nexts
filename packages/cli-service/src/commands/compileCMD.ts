@@ -78,7 +78,7 @@ export default function compileCMD(program: Argv<Flags>) {
 
 			for (const pkg of projects.packages ?? []) {
 				const mainPathExact = path.join(process.cwd(), argv.path, pkg.path, pkg.main);
-				const buildDirExact = path.join(process.cwd(), argv.path, 'build', pkg.name);
+				const buildDirExact = path.join(process.cwd(), argv.path, 'build', pkg.path);
 
 				if (!fsSync.existsSync(path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')) && config.typescript) {
 					logger.error([
@@ -174,7 +174,7 @@ export default function compileCMD(program: Argv<Flags>) {
 							'--emitDeclarationOnly',
 							'--declaration',
 							'--declarationDir',
-							path.join(process.cwd(), argv.path, `build`, pkg.name, 'types'),
+							path.join(process.cwd(), argv.path, `build`, pkg.path, 'types'),
 						];
 					} else {
 						spawnArgs = [
@@ -184,12 +184,12 @@ export default function compileCMD(program: Argv<Flags>) {
 							'./',
 							'--declaration',
 							'--declarationDir',
-							path.join(process.cwd(), argv.path, `build`, pkg.name, 'types'),
+							path.join(process.cwd(), argv.path, `build`, pkg.path, 'types'),
 						];
 					}
 
 					const typescriptChild = spawn(`node`, spawnArgs, {
-						cwd: path.join(process.cwd(), argv.path, 'packages', pkg.name),
+						cwd: path.join(process.cwd(), argv.path, pkg.path),
 					});
 
 					typescriptChild.on('error', (error) => {
