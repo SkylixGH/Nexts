@@ -24,11 +24,17 @@ export default function cleanCMD(program: Argv<Flags>) {
 				description: 'The path to the project',
 				default: './',
 			},
+			force: {
+				type: 'boolean',
+				description: 'Clean the project anyways',
+				default: false,
+			},
 		}, (argv) => {
 			if (
-				!fsSync.existsSync(path.join(process.cwd(), argv.path, 'build')) ||
+				(!fsSync.existsSync(path.join(process.cwd(), argv.path, 'build')) ||
 				!fsSync.existsSync(path.join(process.cwd(), argv.path, '.nexts')) ||
-				!fsSync.lstatSync(path.join(process.cwd(), argv.path)).isDirectory()
+				!fsSync.lstatSync(path.join(process.cwd(), argv.path)).isDirectory()) &&
+				!argv.force
 			) {
 				logger.error('No projects based on NEXTS framework was found, or the project has already been cleaned');
 				process.exit(1);
@@ -36,14 +42,25 @@ export default function cleanCMD(program: Argv<Flags>) {
 
 			logger.log('Cleaning project');
 
+			const failedDelete = (error: any) => {
+				if (!argv.force) {
+					logger.error('Failed to clean the project build files');
+					crashError(error);
+
+					process.exit(1);
+				}
+			};
+
 			try {
-				fsSync.rmSync(path.join(process.cwd(), argv.path, 'build'), {recursive: true});
 				fsSync.rmSync(path.join(process.cwd(), argv.path, '.nexts'), {recursive: true});
 			} catch (error) {
-				logger.error('Failed to clean the project build files');
-				crashError(error);
+				failedDelete(error);
+			}
 
-				process.exit(1);
+			try {
+				fsSync.rmSync(path.join(process.cwd(), argv.path, 'build'), {recursive: true});
+			} catch (error) {
+				failedDelete(error);
 			}
 
 			logger.success('Project build files have been removed');

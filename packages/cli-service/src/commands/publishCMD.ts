@@ -43,30 +43,79 @@ export default function publishCMD(program: Argv<Flags>) {
 				process.exit(1);
 			}
 
-			config.packages.forEach((pkg) => {
-				const publishBuildLocation = path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path);
+			config.packages.forEach(async (pkg) => {
+				let publishBuildLocation = path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path);
 				let buildCopy = 0;
 
 				const tryNextBuild = () => {
-					if (fsSync.existsSync(path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path))) {
+					if (fsSync.existsSync(path.join(process.cwd(), argv.path, '.nexts', 'publish', `${pkg.path} - ${buildCopy}`))) {
 						buildCopy++;
 						tryNextBuild();
 					}
 				};
 
+				tryNextBuild();
+				publishBuildLocation += ` - ${buildCopy}`;
+
 				try {
 					fsSync.mkdirSync(publishBuildLocation, {
 						recursive: true,
 					});
-				} catch (e) {
+				} catch (error) {
 					logger.error(`Could not create publish build location`);
-					crashError(e);
+					crashError(error);
+
+					process.exit(1);
+				}
+
+				let appPkg = {} as any;
+				try {
+					appPkg = JSON.parse(fsSync.readFileSync(path.join(process.cwd(), argv.path, pkg.path, 'package.json'), 'utf-8'));
+				} catch (error) {
+					logger.error(`Failed to read package.json file for the project called ${pkg.name}`);
+				}
+
+				try {
+					await fse.writeFile(path.join(publishBuildLocation, 'package.json'), JSON.stringify({
+						name: `${pkg.org ? `@${pkg.org}/` : ''}${pkg.name}`,
+						description: pkg.description,
+						version: config.version,
+						dependencies: appPkg.dependencies ?? {},
+						bin: appPkg.bin ?? {},
+						type: 'module',
+						types: './' + path.join('types/', pkg.main).replace(/\\/g, '/'),
+						exports: {
+							import: './dist.module.mjs',
+							require: './dist.commonjs.cjs',
+						},
+					}));
+				} catch (error) {
+					logger.error('Failed to move package file');
+					crashError(error);
 
 					process.exit(1);
 				}
 
 				try {
-					await fse.copy()
+					const commonJS = await fse.readFile(path.join(process.cwd(), argv.path, 'build', pkg.path, 'dist.commonjs.cjs'));
+					const moduleJS = await fse.readFile(path.join(process.cwd(), argv.path, 'build', pkg.path, 'dist.esm.mjs'));
+
+					await fse.writeFile(path.join(publishBuildLocation, './dist.commonjs.cjs'), commonJS);
+					await fse.writeFile(path.join(publishBuildLocation, './dist.module.mjs'), moduleJS);
+				} catch (error) {
+					logger.error('Failed to move distribution scripts');
+					crashError(error);
+
+					process.exit(1);
+				}
+
+				try {
+					await fse.move(path.join(process.cwd(), argv.path, 'build', pkg.path, 'types'), path.join(publishBuildLocation, 'types'));
+				} catch (error) {
+					logger.error('Failed to move type declarations');
+					crashError(error);
+
+					process.exit(1);
 				}
 			});
 		});

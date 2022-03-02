@@ -215,7 +215,7 @@ export default function compileCMD(program: Argv<Flags>) {
 						}
 
 						if (tsFinished && tsBuildsFinished === maxBuilds) {
-							logger.success(`Finished compiling all (${maxBuilds}) project(s) in ${getBootTime()}`);
+							logger.success(`Finished compiling all (${maxBuilds}) project(s) in ${getBootTime()}ms`);
 							process.exit(0);
 						} else if (tsFinished && tsBuildsFinished !== maxBuilds) {
 							return;

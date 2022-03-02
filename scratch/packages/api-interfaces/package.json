@@ -1,0 +1,16 @@
+{
+	"name": "api-interfaces",
+	"version": "1.0.0",
+	"author": "SkylixGH",
+	"main": "src/main/index.ts",
+	"exports": {
+		"require": "./../../build/api-interfaces/dist.commonjs.cjs",
+		"import": "./../../build/api-interfaces/dist.esm.mjs"
+	},
+	"types": "./../../build/api-interfaces/types/src/main/index.d.ts",
+	"description": "This is a package for the API types",
+	"keywords": [
+		"api",
+		"package"
+	]
+}
