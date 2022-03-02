@@ -1,4 +1,4 @@
-<h1 align="center">N e x t s</h1>
+<img align="center" src="readme/nexts-logo.svg" alt="nexts-logo" width="200" height="200" />
 <p align="center">A framework for all your needs!</p>
 
 ## Packages NPM
