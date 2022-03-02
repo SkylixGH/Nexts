@@ -1,4 +1,7 @@
-<img align="center" src="readme/nexts-logo.svg" alt="nexts-logo" width="200" height="200" />
+<div align="center">
+    <img src="readme/nexts-logo.svg" alt="nexts-logo" width="200" height="200" />
+</div>
+
 <p align="center">A framework for all your needs!</p>
 
 ## Packages NPM
