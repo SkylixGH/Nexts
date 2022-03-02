@@ -1,0 +1,1 @@
+{"name":"api-client-xf-founders","description":"This is a package for the API client","version":"2.0.0-dec","dependencies":{},"bin":{},"type":"module","types":"./types/src/index.ts","exports":{"import":"./dist.module.mjs","require":"./dist.commonjs.cjs"}}

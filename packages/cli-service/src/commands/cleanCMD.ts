@@ -4,19 +4,12 @@ import fsSync from 'fs';
 import path from 'path';
 import crashError from '../misc/crashError';
 
-interface Flags {
-	/**
-	 * Path to the project to clean
-	 */
-	path: string;
-}
-
 /**
  * The register util for the clean command.
  * @param program The yargs program.
  * @returns Nothing.
  */
-export default function cleanCMD(program: Argv<Flags>) {
+export default function cleanCMD(program: Argv) {
 	program
 		.command('clean [path]', 'Clean the project build files', {
 			path: {

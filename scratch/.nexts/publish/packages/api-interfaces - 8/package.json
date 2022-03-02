@@ -1,0 +1,1 @@
+{"name":"api-interfaces","description":"This is a package for the API types","version":"2.0.0","dependencies":{},"bin":{},"type":"module","types":"./types/src/main/index.ts","exports":{"import":"./dist.module.mjs","require":"./dist.commonjs.cjs"}}

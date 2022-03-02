@@ -11,26 +11,11 @@ import fsSync from 'fs';
 import fs from 'fs/promises';
 
 /**
- * CLI command flags
- */
-interface Flags {
-	/**
-	 * Path to the config
-	 */
-	config: string;
-
-	/**
-	 * Path to project
-	 */
-	path: string;
-}
-
-/**
  * The compile command.
  * @param program The yargs program.
  * @returns Nothing.
  */
-export default function compileCMD(program: Argv<Flags>) {
+export default function compileCMD(program: Argv) {
 	program
 		.command('compile [path]', 'Compile your project.', {
 			config: {

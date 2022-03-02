@@ -5,20 +5,14 @@ import fse from 'fs-extra';
 import readConfig from '../misc/readConfig';
 import path from 'path';
 import crashError from '../misc/crashError';
-
-interface Flags {
-	/**
-	 * Path to the project
-	 */
-	path: string;
-}
+import {spawn} from 'child_process';
 
 /**
  * The register util for the publish command.
  * @param program The yargs program.
  * @returns Nothing.
  */
-export default function publishCMD(program: Argv<Flags>) {
+export default function publishCMD(program: Argv) {
 	program
 		.command('publish [path]', 'Publish all packages', {
 			config: {
@@ -32,6 +26,21 @@ export default function publishCMD(program: Argv<Flags>) {
 				default: './',
 				describe: 'Path to the project.',
 			},
+			otp: {
+				type: 'string',
+				default: '',
+				describe: 'One time password for NPM publishing.',
+			},
+			tag: {
+				type: 'string',
+				default: 'latest',
+				describe: 'The tag to publish with.',
+			},
+			versionOverride: {
+				type: 'string',
+				default: '',
+				describe: 'The override version to publish with.',
+			},
 		}, async (argv) => {
 			logger.log('Checking environment for publishing packages');
 
@@ -42,6 +51,8 @@ export default function publishCMD(program: Argv<Flags>) {
 				logger.error('No packages to publish');
 				process.exit(1);
 			}
+
+			const buildCopies = [] as number[];
 
 			config.packages.forEach(async (pkg) => {
 				let publishBuildLocation = path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path);
@@ -56,6 +67,8 @@ export default function publishCMD(program: Argv<Flags>) {
 
 				tryNextBuild();
 				publishBuildLocation += ` - ${buildCopy}`;
+
+				buildCopies.push(buildCopy);
 
 				try {
 					fsSync.mkdirSync(publishBuildLocation, {
@@ -72,14 +85,14 @@ export default function publishCMD(program: Argv<Flags>) {
 				try {
 					appPkg = JSON.parse(fsSync.readFileSync(path.join(process.cwd(), argv.path, pkg.path, 'package.json'), 'utf-8'));
 				} catch (error) {
-					logger.error(`Failed to read package.json file for the project called ${pkg.name}`);
+					logger.error(`Failed to read package.json file for the project called ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`);
 				}
 
 				try {
 					await fse.writeFile(path.join(publishBuildLocation, 'package.json'), JSON.stringify({
 						name: `${pkg.org ? `@${pkg.org}/` : ''}${pkg.name}`,
 						description: pkg.description,
-						version: config.version,
+						version: argv.versionOverride.length > 0 ? argv.versionOverride : config.version,
 						dependencies: appPkg.dependencies ?? {},
 						bin: appPkg.bin ?? {},
 						type: 'module',
@@ -90,7 +103,7 @@ export default function publishCMD(program: Argv<Flags>) {
 						},
 					}));
 				} catch (error) {
-					logger.error('Failed to move package file');
+					logger.error(`Failed to move package file for ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`);
 					crashError(error);
 
 					process.exit(1);
@@ -110,7 +123,7 @@ export default function publishCMD(program: Argv<Flags>) {
 				}
 
 				try {
-					await fse.move(path.join(process.cwd(), argv.path, 'build', pkg.path, 'types'), path.join(publishBuildLocation, 'types'));
+					await fse.copy(path.join(process.cwd(), argv.path, 'build', pkg.path, 'types'), path.join(publishBuildLocation, 'types'));
 				} catch (error) {
 					logger.error('Failed to move type declarations');
 					crashError(error);
@@ -118,5 +131,63 @@ export default function publishCMD(program: Argv<Flags>) {
 					process.exit(1);
 				}
 			});
+
+			let publishIndex = 0;
+
+			const publishNextPackage = () => {
+				const pkg = config.packages![publishIndex];
+				const buildCopy = buildCopies[publishIndex];
+
+				logger.log(`Publishing ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`);
+
+				const npmChild = spawn(
+					'npm' + (process.platform === 'win32' ? '.cmd' : ''),
+					[
+						'publish',
+						'--access',
+						'public',
+						'--tag',
+						`"${argv.tag}"`,
+						'--registry',
+						'https://registry.npmjs.org/',
+						...(argv.otp ? ['--otp', argv.otp] : []),
+					],
+					{
+						cwd: path.join(process.cwd(), argv.path, '.nexts', 'publish', `${pkg.path} - ${buildCopy}`),
+					},
+				);
+
+				npmChild.on('error', (error) => {
+					logger.error(`Failed to publish ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`);
+					crashError(error);
+
+					process.exit(1);
+				});
+
+				let errorMessageExtracted = null as null | string;
+
+				npmChild.stderr.on('data', (data: Buffer) => {
+					if (data.toString().includes('You cannot publish over the previously published versions')) {
+						errorMessageExtracted = `v${config.version} of ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name} has already been published to NPM`;
+					}
+				});
+
+				npmChild.on('exit', (code: number) => {
+					if (code !== 0) {
+						logger.error(`Failed to publish package ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}${errorMessageExtracted ? ', ' + errorMessageExtracted : ''}`);
+						process.exit(1);
+					}
+
+					publishIndex++;
+					if (publishIndex === (config.packages ?? []).length) {
+						logger.success(`Successfully published all (${(config.packages ?? []).length}) packages`);
+						process.exit(0);
+					}
+
+					publishNextPackage();
+				});
+			};
+
+			publishNextPackage();
 		});
 }
