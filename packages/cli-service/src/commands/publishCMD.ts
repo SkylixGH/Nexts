@@ -1,6 +1,7 @@
 import {Argv} from 'yargs';
 import logger from '@nexts-stack/logger';
 import fsSync from 'fs';
+import fse from 'fs-extra';
 import readConfig from '../misc/readConfig';
 import path from 'path';
 import crashError from '../misc/crashError';
@@ -62,6 +63,10 @@ export default function publishCMD(program: Argv<Flags>) {
 					crashError(e);
 
 					process.exit(1);
+				}
+
+				try {
+					await fse.copy()
 				}
 			});
 		});

@@ -5,6 +5,7 @@
 		"packages/*"
 	],
 	"devDependencies": {
+		"@types/fs-extra": "^9.0.13",
 		"@typescript-eslint/eslint-plugin": "^5.12.1",
 		"@typescript-eslint/parser": "^5.12.1",
 		"esbuild": "^0.14.23",
@@ -20,6 +21,7 @@
 		"code:format": "node ./scripts/code-format.js"
 	},
 	"dependencies": {
-		"esBuild": "npm:esbuild@^0.14.23"
+		"esBuild": "npm:esbuild@^0.14.23",
+		"fs-extra": "^10.0.1"
 	}
 }
