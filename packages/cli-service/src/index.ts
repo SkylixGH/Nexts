@@ -4,6 +4,7 @@ import yargs from 'yargs';
 import {hideBin} from 'yargs/helpers';
 import compileCMD from './commands/compileCMD';
 import cleanCMD from './commands/cleanCMD';
+import publishCMD from './commands/publishCMD';
 
 /**
  * The CLI binary entry point.
@@ -15,6 +16,7 @@ export default function bin() {
 
 	compileCMD(program as any);
 	cleanCMD(program as any);
+	publishCMD(program as any);
 
 	program.demandCommand();
 	program.parse();
