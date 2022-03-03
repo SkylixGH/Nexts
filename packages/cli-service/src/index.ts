@@ -12,13 +12,15 @@ import publishCMD from './commands/publishCMD';
  */
 export default function bin() {
 	const program = yargs(hideBin(process.argv));
+
 	program.scriptName('nexts');
+	program.version(process.env.npm_package_version || 'Error: Version not found');
+	program.help(true).wrap(Math.floor(process.stdout.columns || 100));
 
 	compileCMD(program as any);
 	cleanCMD(program as any);
 	publishCMD(program as any);
 
-	program.demandCommand();
 	program.parse();
 }
 
