@@ -27,7 +27,7 @@ __export(src_exports, {
   default: () => src_default,
   world: () => world
 });
-var hello = "hello world (Nexts)";
+var hello = "hello world (Nexts Pro)";
 var world = "hello";
 var src_default = hello;
 module.exports = __toCommonJS(src_exports);
