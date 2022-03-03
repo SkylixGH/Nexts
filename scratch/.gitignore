@@ -1,0 +1,5 @@
+.nexts
+build
+
+ints/**
+!ints/IGNOREME.md
