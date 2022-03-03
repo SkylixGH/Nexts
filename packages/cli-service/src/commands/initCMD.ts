@@ -1,4 +1,5 @@
 import {Argv} from 'yargs';
+import askListCLI from '../misc/askListCLI';
 
 /**
  * The initialization command
@@ -7,14 +8,9 @@ import {Argv} from 'yargs';
  */
 export default function initCMD(program: Argv) {
 	program
-		.command('clean [path]', 'Clean the project build files', {
-			path: {
-				type: 'string',
-				description: 'The path to the project',
-				default: './',
-			},
-		}, (argv) => {
-
+		.command('init', 'Initialize a new NEXTS project', {}, async (argv) => {
+			const projectType = await askListCLI('Select a project license', ['MIT', 'Apache-2.0', 'GPL-3.0']);
+			console.log(projectType);
 		});
 }
 
