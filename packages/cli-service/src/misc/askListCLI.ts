@@ -8,13 +8,13 @@ import askCLI from "./askCLI";
  * @returns The index of the item selected
  */
 export default async function askListCLI(question: string, listOptions: string[]) {
-	const options = ['', ...listOptions];
+	const options = [...listOptions];
 
 	options.forEach((opt, index) => {
 		console.log(` ${index + 1}) ${opt}`);
 	});
 
-	return await askCLI(`${question} [1..${options.length}]`, (answer) => {
+	return +await askCLI(`${question} [1..${options.length}]`, (answer) => {
 		if (isNaN(answer as any) || answer.length === 0) {
 			return 'Please specify the number for the option you would like to select';
 		}

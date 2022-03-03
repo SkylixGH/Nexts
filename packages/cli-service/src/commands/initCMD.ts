@@ -1,4 +1,5 @@
 import {Argv} from 'yargs';
+import askCLI from '../misc/askCLI';
 import askListCLI from '../misc/askListCLI';
 
 /**
@@ -9,8 +10,22 @@ import askListCLI from '../misc/askListCLI';
 export default function initCMD(program: Argv) {
 	program
 		.command('init', 'Initialize a new NEXTS project', {}, async (argv) => {
-			const projectType = await askListCLI('Select a project license', ['MIT', 'Apache-2.0', 'GPL-3.0']);
-			console.log(projectType);
+			const options = {
+				license: ['MIT', 'Apache-2.0', 'GPL-3.0'],
+			};
+
+			const answers = {
+				author: await askCLI('Project Author'),
+				version: await askCLI('Project Version'),
+				license: await askListCLI('Project License', options.license),
+			};
+
+			const monorepoPkg = {
+				workspaces: [
+					'packages/*',
+					'apps/*',
+				],
+			};
 		});
 }
 
