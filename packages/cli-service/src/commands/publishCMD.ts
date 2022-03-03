@@ -54,7 +54,7 @@ export default function publishCMD(program: Argv) {
 
 			const buildCopies = [] as number[];
 
-			config.packages.forEach(async (pkg) => {
+			for (const pkg of config.packages) {
 				let publishBuildLocation = path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path);
 				let buildCopy = 0;
 
@@ -130,7 +130,7 @@ export default function publishCMD(program: Argv) {
 
 					process.exit(1);
 				}
-			});
+			}
 
 			let publishIndex = 0;
 
@@ -173,6 +173,15 @@ export default function publishCMD(program: Argv) {
 				});
 
 				npmChild.on('exit', (code: number) => {
+					try {
+						fse.rmSync(path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path) + ' - ' + buildCopies[publishIndex], {
+							recursive: true,
+						});
+					} catch (error) {
+						logger.error(`Failed to clean build files ${pkg.org ? '@' + pkg.org + '/' : ''}`);
+						crashError(error);
+					}
+
 					if (code !== 0) {
 						logger.error(`Failed to publish package ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}${errorMessageExtracted ? ', ' + errorMessageExtracted : ''}`);
 						process.exit(1);
