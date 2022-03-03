@@ -4,8 +4,8 @@
 	"author": "SkylixGH",
 	"main": "src/index.ts",
 	"exports": {
-		"require": "./../../build/api-client-xf-founders/dist.commonjs.cjs",
-		"import": "./../../build/api-client-xf-founders/dist.esm.mjs"
+		"require": "./../../build/packages/api-client/dist.commonjs.cjs",
+		"import": "./../../build/packages/api-client/dist.esm.mjs"
 	},
 	"types": "./../../build/api-client-xf-founders/types/src/index.d.ts",
 	"description": "This is a package for the API client",

@@ -94,8 +94,8 @@ export default function compileCMD(program: Argv) {
 						author: config.author,
 						main: pkg.main,
 						exports: {
-							require: './' + path.join('../../build', pkg.name, 'dist.commonjs.cjs').replace(/\\/g, '/'),
-							import: './' + path.join('../../build', pkg.name, 'dist.esm.mjs').replace(/\\/g, '/'),
+							require: './' + path.join('../../build', pkg.path, 'dist.commonjs.cjs').replace(/\\/g, '/'),
+							import: './' + path.join('../../build', pkg.path, 'dist.esm.mjs').replace(/\\/g, '/'),
 						},
 						...(config.typescript && {types: './' + path.join('./../../build', pkg.name, 'types/', dtsRelativeFileName).replace(/\\/g, '/')}),
 						...(pkg.license && {license: pkg.license}),

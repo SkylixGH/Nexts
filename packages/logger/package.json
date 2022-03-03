@@ -1,6 +1,6 @@
 {
 	"name": "@nexts-stack/logger",
-	"version": "1.0.0-dev.1",
+	"version": "1.0.0-dev.2",
 	"main": "./build/common.cjs",
 	"type": "module",
 	"types": "./build/types/index.d.ts",

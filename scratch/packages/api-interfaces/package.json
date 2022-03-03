@@ -4,8 +4,8 @@
 	"author": "SkylixGH",
 	"main": "src/main/index.ts",
 	"exports": {
-		"require": "./../../build/api-interfaces/dist.commonjs.cjs",
-		"import": "./../../build/api-interfaces/dist.esm.mjs"
+		"require": "./../../build/packages/api-interfaces/dist.commonjs.cjs",
+		"import": "./../../build/packages/api-interfaces/dist.esm.mjs"
 	},
 	"types": "./../../build/api-interfaces/types/src/main/index.d.ts",
 	"description": "This is a package for the API types",
