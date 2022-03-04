@@ -6,6 +6,8 @@ import {spawn} from 'child_process';
 info('NPM Release');
 
 const projects = await getProjects();
+
+info("#####    DONT FORGET RELEASE TAGS    #####");
 const npmExtraArgs = await cliGet('Extra NPM Arguments');
 const npmParams = ['publish', '--access', 'public'];
 let projectIndex = 0;
