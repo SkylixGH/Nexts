@@ -1,4 +1,4 @@
-import logger from '@nexts-stack/logger';
+import logger from '@nexts-stack/logger'
 
 /**
  * Crash the CLI and render an error
@@ -7,6 +7,6 @@ import logger from '@nexts-stack/logger';
  */
 export default function crashError(error: Error | any) {
 	error.stack.split('\n').forEach((line: string) => {
-		logger.error(line);
-	});
+		logger.error(line)
+	})
 }

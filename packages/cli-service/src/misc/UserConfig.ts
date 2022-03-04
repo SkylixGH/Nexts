@@ -115,5 +115,12 @@ export default interface UserConfig {
 		 * The project license
 		 */
 		license?: string;
-	}[];
+
+		/**
+		 * The package dependencies
+		 */
+		dependencies?: {
+			[name: string]: string;
+		}
+	}[]
 };;;;;;;;;;

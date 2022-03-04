@@ -3,7 +3,7 @@
  * @param {string} message Message
  */
 export function info(message) {
-	console.log(`[INFO] ${message}`);
+	console.log(`[INFO] ${message}`)
 }
 
 /**
@@ -11,5 +11,5 @@ export function info(message) {
  * @param {string} message Message
  */
 export function error(message) {
-	console.error(`[ERROR] ${message}`);
+	console.error(`[ERROR] ${message}`)
 }

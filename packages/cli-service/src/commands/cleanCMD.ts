@@ -1,8 +1,8 @@
-import {Argv} from 'yargs';
-import logger from '@nexts-stack/logger';
-import fsSync from 'fs';
-import path from 'path';
-import crashError from '../misc/crashError';
+import {Argv} from 'yargs'
+import logger from '@nexts-stack/logger'
+import fsSync from 'fs'
+import path from 'path'
+import crashError from '../misc/crashError'
 
 /**
  * The register util for the clean command.
@@ -29,33 +29,33 @@ export default function cleanCMD(program: Argv) {
 				!fsSync.lstatSync(path.join(process.cwd(), argv.path)).isDirectory()) &&
 				!argv.force
 			) {
-				logger.error('No projects based on NEXTS framework was found, or the project has already been cleaned');
-				process.exit(1);
+				logger.error('No projects based on NEXTS framework was found, or the project has already been cleaned')
+				process.exit(1)
 			}
 
-			logger.log('Cleaning project');
+			logger.log('Cleaning project')
 
 			const failedDelete = (error: any) => {
 				if (!argv.force) {
-					logger.error('Failed to clean the project build files');
-					crashError(error);
+					logger.error('Failed to clean the project build files')
+					crashError(error)
 
-					process.exit(1);
+					process.exit(1)
 				}
-			};
-
-			try {
-				fsSync.rmSync(path.join(process.cwd(), argv.path, '.nexts'), {recursive: true});
-			} catch (error) {
-				failedDelete(error);
 			}
 
 			try {
-				fsSync.rmSync(path.join(process.cwd(), argv.path, 'build'), {recursive: true});
+				fsSync.rmSync(path.join(process.cwd(), argv.path, '.nexts'), {recursive: true})
 			} catch (error) {
-				failedDelete(error);
+				failedDelete(error)
 			}
 
-			logger.success('Project build files have been removed');
-		});
+			try {
+				fsSync.rmSync(path.join(process.cwd(), argv.path, 'build'), {recursive: true})
+			} catch (error) {
+				failedDelete(error)
+			}
+
+			logger.success('Project build files have been removed')
+		})
 }

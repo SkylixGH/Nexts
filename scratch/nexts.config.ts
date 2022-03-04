@@ -47,4 +47,4 @@ export default {
 			keywords: ['api', 'package'],
 		},
 	],
-};
+}

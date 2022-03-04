@@ -1,5 +1,5 @@
-const hello = 'hello world (Nexts Pro)';
-const world = 'hello';
+const hello = 'hello world (Nexts Pro)'
+const world = 'hello'
 
-export default hello;
-export {world};
+export default hello
+export {world}

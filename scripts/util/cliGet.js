@@ -1,5 +1,5 @@
-import readline from 'readline';
-import {error} from './logger.js';
+import readline from 'readline'
+import {error} from './logger.js'
 
 /**
  * Get user input from the CLI
@@ -17,24 +17,24 @@ export default function cliGet(question, validator = () => void 0) {
 			const rl = readline.createInterface({
 				input: process.stdin,
 				output: process.stdout,
-			});
+			})
 
 			rl.question(`> ${question}: `, (answer) => {
-				const validatorResult = validator(answer);
+				const validatorResult = validator(answer)
 
 				if (typeof validatorResult === 'string') {
-					error('>> ' + validatorResult);
-					rl.close();
+					error('>> ' + validatorResult)
+					rl.close()
 
-					ask();
-					return;
+					ask()
+					return
 				}
 
-				rl.close();
-				resolve(answer);
-			});
+				rl.close()
+				resolve(answer)
+			})
 		}
 
-		ask();
-	});
+		ask()
+	})
 }

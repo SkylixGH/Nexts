@@ -1,5 +1,5 @@
-import logger from '@nexts-stack/logger';
-import readline from 'readline';
+import logger from '@nexts-stack/logger'
+import readline from 'readline'
 
 /**
  * Get CLI input from user.
@@ -13,22 +13,22 @@ export default function askCLI(question: string, validator?: (answer: string) =>
 			const rl = readline.createInterface({
 				input: process.stdin,
 				output: process.stdout,
-			});
+			})
 
 			rl.question(`> ${question}: `, (answer) => {
-				const validated = validator ? validator(answer) : void 0;
+				const validated = validator ? validator(answer) : void 0
 
-				rl.close();
+				rl.close()
 
 				if (!validated) {
-					resolve(answer);
+					resolve(answer)
 				} else {
-					logger.error(validated);
-					ask();
+					logger.error(validated)
+					ask()
 				}
-			});
-		};
+			})
+		}
 
-		ask();
-	});
+		ask()
+	})
 }

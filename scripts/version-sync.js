@@ -1,23 +1,23 @@
-import {info} from './util/logger.js';
-import cliGet from './util/cliGet.js';
-import getProjects from './util/getProjects.js';
-import path from 'path';
-import fs from 'fs/promises';
+import {info} from './util/logger.js'
+import cliGet from './util/cliGet.js'
+import getProjects from './util/getProjects.js'
+import path from 'path'
+import fs from 'fs/promises'
 
-info(' --- [ Sync version numbers ] ---');
+info(' --- [ Sync version numbers ] ---')
 
-const newVersion = await cliGet('Exact Version');
-const projects = await getProjects();
+const newVersion = await cliGet('Exact Version')
+const projects = await getProjects()
 
-info(`The version of the following package will be updated to '${newVersion}'`);
+info(`The version of the following package will be updated to '${newVersion}'`)
 
 projects.projects.forEach((project, index) => {
-	info(` - ${project}`);
-});
+	info(` - ${project}`)
+})
 
 projects.paths.forEach(async (projectPath) => {
-	const packageFileLocation = path.join(projectPath, 'package.json');
-	const packageFile = JSON.parse(await fs.readFile(packageFileLocation, 'utf8'));
+	const packageFileLocation = path.join(projectPath, 'package.json')
+	const packageFile = JSON.parse(await fs.readFile(packageFileLocation, 'utf8'))
 
 	await fs.writeFile(packageFileLocation, JSON.stringify({
 		...packageFile,
@@ -26,7 +26,7 @@ projects.paths.forEach(async (projectPath) => {
 			registry: 'https://registry.npmjs.org/',
 			access: 'public',
 		},
-	}, null, '\t') + '\n');
-});
+	}, null, '\t') + '\n')
+})
 
-info('Finished update versions');
+info('Finished update versions')
