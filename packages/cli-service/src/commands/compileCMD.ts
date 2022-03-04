@@ -94,10 +94,10 @@ export default function compileCMD(program: Argv) {
 						author: config.author,
 						main: pkg.main,
 						exports: {
-							require: './dist/dist.commonjs.cjs',
-							import: './dist/dist.module.mjs',
+							require: './build/dist.commonjs.cjs',
+							import: './build/dist.module.mjs',
 						},
-						...(config.typescript && {types: './' + path.join('./dist/types/', dtsRelativeFileName).replace(/\\/g, '/')}),
+						...(config.typescript && {types: './' + path.join('./build/types/', dtsRelativeFileName).replace(/\\/g, '/')}),
 						...(pkg.license && {license: pkg.license}),
 						...(pkg.description && {description: pkg.description}),
 						...(pkg.keywords && {keywords: pkg.keywords}),
