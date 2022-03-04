@@ -95,7 +95,7 @@ export default function compileCMD(program: Argv) {
 						main: pkg.main,
 						exports: {
 							require: './build/dist.commonjs.cjs',
-							import: './build/dist.module.mjs',
+							import: './build/dist.esm.mjs',
 						},
 						...(config.typescript && {types: './' + path.join('./build/types/', dtsRelativeFileName).replace(/\\/g, '/')}),
 						...(pkg.license && {license: pkg.license}),
