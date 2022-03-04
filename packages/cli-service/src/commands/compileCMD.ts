@@ -63,7 +63,7 @@ export default function compileCMD(program: Argv) {
 
 			for (const pkg of projects.packages ?? []) {
 				const mainPathExact = path.join(process.cwd(), argv.path, pkg.path, pkg.main);
-				const buildDirExact = path.join(process.cwd(), argv.path, 'build', pkg.path);
+				const buildDirExact = path.join(process.cwd(), argv.path, pkg.path, 'build');
 
 				if (!fsSync.existsSync(path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')) && config.typescript) {
 					logger.error([
@@ -94,10 +94,10 @@ export default function compileCMD(program: Argv) {
 						author: config.author,
 						main: pkg.main,
 						exports: {
-							require: './' + path.join('../../build', pkg.path, 'dist.commonjs.cjs').replace(/\\/g, '/'),
-							import: './' + path.join('../../build', pkg.path, 'dist.esm.mjs').replace(/\\/g, '/'),
+							require: './dist/dist.commonjs.cjs',
+							import: './dist/dist.module.mjs',
 						},
-						...(config.typescript && {types: './' + path.join('./../../build', pkg.name, 'types/', dtsRelativeFileName).replace(/\\/g, '/')}),
+						...(config.typescript && {types: './' + path.join('./dist/types/', dtsRelativeFileName).replace(/\\/g, '/')}),
 						...(pkg.license && {license: pkg.license}),
 						...(pkg.description && {description: pkg.description}),
 						...(pkg.keywords && {keywords: pkg.keywords}),
@@ -159,17 +159,17 @@ export default function compileCMD(program: Argv) {
 							'--emitDeclarationOnly',
 							'--declaration',
 							'--declarationDir',
-							path.join(process.cwd(), argv.path, `build`, pkg.path, 'types'),
+							path.join(process.cwd(), argv.path, pkg.path, 'build', 'types'),
 						];
 					} else {
 						spawnArgs = [
-							'../../node_modules/typescript/bin/tsc',
+							path.join(process.cwd(), './node_modules/typescript/bin/tsc'),
 							'--emitDeclarationOnly',
 							'--rootDir',
 							'./',
 							'--declaration',
 							'--declarationDir',
-							path.join(process.cwd(), argv.path, `build`, pkg.path, 'types'),
+							path.join(process.cwd(), argv.path, pkg.path, `build`, 'types'),
 						];
 					}
 

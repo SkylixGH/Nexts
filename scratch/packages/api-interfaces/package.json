@@ -4,10 +4,10 @@
 	"author": "SkylixGH",
 	"main": "src/main/index.ts",
 	"exports": {
-		"require": "./../../build/packages/api-interfaces/dist.commonjs.cjs",
-		"import": "./../../build/packages/api-interfaces/dist.esm.mjs"
+		"require": "./dist/dist.commonjs.cjs",
+		"import": "./dist/dist.module.mjs"
 	},
-	"types": "./../../build/api-interfaces/types/src/main/index.d.ts",
+	"types": "./dist/types/src/main/index.d.ts",
 	"description": "This is a package for the API types",
 	"keywords": [
 		"api",

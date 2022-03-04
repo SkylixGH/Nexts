@@ -110,8 +110,8 @@ export default function publishCMD(program: Argv) {
 				}
 
 				try {
-					const commonJS = await fse.readFile(path.join(process.cwd(), argv.path, 'build', pkg.path, 'dist.commonjs.cjs'));
-					const moduleJS = await fse.readFile(path.join(process.cwd(), argv.path, 'build', pkg.path, 'dist.esm.mjs'));
+					const commonJS = await fse.readFile(path.join(process.cwd(), argv.path, pkg.path, 'build', 'dist.commonjs.cjs'));
+					const moduleJS = await fse.readFile(path.join(process.cwd(), argv.path, pkg.path, 'build', 'dist.esm.mjs'));
 
 					await fse.writeFile(path.join(publishBuildLocation, './dist.commonjs.cjs'), commonJS);
 					await fse.writeFile(path.join(publishBuildLocation, './dist.module.mjs'), moduleJS);
@@ -123,7 +123,7 @@ export default function publishCMD(program: Argv) {
 				}
 
 				try {
-					await fse.copy(path.join(process.cwd(), argv.path, 'build', pkg.path, 'types'), path.join(publishBuildLocation, 'types'));
+					await fse.copy(path.join(process.cwd(), argv.path, pkg.path, 'build', 'types'), path.join(publishBuildLocation, 'types'));
 				} catch (error) {
 					logger.error('Failed to move type declarations');
 					crashError(error);
