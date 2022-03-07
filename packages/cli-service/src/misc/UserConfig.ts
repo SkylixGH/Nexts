@@ -75,6 +75,11 @@ export default interface UserConfig {
 		 * The app's keywords
 		 */
 		keywords: string[];
+
+		/**
+		 * The app's display name
+		 */
+		displayName: string;
 	}[];
 
 	/**

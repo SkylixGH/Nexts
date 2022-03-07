@@ -1,4 +1,6 @@
-export default {
+import {defineConfig} from '@nexts-stack/cli-service'
+
+export default defineConfig({
 	version: '1.0.0',
 	typescript: true,
 	author: 'SkylixGH',
@@ -7,13 +9,14 @@ export default {
 		maxVersion: '*',
 	},
 	apps: [
-		// {
-		// 	type: 'desktop',
-		// 	path: './apps/desktop',
-		// 	description: 'This is a desktop app',
-		// 	keywords: ['desktop', 'app'],
-		// 	name: 'My Desktop App',
-		// },
+		{
+			type: 'desktop',
+			path: './apps/desktop',
+			description: 'This is a desktop app',
+			keywords: ['desktop', 'app'],
+			displayName: 'My Desktop App',
+			name: 'desk',
+		},
 		// {
 		// 	type: 'mobile',
 		// 	path: './apps/mobile',
@@ -47,4 +50,4 @@ export default {
 			keywords: ['api', 'package'],
 		},
 	],
-}
+})

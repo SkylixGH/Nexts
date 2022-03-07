@@ -6,6 +6,8 @@ import compileCMD from './commands/compileCMD'
 import cleanCMD from './commands/cleanCMD'
 import publishCMD from './commands/publishCMD'
 import initCMD from './commands/initCMD'
+import devCMD from './commands/devCMD'
+import UserConfig from './misc/UserConfig'
 
 /**
  * The CLI binary entry point.
@@ -22,8 +24,20 @@ export default function bin() {
 	cleanCMD(program as any)
 	publishCMD(program as any)
 	initCMD(program as any)
+	devCMD(program as any)
 
 	program.parse()
 }
+
+/**
+ * Your project configuration object helper that supports TypeScript.
+ * @param config The project configuration object.
+ * @returns The project configuration object.
+ */
+export function defineConfig(config: UserConfig) {
+	return config
+}
+
+export {UserConfig}
 
 bin()
