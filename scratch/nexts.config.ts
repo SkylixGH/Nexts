@@ -16,6 +16,7 @@ export default defineConfig({
 			keywords: ['desktop', 'app'],
 			displayName: 'My Desktop App',
 			name: 'desk',
+			id: 'net.skylix.desktop',
 		},
 		// {
 		// 	type: 'mobile',

@@ -3,9 +3,11 @@
 </div>
 
 <p align="center">A framework for all your needs!</p>
+// TODO: https://github.com/gajus/eslint-plugin-jsdoc
+(Require periods at the ends of sentences)
 
 ## Packages NPM
- - [@nexts-stack/cli-service](https://www.npmjs.com/package/@nexts-stack/cli-service) The <ins>**NEXTS**</ins> CLI service for maintaining <ins>**NEXTS**</ins> libraries and applications. 
+ - [@nexts-stack/cli-service](https://www.npmjs.com/package/@nexts-stack/cli-service) The <ins>**NEXTS**</ins> CLI service for maintaining <ins>**NEXTS**</ins> libraries and applications.
  - [@nexts-stack/logger](https://www.npmjs.com/package/@nexts-stack/logger) The <ins>**NEXTS**</ins> service logger.
  - [@nexts-stack/api-server](https://www.npmjs.com/package/@nexts-stack/api-server) The <ins>**NEXTS**</ins> universal API server
  - [@nexts-stack/api-client](https://www.npmjs.com/package/@nexts-stack/api-client) The <ins>**NEXTS**</ins> universal API client
@@ -19,7 +21,7 @@
  - [@nexts-stack/mobile-plugin-loader](https://www.npmjs.com/package/@nexts-stack/mobile-plugin-loader) The <ins>**NEXTS**</ins> mobile ionic framework plugin loader
  - [@nexts-stack/desktop-locale](https://www.npmjs.com/package/@nexts-stack/desktop-locale) The <ins>**NEXTS**</ins> desktop locale service
  - [@nexts-stack/mobile-locale](https://www.npmjs.com/package/@nexts-stack/mobile-locale) The <ins>**NEXTS**</ins> mobile locale service
- 
+
 ## Badges
 ![](https://tokei.rs/b1/github/skylixgh/nexts) <br />
 ![](https://img.shields.io/discord/909547196762959902) <br />

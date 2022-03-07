@@ -3,6 +3,7 @@ import {Argv} from 'yargs'
 import readConfig from '../misc/readConfig'
 import fsSync from 'fs'
 import path from 'path'
+import generateAppPkg from '../misc/generateAppPkg'
 
 /**
  * The dev command
@@ -63,6 +64,8 @@ export default function devCMD(program: Argv) {
 				logger.error(`The path '${app.path}' is a file for the app called ${app.name} but expected a directory`)
 				process.exit(1)
 			}
+
+			await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path))
 		})
 }
 

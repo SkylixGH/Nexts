@@ -1,5 +1,45 @@
 /**
- * The Nexts config
+ * An app entry.
+ */
+export interface App {
+	/**
+	 * The app's display name
+	 */
+	name: string;
+
+	/**
+	 * The app type
+	 */
+	type: 'desktop' | 'mobile' | 'web' | 'node';
+
+	/**
+	 * The app's root path
+	 */
+	path: string;
+
+	/**
+	 * The app's description
+	 */
+	description: string;
+
+	/**
+	 * The app's keywords
+	 */
+	keywords: string[];
+
+	/**
+	 * The app's display name
+	 */
+	displayName: string;
+
+	/**
+	 * The product ID
+	 */
+	id: string;
+}
+
+/**
+ * The Nexts config.
  */
 export default interface UserConfig {
 	/**
@@ -8,7 +48,7 @@ export default interface UserConfig {
 	version: string;
 
 	/**
-	 * Whether the project uses typescript
+	 * Whether the project uses typescript.
 	 */
 	typescript: boolean;
 
@@ -50,37 +90,7 @@ export default interface UserConfig {
 	/**
 	 * The project user/server applications
 	 */
-	apps?: {
-		/**
-		 * The app's display name
-		 */
-		name: string;
-
-		/**
-		 * The app type
-		 */
-		type: 'desktop' | 'mobile' | 'web' | 'node';
-
-		/**
-		 * The app's root path
-		 */
-		path: string;
-
-		/**
-		 * The app's description
-		 */
-		description: string;
-
-		/**
-		 * The app's keywords
-		 */
-		keywords: string[];
-
-		/**
-		 * The app's display name
-		 */
-		displayName: string;
-	}[];
+	apps?: App[];
 
 	/**
 	 * The project packages
@@ -128,4 +138,4 @@ export default interface UserConfig {
 			[name: string]: string;
 		}
 	}[]
-};;;;;;;;;;
+}
