@@ -67,7 +67,7 @@ export default interface UserConfig {
 	/**
 	 * The project environment settings
 	 */
-	node?: {
+	node: {
 		/**
 		 * The minimum node version
 		 */

@@ -12,6 +12,7 @@ import crashError from './crashError'
 import typescript from 'typescript'
 import cacheWrite from '../manager/cacheWrite'
 import UserConfig from './UserConfig'
+import semver from 'semver'
 
 /**
  * Read the project config
@@ -89,6 +90,14 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 	const validateConfigTypes = (config: {
 		[index: string]: any
 	}) => {
+		if (isEmpty(config?.node)) {
+			missingKeyError('node')
+		} else if (isEmpty(config?.node?.minVersion)) {
+			missingKeyError('node.minVersion')
+		} else if (isEmpty(config?.node?.maxVersion)) {
+			missingKeyError('node.maxVersion')
+		}
+
 		if (isEmpty(config?.version)) {
 			missingKeyError('config.version')
 		}
@@ -98,7 +107,6 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 		let configModulePath = path.join(process.cwd(), relativeCWDPath, '.nexts/configs/nexts.mjs')
 		configModulePath = 'file:///' + configModulePath.replace(/\\/g, '/')
 
-
 		configModule = await import(configModulePath)
 		validateConfigTypes(configModule.default)
 	} catch (error) {
@@ -107,6 +115,20 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 
 		process.exit(1)
 	}
+
+	const nodeVersionRanges = {
+		min: configModule.default.node.minVersion,
+		max: configModule.default.node.maxVersion,
+	}
+
+	if (!semver.valid(nodeVersionRanges.min)) {
+		renderConfigError(`Invalid node.minVersion: '${nodeVersionRanges.min}'`)
+	} else if (!semver.valid(nodeVersionRanges.max)) {
+		renderConfigError(`Invalid node.maxVersion: '${nodeVersionRanges.max}'`)
+	}
+
+	const rangeMatches = semver.satisfies(process.version, `${nodeVersionRanges.min} - ${nodeVersionRanges.max}`)
+	console.log(rangeMatches)
 
 	return configModule.default as UserConfig
 }

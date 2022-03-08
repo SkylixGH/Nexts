@@ -12,15 +12,6 @@
 		"copyright": "Copyright © 2022 SkylixGH"
 	},
 	"dependencies": {
-		"electron": {
-			"name": "v19.0.0-nightly.20220308",
-			"zipball_url": "https://api.github.com/repos/electron/electron/zipball/refs/tags/v19.0.0-nightly.20220308",
-			"tarball_url": "https://api.github.com/repos/electron/electron/tarball/refs/tags/v19.0.0-nightly.20220308",
-			"commit": {
-				"sha": "a20216de7a1fe71057862aa429484e5f8af35537",
-				"url": "https://api.github.com/repos/electron/electron/commits/a20216de7a1fe71057862aa429484e5f8af35537"
-			},
-			"node_id": "MDM6UmVmOTM4NDI2NzpyZWZzL3RhZ3MvdjE5LjAuMC1uaWdodGx5LjIwMjIwMzA4"
-		}
+		"electron": "^v19.0.0-nightly.20220308"
 	}
 }
