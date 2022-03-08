@@ -1,1 +1,16 @@
-{"name":"api-client-xf-founders","version":"1.0.0","author":"SkylixGH","main":"src/index.ts","exports":{"require":"./build/dist.commonjs.cjs","import":"./build/dist.esm.mjs"},"types":"./build/types/src/index.d.ts","description":"This is a package for the API client","keywords":["api","package"]}
+{
+	"name": "api-client-xf-founders",
+	"version": "1.0.0",
+	"author": "SkylixGH",
+	"main": "src/index.ts",
+	"exports": {
+		"require": "./build/dist.commonjs.cjs",
+		"import": "./build/dist.esm.mjs"
+	},
+	"types": "./build/types/src/index.d.ts",
+	"description": "This is a package for the API client",
+	"keywords": [
+		"api",
+		"package"
+	]
+}

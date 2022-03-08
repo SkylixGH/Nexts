@@ -29,7 +29,10 @@ export default function devCMD(program: Argv) {
 				describe: 'Path to the config file',
 			},
 		}, async (argv) => {
+			logger.log('Checking environment for development')
 			const config = await readConfig(argv.path, argv.config)
+
+			logger.log('Fetching app data')
 
 			if (config.apps?.length === 0) {
 				logger.error('There are no applications configured to run')
@@ -66,6 +69,9 @@ export default function devCMD(program: Argv) {
 			}
 
 			await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path))
+			logger.log('Generating app package')
+
+			
 		})
 }
 

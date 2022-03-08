@@ -5,6 +5,7 @@ import path from 'path'
 import logger from '@nexts-stack/logger'
 import crashError from './crashError'
 import getTags from '../api/github/getTags'
+import semver from 'semver'
 
 /**
  * Generate an automatic package file for a client/server/cli application
@@ -14,11 +15,10 @@ import getTags from '../api/github/getTags'
  * @returns Nothing.
  */
 export default async function generateAppPkg(config: UserConfig, app: App, appRootPathExact: string) {
-	const electronTags = await getTags('electron', 'electron')
-
 	const pkg = {
 		name: app.name,
 		version: config.version,
+		private: true,
 		...(app.keywords && app.keywords.length > 0 ? {keywords: app.keywords} : {}),
 		...(app.description ? {description: app.description} : {}),
 		...( app.type === 'desktop' ? {build: {
@@ -27,7 +27,7 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 			copyright: `Copyright © ${new Date().getFullYear()} ${config.author}`,
 		}} : {}),
 		dependencies: {
-			'electron': `^${electronTags[0].name}`,
+			'@nexts-stack/desktop': '',
 			...(app.dependencies ? app.dependencies : {}),
 		},
 	}

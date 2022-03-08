@@ -117,8 +117,8 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 	}
 
 	const nodeVersionRanges = {
-		min: configModule.default.node.minVersion,
-		max: configModule.default.node.maxVersion,
+		min: configModule.default.node.minVersion as string,
+		max: configModule.default.node.maxVersion as string,
 	}
 
 	if (!semver.valid(nodeVersionRanges.min)) {
@@ -128,7 +128,10 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 	}
 
 	const rangeMatches = semver.satisfies(process.version, `${nodeVersionRanges.min} - ${nodeVersionRanges.max}`)
-	console.log(rangeMatches)
+	if (!rangeMatches) {
+		logger.error(`Invalid NodeJS version, the version must be between '${nodeVersionRanges.min}' and '${nodeVersionRanges.max}', you are using '${process.version}'`)
+		process.exit(1)
+	}
 
 	return configModule.default as UserConfig
 }

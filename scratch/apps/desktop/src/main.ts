@@ -5,7 +5,7 @@ import {app, windowManager} from '@nexts-stack/desktop-electron'
  * @returns Nothing.
  */
 function createWindow() {
-	const mainWindow = windowManager.new({
+	const mainWindow = windowManager.create({
 		width: 800,
 		height: 400,
 	})

@@ -49,9 +49,9 @@ export interface Tag {
  * @param page The page number
  * @returns All tags from the repository
  */
-export default function getTags(org: string, repo: string, page = 1) {
+export default function getTags(org: string, repo: string, page?: string) {
 	return new Promise<Tag[]>((resolve, reject) => {
-		const url = `/repos/${org}/${repo}/tags?page=${page}`
+		const url = `/repos/${org}/${repo}/tags${page ? `?page=${page}` : '' }`
 
 		https.get({
 			headers: {

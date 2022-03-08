@@ -13,7 +13,7 @@ import UserConfig from './misc/UserConfig'
  * The CLI binary entry point.
  * @returns Nothing.
  */
-export default function bin() {
+function bin() {
 	const program = yargs(hideBin(process.argv))
 
 	program.scriptName('nexts')

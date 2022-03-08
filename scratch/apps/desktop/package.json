@@ -1,6 +1,7 @@
 {
 	"name": "desk",
 	"version": "1.0.0",
+	"private": true,
 	"keywords": [
 		"desktop",
 		"app"
@@ -11,7 +12,5 @@
 		"productName": "My Desktop App",
 		"copyright": "Copyright © 2022 SkylixGH"
 	},
-	"dependencies": {
-		"electron": "^v19.0.0-nightly.20220308"
-	}
+	"dependencies": {}
 }
