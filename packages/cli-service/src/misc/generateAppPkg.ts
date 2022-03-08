@@ -11,12 +11,16 @@ import { App } from './UserConfig'
 export default async function generateAppPkg(config: UserConfig, app: App, appRootPathExact: string) {
 	const pkg = {
 		name: app.name,
-		build: {
+		keywords: app.keywords,
+		description: app.description,
+		version: config.version,
+		
+		...( app.type === 'desktop' ? {build: {
 			appId: app.id,
 			productName: app.displayName,
 			copyright: `Copyright © ${new Date().getFullYear()} ${config.author}`,
-		},
+		}} : {}),
 	}
 
-	console.log(pkg);
+	console.log(pkg)
 }

@@ -67,12 +67,34 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 
 	let configModule: any
 
+	const renderKeyError = (key: string, expected: string) => {
+
+	}
+
+	const missingKeyError = (key: string) => {
+
+	}
+
+	const isEmpty = (value: any) => {
+		if (!value || typeof value === 'undefined' || value === null) return true
+	}
+
+	const validateConfigTypes = (config: {
+		[index: string]: any
+	}) => {
+		if (isEmpty(config.version)) {
+			renderKeyError(config.version) n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+		}
+	}
+
 	try {
 		let configModulePath = path.join(process.cwd(), relativeCWDPath, '.nexts/configs/nexts.mjs')
 
 		if (process.platform === 'win32') {
 			configModulePath = 'file:///' + configModulePath
 		}
+
+		validateConfigTypes(configModule)
 
 		configModule = await import(configModulePath)
 	} catch (error) {
