@@ -20,12 +20,12 @@ export interface App {
 	/**
 	 * The app's description
 	 */
-	description: string;
+	description?: string;
 
 	/**
 	 * The app's keywords
 	 */
-	keywords: string[];
+	keywords?: string[];
 
 	/**
 	 * The app's display name
@@ -36,10 +36,17 @@ export interface App {
 	 * The product ID
 	 */
 	id: string;
+
+	/**
+	 * The app dependencies
+	 */
+	dependencies?: {
+		[name: string]: string;
+	}
 }
 
 /**
- * The Nexts config.
+ * The NEXTS  config.
  */
 export default interface UserConfig {
 	/**

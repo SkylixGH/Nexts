@@ -67,36 +67,40 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 
 	let configModule: any
 
+	const renderConfigError = (message: string) => {
+		logger.error(`Failed to load configuration file from '${rawConfigPath}', the following error was produced:`)
+		logger.error(message)
+
+		process.exit(1)
+	}
+
 	const renderKeyError = (key: string, expected: string) => {
 
 	}
 
 	const missingKeyError = (key: string) => {
-
+		renderConfigError(`Property '${key}' is missing from the config or is undefined`)
 	}
 
 	const isEmpty = (value: any) => {
-		if (!value || typeof value === 'undefined' || value === null) return true
+		if (typeof value === 'undefined') return true
 	}
 
 	const validateConfigTypes = (config: {
 		[index: string]: any
 	}) => {
-		// if (isEmpty(config.version)) {
-		// 	renderKeyError(config.version)
-		// }
+		if (isEmpty(config?.version)) {
+			missingKeyError('config.version')
+		}
 	}
 
 	try {
 		let configModulePath = path.join(process.cwd(), relativeCWDPath, '.nexts/configs/nexts.mjs')
+		configModulePath = 'file:///' + configModulePath.replace(/\\/g, '/')
 
-		if (process.platform === 'win32') {
-			configModulePath = 'file:///' + configModulePath
-		}
-
-		validateConfigTypes(configModule)
 
 		configModule = await import(configModulePath)
+		validateConfigTypes(configModule.default)
 	} catch (error) {
 		logger.error(`Failed to load configuration from '${rawConfigPath}', the following error was produced:`)
 		crashError(error)
