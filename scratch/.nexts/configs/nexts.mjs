@@ -7,6 +7,11 @@ export default defineConfig({
         minVersion: '16.*',
         maxVersion: '*',
     },
+    formatting: {
+        package: {
+            indent: '',
+        },
+    },
     apps: [
         {
             type: 'desktop',

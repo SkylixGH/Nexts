@@ -1,1 +1,1 @@
-CMakeLists.txt not found in C:\Users\xfaon\WebstormProjects\nexts2 Select CMakeLists.txt
+CMakeLists.txt not found in C:\Users\XFaon\CLionProjects\nexts Select CMakeLists.txt

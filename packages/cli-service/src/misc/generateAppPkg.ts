@@ -1,5 +1,5 @@
 import {UserConfig} from '..'
-import { App } from './UserConfig'
+import {App} from './UserConfig'
 
 /**
  * Generate an automatic package file for a client/server/cli application
@@ -14,7 +14,7 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 		keywords: app.keywords,
 		description: app.description,
 		version: config.version,
-		
+
 		...( app.type === 'desktop' ? {build: {
 			appId: app.id,
 			productName: app.displayName,

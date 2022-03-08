@@ -82,9 +82,9 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 	const validateConfigTypes = (config: {
 		[index: string]: any
 	}) => {
-		if (isEmpty(config.version)) {
-			renderKeyError(config.version) n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-		}
+		// if (isEmpty(config.version)) {
+		// 	renderKeyError(config.version)
+		// }
 	}
 
 	try {
