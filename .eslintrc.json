@@ -27,7 +27,9 @@
 		"max-len": ["error", { "code": 200 }],
 		"semi": ["error", "never"],
 	  	"@typescript-eslint/explicit-member-accessibility": ["off"],
+		"@typescript-eslint/no-unused-var": ["error", {}],
 		"jsdoc/require-description-complete-sentence": ["error"],
+		"no-unused-vars": ["error", "never"],
 		"jsdoc/require-jsdoc": ["error", {"contexts": ["TSInterfaceDeclaration", "TSTypeAliasDeclaration", "TSEnumDeclaration"]}],
 		"valid-jsdoc": ["error", {
 			"requireReturn": true,

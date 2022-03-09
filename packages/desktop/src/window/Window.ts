@@ -142,6 +142,10 @@ export default class Window {
 			this.#browserWindow.show()
 		})
 
-		this.#browserWindow.loadURL('https://skylix.net')
+		if (process.env.NEXTS_DEV_RENDERER) {
+			this.#browserWindow.loadURL(process.env.NEXTS_DEV_RENDERER)
+		}
+
+		console.log(process.env.NEXTS_DEV_RENDERER)
 	}
 }

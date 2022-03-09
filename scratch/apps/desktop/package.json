@@ -2,7 +2,6 @@
 	"name": "desk",
 	"version": "1.0.0",
 	"private": true,
-	"main": "el.js",
 	"keywords": [
 		"desktop",
 		"app"
@@ -14,9 +13,7 @@
 		"copyright": "Copyright © 2022 SkylixGH"
 	},
 	"dependencies": {
-		"@nexts-stack/desktop": "file:../../../packages/desktop"
-	},
-	"devDependencies": {
+		"@nexts-stack/desktop": "file:../../../packages/desktop",
 		"electron": "^17.1.1"
 	}
 }
