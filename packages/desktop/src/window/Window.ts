@@ -1,7 +1,7 @@
-import {PartialDeep} from 'type-fest'
 import deepmerge from 'deepmerge'
 import * as app from '../app/app'
-import {NextsError} from '@nexts-stack/internal'
+import {DeepPartial, NextsError} from '@nexts-stack/internal'
+import {BrowserWindow} from 'electron'
 
 /**
  * Errors for the window.
@@ -106,14 +106,42 @@ export default class Window {
 	#settings: Settings
 
 	/**
+	 * The window.
+	 */
+	#browserWindow: BrowserWindow
+
+	/**
 	 * Create a new window.
 	 * @param settings The window settings.
 	 */
-	public constructor(settings: PartialDeep<Settings>) {
+	public constructor(settings: DeepPartial<Settings>) {
 		this.#settings = deepmerge<Settings, typeof settings>(defaultSettings, settings)
 
 		if (!app.isReady()) {
 			throw new NextsError(Errors.APP_NOT_READY, 'The NEXTS app is not yet ready.')
 		}
+
+		this.#browserWindow = new BrowserWindow({
+			width: this.#settings.frame.width,
+			height: this.#settings.frame.height,
+			minWidth: this.#settings.frame.restrictions.size.minWidth,
+			minHeight: this.#settings.frame.restrictions.size.minHeight,
+			maxWidth: this.#settings.frame.restrictions.size.maxWidth,
+			maxHeight: this.#settings.frame.restrictions.size.maxHeight,
+			fullscreen: this.#settings.frame.fullscreen,
+			resizable: this.#settings.frame.restrictions.resize,
+			show: false,
+			webPreferences: {
+				nodeIntegration: true,
+				webSecurity: false,
+				contextIsolation: false,
+			},
+		})
+
+		this.#browserWindow.once('ready-to-show', () => {
+			this.#browserWindow.show()
+		})
+
+		this.#browserWindow.loadURL('https://skylix.net')
 	}
 }

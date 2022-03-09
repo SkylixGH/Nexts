@@ -2,6 +2,7 @@
 	"name": "desk",
 	"version": "1.0.0",
 	"private": true,
+	"main": "el.js",
 	"keywords": [
 		"desktop",
 		"app"
@@ -14,5 +15,8 @@
 	},
 	"dependencies": {
 		"@nexts-stack/desktop": "file:../../../packages/desktop"
+	},
+	"devDependencies": {
+		"electron": "^17.1.1"
 	}
 }

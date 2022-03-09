@@ -4,12 +4,13 @@ import {EventEmitter} from 'events'
 const emitter = new EventEmitter()
 let ready = app.isReady()
 
-app.on('ready', () => {
-	if (ready) return
-	ready = true
-
-	emitter.emit('ready')
-})
+if (ready) emitter.emit('ready')
+else {
+	app.once('ready', () => {
+		ready = true
+		emitter.emit('ready')
+	})
+}
 
 /**
  * See if the app is ready.
