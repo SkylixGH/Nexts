@@ -1,5 +1,17 @@
 import {PartialDeep} from 'type-fest'
 import deepmerge from 'deepmerge'
+import * as app from '../app/app'
+import {NextsError} from '@nexts-stack/internal'
+
+/**
+ * Errors for the window.
+ */
+export enum Errors {
+	/**
+	 * The NEXTS app is not yet ready.
+	 */
+	APP_NOT_READY = 'APP_NOT_READY',
+}
 
 /**
  * Window load settings.
@@ -99,5 +111,9 @@ export default class Window {
 	 */
 	public constructor(settings: PartialDeep<Settings>) {
 		this.#settings = deepmerge<Settings, typeof settings>(defaultSettings, settings)
+
+		if (!app.isReady()) {
+			throw new NextsError(Errors.APP_NOT_READY, 'The NEXTS app is not yet ready.')
+		}
 	}
 }
