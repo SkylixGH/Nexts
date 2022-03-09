@@ -46,7 +46,7 @@ export interface App {
 }
 
 /**
- * The NEXTS  config.
+ * The Nexts  config.
  */
 export default interface UserConfig {
 	/**

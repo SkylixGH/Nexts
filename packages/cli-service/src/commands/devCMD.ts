@@ -12,7 +12,7 @@ import generateAppPkg from '../misc/generateAppPkg'
  */
 export default function devCMD(program: Argv) {
 	program
-		.command('dev', 'Start a development server for a NEXTS app', {
+		.command('dev', 'Start a development server for a Nexts app', {
 			name: {
 				type: 'string',
 				describe: 'The name of the app to start',

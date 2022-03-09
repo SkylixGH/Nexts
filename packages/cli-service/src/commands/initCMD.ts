@@ -9,7 +9,7 @@ import askListCLI from '../misc/askListCLI'
  */
 export default function initCMD(program: Argv) {
 	program
-		.command('init', 'Initialize a new NEXTS project', {}, async (argv) => {
+		.command('init', 'Initialize a new Nexts project', {}, async (argv) => {
 			const options = {
 				license: ['MIT', 'Apache-2.0', 'GPL-3.0'],
 			}

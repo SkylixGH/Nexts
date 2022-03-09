@@ -29,7 +29,7 @@ export default function cleanCMD(program: Argv) {
 				!fsSync.lstatSync(path.join(process.cwd(), argv.path)).isDirectory()) &&
 				!argv.force
 			) {
-				logger.error('No projects based on NEXTS framework was found, or the project has already been cleaned')
+				logger.error('No projects based on Nexts framework was found, or the project has already been cleaned')
 				process.exit(1)
 			}
 

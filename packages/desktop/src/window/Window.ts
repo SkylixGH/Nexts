@@ -9,7 +9,7 @@ import {EventEmitter} from 'events'
  */
 export enum Errors {
 	/**
-	 * The NEXTS app is not yet ready.
+	 * The Nexts app is not yet ready.
 	 */
 	APP_NOT_READY = 'APP_NOT_READY',
 }
@@ -131,7 +131,7 @@ export default class Window extends EventEmitter {
 		this.#settings = deepmerge<Settings, typeof settings>(defaultSettings, settings)
 
 		if (!app.isReady()) {
-			throw new NextsError(Errors.APP_NOT_READY, 'The NEXTS app is not yet ready.')
+			throw new NextsError(Errors.APP_NOT_READY, 'The Nexts app is not yet ready.')
 		}
 
 		this.#browserWindow = new BrowserWindow({

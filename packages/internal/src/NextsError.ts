@@ -1,9 +1,9 @@
 /**
- * A NEXTS error thrown by the framework.
+ * A Nexts error thrown by the framework.
  */
 export default class NextsError extends Error {
 	/**
-	 * Create a new NEXTS error.
+	 * Create a new Nexts error.
 	 * @param name The name of the error.
 	 * @param message The message of the error.
 	 */
