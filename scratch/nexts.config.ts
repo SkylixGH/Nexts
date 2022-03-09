@@ -17,6 +17,9 @@ export default defineConfig({
 			displayName: 'My Desktop App',
 			name: 'desk',
 			id: 'net.skylix.desktop',
+			dependencies: {
+				'@nexts-stack/desktop': 'file:../../../packages/desktop',
+			},
 		},
 		// {
 		// 	type: 'mobile',

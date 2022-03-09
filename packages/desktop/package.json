@@ -11,5 +11,13 @@
 	"publishConfig": {
 		"registry": "https://registry.npmjs.org/",
 		"access": "public"
+	},
+	"dependencies": {
+		"deepmerge": "^4.2.2",
+		"electron": "^17.1.1",
+		"type-fest": "^2.12.0"
+	},
+	"devDependencies": {
+		"@types/deepmerge": "^2.2.0"
 	}
 }

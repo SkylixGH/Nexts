@@ -1,13 +1,15 @@
-import {app, windowManager} from '@nexts-stack/desktop-electron'
+import {app, windowManager} from '@nexts-stack/desktop'
 
 /**
  * Create the main browser window.
  * @returns Nothing.
  */
 function createWindow() {
-	const mainWindow = windowManager.create({
-		width: 800,
-		height: 400,
+	windowManager.create({
+		frame: {
+			width: 1200,
+			height: 800,
+		},
 	})
 }
 

@@ -12,5 +12,7 @@
 		"productName": "My Desktop App",
 		"copyright": "Copyright © 2022 SkylixGH"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"@nexts-stack/desktop": "file:../../../packages/desktop"
+	}
 }

@@ -1,34 +1,35 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "plugin:react/recommended",
-        "google"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint",
-        "jsdoc"
-    ],
-    "rules": {
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"node": true
+	},
+	"extends": [
+		"plugin:react/recommended",
+		"google"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"plugins": [
+		"react",
+		"@typescript-eslint",
+		"jsdoc"
+	],
+	"rules": {
 		"indent": ["error", "tab"],
 		"no-tabs": "off",
 		"max-len": ["error", { "code": 200 }],
-        "semi": ["error", "never"],
-        "jsdoc/require-description-complete-sentence": ["error"],
-        "jsdoc/require-jsdoc": ["error", {"contexts": ["TSInterfaceDeclaration", "TSTypeAliasDeclaration", "TSEnumDeclaration"]}],
-        "valid-jsdoc": ["error", {
+		"semi": ["error", "never"],
+	  	"@typescript-eslint/explicit-member-accessibility": ["off"],
+		"jsdoc/require-description-complete-sentence": ["error"],
+		"jsdoc/require-jsdoc": ["error", {"contexts": ["TSInterfaceDeclaration", "TSTypeAliasDeclaration", "TSEnumDeclaration"]}],
+		"valid-jsdoc": ["error", {
 			"requireReturn": true,
 			"requireParamDescription": true,
 			"requireReturnDescription": true,
@@ -39,5 +40,5 @@
 				"param": "param"
 			}
 		}]
-    }
+	}
 }
