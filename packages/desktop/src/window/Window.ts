@@ -2,6 +2,7 @@ import deepmerge from 'deepmerge'
 import * as app from '../app/app'
 import {DeepPartial, NextsError} from '@nexts-stack/internal'
 import {BrowserWindow} from 'electron'
+import {EventEmitter} from 'events'
 
 /**
  * Errors for the window.
@@ -99,7 +100,7 @@ const defaultSettings: Settings = {
 /**
  * A browser window.
  */
-export default class Window {
+export default class Window extends EventEmitter {
 	/**
 	 * The window settings.
 	 */
@@ -111,10 +112,22 @@ export default class Window {
 	#browserWindow: BrowserWindow
 
 	/**
+	 * If the renderer is ready.
+	 */
+	#rendererReady = false
+
+	/**
+	 * If the window is ready.
+	 */
+	#windowReady = false
+
+	/**
 	 * Create a new window.
 	 * @param settings The window settings.
 	 */
 	public constructor(settings: DeepPartial<Settings>) {
+		super()
+
 		this.#settings = deepmerge<Settings, typeof settings>(defaultSettings, settings)
 
 		if (!app.isReady()) {
@@ -138,12 +151,18 @@ export default class Window {
 			},
 		})
 
+		const progressiveLogicAction = () => {
+
+		}
+
 		this.#browserWindow.once('ready-to-show', () => {
 			this.#browserWindow.show()
 		})
 
 		if (process.env.NEXTS_DEV_RENDERER) {
-			this.#browserWindow.loadURL(process.env.NEXTS_DEV_RENDERER)
+			this.#browserWindow.loadURL(process.env.NEXTS_DEV_RENDERER).then(() => {
+
+			})
 		}
 
 		console.log(process.env.NEXTS_DEV_RENDERER)
