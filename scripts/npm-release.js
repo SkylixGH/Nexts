@@ -18,9 +18,9 @@ if (npmExtraArgs && npmExtraArgs.length > 0) {
 
 const nextProject = () => {
 	const project = projects.paths[projectIndex]
-	info('Publishing: ' + projects.projects[projectIndex])
+	info(`Publishing: ${ projects.projects[projectIndex]}`)
 
-	const proc = spawn('npm' + (process.platform === 'win32' ? '.cmd' : ''), npmParams, {cwd: project, stdio: 'inherit'})
+	const proc = spawn(`npm${ process.platform === 'win32' ? '.cmd' : ''}`, npmParams, {cwd: project, stdio: 'inherit'})
 
 	proc.on('exit', () => {
 		projectIndex++

@@ -11,7 +11,7 @@ export default function cliGet(question, validator = () => void 0) {
 	return new Promise((resolve) => {
 		/**
 		 * Ask the user input after it has been closed.
-		 * @returns Nothing.
+		 * @returns {void}
 		 */
 		function ask() {
 			const rl = readline.createInterface({
@@ -23,7 +23,7 @@ export default function cliGet(question, validator = () => void 0) {
 				const validatorResult = validator(answer)
 
 				if (typeof validatorResult === 'string') {
-					error('>> ' + validatorResult)
+					error(`>> ${ validatorResult}`)
 					rl.close()
 
 					ask()

@@ -12,7 +12,7 @@ import semver from 'semver'
  * @param config The project config.
  * @param app The application to generate the package file for.
  * @param appRootPathExact The root location to the app.
- * @returns Nothing.
+ * @returns {void}
  */
 export default async function generateAppPkg(config: UserConfig, app: App, appRootPathExact: string) {
 	const pkg = {
@@ -33,7 +33,7 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 	}
 
 	try {
-		fsSync.writeFileSync(path.join(appRootPathExact, 'package.json'), JSON.stringify(pkg, null, config.formatting?.package?.indent ?? '\t') + '\n')
+		fsSync.writeFileSync(path.join(appRootPathExact, 'package.json'), `${JSON.stringify(pkg, null, config.formatting?.package?.indent ?? '\t') }\n`)
 	} catch (error) {
 		logger.error(`Failed to write package.json file for app ${app.name}`)
 		crashError(error)

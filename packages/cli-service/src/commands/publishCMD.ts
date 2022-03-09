@@ -10,7 +10,7 @@ import {spawn} from 'child_process'
 /**
  * The register util for the publish command.
  * @param program The yargs program.
- * @returns Nothing.
+ * @returns {void}
  */
 export default function publishCMD(program: Argv) {
 	program
@@ -85,7 +85,7 @@ export default function publishCMD(program: Argv) {
 				try {
 					appPkg = JSON.parse(fsSync.readFileSync(path.join(process.cwd(), argv.path, pkg.path, 'package.json'), 'utf-8'))
 				} catch (error) {
-					logger.error(`Failed to read package.json file for the project called ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`)
+					logger.error(`Failed to read package.json file for the project called ${pkg.org ? `@${ pkg.org }/` : ''}${pkg.name}`)
 				}
 
 				try {
@@ -96,14 +96,14 @@ export default function publishCMD(program: Argv) {
 						dependencies: appPkg.dependencies ?? {},
 						bin: appPkg.bin ?? {},
 						type: 'module',
-						types: './' + path.join('types/', pkg.main).replace(/\\/g, '/'),
+						types: `./${ path.join('types/', pkg.main).replace(/\\/g, '/')}`,
 						exports: {
 							import: './dist.module.mjs',
 							require: './dist.commonjs.cjs',
 						},
 					}))
 				} catch (error) {
-					logger.error(`Failed to move package file for ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`)
+					logger.error(`Failed to move package file for ${pkg.org ? `@${ pkg.org }/` : ''}${pkg.name}`)
 					crashError(error)
 
 					process.exit(1)
@@ -138,10 +138,10 @@ export default function publishCMD(program: Argv) {
 				const pkg = config.packages![publishIndex]
 				const buildCopy = buildCopies[publishIndex]
 
-				logger.log(`Publishing ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`)
+				logger.log(`Publishing ${pkg.org ? `@${ pkg.org }/` : ''}${pkg.name}`)
 
 				const npmChild = spawn(
-					'npm' + (process.platform === 'win32' ? '.cmd' : ''),
+					`npm${ process.platform === 'win32' ? '.cmd' : ''}`,
 					[
 						'publish',
 						'--access',
@@ -158,7 +158,7 @@ export default function publishCMD(program: Argv) {
 				)
 
 				npmChild.on('error', (error) => {
-					logger.error(`Failed to publish ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}`)
+					logger.error(`Failed to publish ${pkg.org ? `@${ pkg.org }/` : ''}${pkg.name}`)
 					crashError(error)
 
 					process.exit(1)
@@ -168,22 +168,22 @@ export default function publishCMD(program: Argv) {
 
 				npmChild.stderr.on('data', (data: Buffer) => {
 					if (data.toString().includes('You cannot publish over the previously published versions')) {
-						errorMessageExtracted = `v${config.version} of ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name} has already been published to NPM`
+						errorMessageExtracted = `v${config.version} of ${pkg.org ? `@${ pkg.org }/` : ''}${pkg.name} has already been published to NPM`
 					}
 				})
 
 				npmChild.on('exit', (code: number) => {
 					try {
-						fse.rmSync(path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path) + ' - ' + buildCopies[publishIndex], {
+						fse.rmSync(`${path.join(process.cwd(), argv.path, '.nexts', 'publish', pkg.path) } - ${ buildCopies[publishIndex]}`, {
 							recursive: true,
 						})
 					} catch (error) {
-						logger.error(`Failed to clean build files ${pkg.org ? '@' + pkg.org + '/' : ''}`)
+						logger.error(`Failed to clean build files ${pkg.org ? `@${ pkg.org }/` : ''}`)
 						crashError(error)
 					}
 
 					if (code !== 0) {
-						logger.error(`Failed to publish package ${pkg.org ? '@' + pkg.org + '/' : ''}${pkg.name}${errorMessageExtracted ? ', ' + errorMessageExtracted : ''}`)
+						logger.error(`Failed to publish package ${pkg.org ? `@${ pkg.org }/` : ''}${pkg.name}${errorMessageExtracted ? `, ${ errorMessageExtracted}` : ''}`)
 						process.exit(1)
 					}
 

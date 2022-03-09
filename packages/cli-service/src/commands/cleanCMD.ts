@@ -7,7 +7,7 @@ import crashError from '../misc/crashError'
 /**
  * The register util for the clean command.
  * @param program The yargs program.
- * @returns Nothing.
+ * @returns {void}
  */
 export default function cleanCMD(program: Argv) {
 	program

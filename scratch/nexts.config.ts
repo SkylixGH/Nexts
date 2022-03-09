@@ -19,7 +19,7 @@ export default defineConfig({
 			id: 'net.skylix.desktop',
 			dependencies: {
 				'@nexts-stack/desktop': 'file:../../../packages/desktop',
-				'electron': '^17.1.1'
+				'electron': '^17.1.1',
 			},
 		},
 		// {

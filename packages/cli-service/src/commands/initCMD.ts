@@ -5,7 +5,7 @@ import askListCLI from '../misc/askListCLI'
 /**
  * The initialization command.
  * @param program The yargs program.
- * @returns Nothing.
+ * @returns {void}
  */
 export default function initCMD(program: Argv) {
 	program

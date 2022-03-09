@@ -24,7 +24,7 @@ projects.paths.forEach(async (project) => {
 		require: './build/common.cjs',
 	}
 
-	await fs.writeFile(path.join(project, 'package.json'), JSON.stringify(packageFile, null, '\t') + '\n', 'utf8')
+	await fs.writeFile(path.join(project, 'package.json'), `${JSON.stringify(packageFile, null, '\t') }\n`, 'utf8')
 
 	tsc.push(exec('npx tsc --watch', {
 		cwd: project,

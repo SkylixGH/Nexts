@@ -19,14 +19,14 @@ projects.paths.forEach(async (projectPath) => {
 	const packageFileLocation = path.join(projectPath, 'package.json')
 	const packageFile = JSON.parse(await fs.readFile(packageFileLocation, 'utf8'))
 
-	await fs.writeFile(packageFileLocation, JSON.stringify({
+	await fs.writeFile(packageFileLocation, `${JSON.stringify({
 		...packageFile,
 		version: newVersion,
 		publishConfig: {
 			registry: 'https://registry.npmjs.org/',
 			access: 'public',
 		},
-	}, null, '\t') + '\n')
+	}, null, '\t') }\n`)
 })
 
 info('Finished update versions')

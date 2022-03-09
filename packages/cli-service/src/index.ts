@@ -11,7 +11,7 @@ import UserConfig from './misc/UserConfig'
 
 /**
  * The CLI binary entry point.
- * @returns Nothing.
+ * @returns {void}
  */
 function bin() {
 	const program = yargs(hideBin(process.argv))

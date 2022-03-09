@@ -31,7 +31,7 @@ export function on(event: 'ready', listener: () => void): void
  * Listen for events.
  * @param event The event name.
  * @param listener The event listener.
- * @returns Nothing.
+ * @returns {void}
  */
 export function on(event: string, listener: () => void) {
 	emitter.on(event, listener)
@@ -41,7 +41,7 @@ export function on(event: string, listener: () => void) {
  * Listen for events once.
  * @param event The event name.
  * @param listener The event listener.
- * @returns Nothing.
+ * @returns {void}
  */
 export function once(event: 'ready', listener: () => void) {
 	emitter.once(event, listener)
@@ -51,7 +51,7 @@ export function once(event: 'ready', listener: () => void) {
  * Remove an event listener.
  * @param event The event name.
  * @param listener The event listener.
- * @returns Nothing.
+ * @returns {void}
  */
 export function removeListener(event: 'ready', listener: () => void) {
 	emitter.removeListener(event, listener)
@@ -61,7 +61,7 @@ export function removeListener(event: 'ready', listener: () => void) {
  * Remove an event listener.
  * @param event The event name.
  * @param listener The event listener.
- * @returns Nothing.
+ * @returns {void}
  */
 export function addListener(event: string, listener: () => void) {
 	emitter.addListener(event, listener)

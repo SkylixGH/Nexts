@@ -38,7 +38,7 @@ export default class Server {
 
 	/**
 	 * Run the development server.
-	 * @returns Nothing.
+	 * @returns {void}
 	 */
 	public run() {
 		if (this.#running) return

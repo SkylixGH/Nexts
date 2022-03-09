@@ -10,7 +10,7 @@ let finished = 0
 info('Code Formatting');
 
 ['.js', '.ts', '.jsx', '.tsx'].forEach((ext) => {
-	const eslint = spawn('node' + (process.platform === 'win32' ? '.exe' : ''), [eslintPath, `./**/*${ext}`, '--fix'], {
+	const eslint = spawn(`node${ process.platform === 'win32' ? '.exe' : ''}`, [eslintPath, `./**/*${ext}`, '--fix'], {
 		cwd: path.join(dirname, '..'),
 		stdio: 'inherit',
 	})

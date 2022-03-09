@@ -8,7 +8,7 @@ import generateAppPkg from '../misc/generateAppPkg'
 /**
  * The dev command.
  * @param program The yargs program.
- * @returns Nothing.
+ * @returns {void}
  */
 export default function devCMD(program: Argv) {
 	program

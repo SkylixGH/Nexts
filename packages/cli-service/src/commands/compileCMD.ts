@@ -13,7 +13,7 @@ import fs from 'fs/promises'
 /**
  * The compile command.
  * @param program The yargs program.
- * @returns Nothing.
+ * @returns {void}
  */
 export default function compileCMD(program: Argv) {
 	program
@@ -86,7 +86,7 @@ export default function compileCMD(program: Argv) {
 				}
 
 				try {
-					const dtsRelativeFileName = pkg.main.slice(0, -2) + 'd.ts'
+					const dtsRelativeFileName = `${pkg.main.slice(0, -2) }d.ts`
 
 					const packageFile = {
 						name: `${pkg.org ? `@${pkg.org}/` : ''}${pkg.name}`,
@@ -97,7 +97,7 @@ export default function compileCMD(program: Argv) {
 							require: './build/dist.commonjs.cjs',
 							import: './build/dist.esm.mjs',
 						},
-						...(config.typescript && {types: './' + path.join('./build/types/', dtsRelativeFileName).replace(/\\/g, '/')}),
+						...(config.typescript && {types: `./${ path.join('./build/types/', dtsRelativeFileName).replace(/\\/g, '/')}`}),
 						...(pkg.license && {license: pkg.license}),
 						...(pkg.description && {description: pkg.description}),
 						...(pkg.keywords && {keywords: pkg.keywords}),
@@ -106,7 +106,7 @@ export default function compileCMD(program: Argv) {
 
 					await fs.writeFile(
 						path.join(process.cwd(), argv.path, pkg.path, 'package.json'),
-						JSON.stringify(packageFile, null, config.formatting?.package?.indent ?? '\t') + '\n',
+						`${JSON.stringify(packageFile, null, config.formatting?.package?.indent ?? '\t') }\n`,
 					)
 				} catch (error) {
 					logger.error(`Failed to generate package file for ${pkg.name}`)
@@ -208,8 +208,8 @@ export default function compileCMD(program: Argv) {
 						}
 
 						logger.error('The TypeScript processed seems to have crashed for an unknown reason')
-						logger.error('Spawn Args: ' + spawnArgs.join(' '))
-						logger.error('Spawn CWD: ' + path.join(process.cwd(), argv.path))
+						logger.error(`Spawn Args: ${ spawnArgs.join(' ')}`)
+						logger.error(`Spawn CWD: ${ path.join(process.cwd(), argv.path)}`)
 
 						tsOutDataLog.split('\n').forEach((line) => {
 							logger.error(line)

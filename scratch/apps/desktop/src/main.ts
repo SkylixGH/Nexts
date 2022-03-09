@@ -2,7 +2,7 @@ import {app, windowManager} from '@nexts-stack/desktop'
 
 /**
  * Create the main browser window.
- * @returns Nothing.
+ * @returns {void}
  */
 function createWindow() {
 	windowManager.create({

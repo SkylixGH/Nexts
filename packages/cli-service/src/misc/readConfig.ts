@@ -2,7 +2,7 @@
  * Read the project config.
  * @param relativeCWDPath The path to the project root relative to the CWD.
  * @param relativeCWDConfigPath The path to the config relative to the CWD.
- * @returns Nothing.
+ * @returns {void}
  */
 import path from 'path'
 import fs from 'fs/promises'
@@ -105,7 +105,7 @@ export default async function readConfig(relativeCWDPath: string, relativeCWDCon
 
 	try {
 		let configModulePath = path.join(process.cwd(), relativeCWDPath, '.nexts/configs/nexts.mjs')
-		configModulePath = 'file:///' + configModulePath.replace(/\\/g, '/')
+		configModulePath = `file:///${ configModulePath.replace(/\\/g, '/')}`
 
 		configModule = await import(configModulePath)
 		validateConfigTypes(configModule.default)
