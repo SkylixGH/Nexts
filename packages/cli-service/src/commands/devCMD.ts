@@ -6,8 +6,8 @@ import path from 'path'
 import generateAppPkg from '../misc/generateAppPkg'
 
 /**
- * The dev command
- * @param program The yargs program
+ * The dev command.
+ * @param program The yargs program.
  * @returns Nothing.
  */
 export default function devCMD(program: Argv) {
@@ -70,8 +70,6 @@ export default function devCMD(program: Argv) {
 
 			await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path))
 			logger.log('Generating app package')
-
-			
 		})
 }
 

@@ -2,10 +2,10 @@ import logger from '@nexts-stack/logger'
 import askCLI from './askCLI'
 
 /**
- * Let the user select an item from a list of items
- * @param question The question to ask
- * @param options The options for the list
- * @returns The index of the item selected
+ * Let the user select an item from a list of items.
+ * @param question The question to ask.
+ * @param options The options for the list.
+ * @returns The index of the item selected.
  */
 export default async function askListCLI(question: string, listOptions: string[]) {
 	const options = [...listOptions]

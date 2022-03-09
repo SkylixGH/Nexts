@@ -2,15 +2,15 @@ import readline from 'readline'
 import {error} from './logger.js'
 
 /**
- * Get user input from the CLI
- * @param {string} question The question to ask the user
- * @param {CallableFunction} validator A function that validates the user input
+ * Get user input from the CLI.
+ * @param {string} question The question to ask the user.
+ * @param {CallableFunction} validator A function that validates the user input.
  * @returns {Promise<string>} The user input.
  */
 export default function cliGet(question, validator = () => void 0) {
 	return new Promise((resolve) => {
 		/**
-		 * Ask the user input after it has been closed
+		 * Ask the user input after it has been closed.
 		 * @returns Nothing.
 		 */
 		function ask() {

@@ -1,5 +1,5 @@
 /**
- * Read the project config
+ * Read the project config.
  * @param relativeCWDPath The path to the project root relative to the CWD.
  * @param relativeCWDConfigPath The path to the config relative to the CWD.
  * @returns Nothing.
@@ -15,7 +15,7 @@ import UserConfig from './UserConfig'
 import semver from 'semver'
 
 /**
- * Read the project config
+ * Read the project config.
  * @param relativeCWDPath The path to the project root relative to the CWD.
  * @param relativeCWDConfigPath The path to the config relative to the CWD.
  * @returns A promise containing the config.

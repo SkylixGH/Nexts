@@ -4,7 +4,7 @@ import readline from 'readline'
 /**
  * Get CLI input from user.
  * @param question The question to ask.
- * @param validator The input validator
+ * @param validator The input validator.
  * @returns The answer.
  */
 export default function askCLI(question: string, validator?: (answer: string) => (string | void)) {

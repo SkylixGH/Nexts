@@ -18,14 +18,17 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "jsdoc"
     ],
     "rules": {
 		"indent": ["error", "tab"],
 		"no-tabs": "off",
 		"max-len": ["error", { "code": 200 }],
         "semi": ["error", "never"],
-		"valid-jsdoc": ["error", {
+        "jsdoc/require-description-complete-sentence": ["error"],
+        "jsdoc/require-jsdoc": ["error", {"contexts": ["TSInterfaceDeclaration", "TSTypeAliasDeclaration", "TSEnumDeclaration"]}],
+        "valid-jsdoc": ["error", {
 			"requireReturn": true,
 			"requireParamDescription": true,
 			"requireReturnDescription": true,

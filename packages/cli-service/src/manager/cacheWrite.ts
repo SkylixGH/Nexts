@@ -4,10 +4,10 @@ import path from 'path'
 import crashError from '../misc/crashError'
 
 /**
- * Write a cache record
- * @param relativeCWDPath The path to the project root relative to the CWD
- * @param recordPathRelative The path to the record relative from the .nexts folder
- * @param content The file contents
+ * Write a cache record.
+ * @param relativeCWDPath The path to the project root relative to the CWD.
+ * @param recordPathRelative The path to the record relative from the .nexts folder.
+ * @param content The file contents.
  * @returns Nothing.
  */
 export default async function cacheWrite(relativeCWDPath: string, recordPathRelative: string, content: string) {

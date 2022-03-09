@@ -8,10 +8,10 @@ import getTags from '../api/github/getTags'
 import semver from 'semver'
 
 /**
- * Generate an automatic package file for a client/server/cli application
- * @param config The project config
+ * Generate an automatic package file for a client/server/cli application.
+ * @param config The project config.
  * @param app The application to generate the package file for.
- * @param appRootPathExact The root location to the app
+ * @param appRootPathExact The root location to the app.
  * @returns Nothing.
  */
 export default async function generateAppPkg(config: UserConfig, app: App, appRootPathExact: string) {

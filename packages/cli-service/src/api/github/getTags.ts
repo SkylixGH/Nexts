@@ -3,51 +3,51 @@ import https from 'https'
 import crashError from '../../misc/crashError'
 
 /**
- * A github tag
+ * A github tag.
  */
 export interface Tag {
 	/**
-	 * The tag name
+	 * The tag name.
 	 */
 	name: string;
 
 	/**
-	 * The zip release
+	 * The zip release.
 	 */
 	zipball_url: string;
 
 	/**
-	 * The tar release
+	 * The tar release.
 	 */
 	tarball_url: string;
 
 	/**
-	 * The commit info
+	 * The commit info.
 	 */
 	commit: {
 		/**
-		 * The commit sha
+		 * The commit sha.
 		 */
 		sha: string;
 
 		/**
-		 * The commit url
+		 * The commit url.
 		 */
 		url: string;
 	};
 
 	/**
-	 * The node ID
+	 * The node ID.
 	 */
 	node_id: string,
 }
 
 /**
- * Get all tags from a github repository
- * @param org The organization name
- * @param repo The repository name
- * @param page The page number
- * @returns All tags from the repository
+ * Get all tags from a github repository.
+ * @param org The organization name.
+ * @param repo The repository name.
+ * @param page The page number.
+ * @returns All tags from the repository.
  */
 export default function getTags(org: string, repo: string, page?: string) {
 	return new Promise<Tag[]>((resolve, reject) => {

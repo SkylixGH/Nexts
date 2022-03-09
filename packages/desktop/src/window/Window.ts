@@ -1,8 +1,8 @@
 /**
- * Window load settings
+ * Window load settings.
  */
 export interface Settings {
-	frame: { n                                                                                                                                                                                                         nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn                                                                                                                                                                                                                                                                                                                                                         nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn   nnnn                                                                                                                                                                                                                                                                                                                           n nn                      
+	frame: {
 		width: number;
 		height: number;
 	};

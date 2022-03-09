@@ -5,27 +5,27 @@ import UserConfig, {App} from '../../misc/UserConfig'
  */
 export default class Server {
 	/**
-	 * The exact path of the app
+	 * The exact path of the app.
 	 */
 	readonly #appExactPath: string
 
 	/**
-	 * The config app record
+	 * The config app record.
 	 */
 	readonly #app: App
 
 	/**
-	 * The project config
+	 * The project config.
 	 */
 	readonly #config: UserConfig
 
 	/**
-	 * If the dev server is running
+	 * If the dev server is running.
 	 */
 	#running = false
 
 	/**
-	 * Create a dev server host
+	 * Create a dev server host.
 	 * @param appExactPath The exact path of the app.
 	 * @param app The app record.
 	 * @param config The project config.
@@ -37,7 +37,7 @@ export default class Server {
 	}
 
 	/**
-	 * Run the development server
+	 * Run the development server.
 	 * @returns Nothing.
 	 */
 	public run() {

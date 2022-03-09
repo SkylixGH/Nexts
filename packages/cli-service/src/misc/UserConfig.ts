@@ -3,42 +3,42 @@
  */
 export interface App {
 	/**
-	 * The app's display name
+	 * The app's display name.
 	 */
 	name: string;
 
 	/**
-	 * The app type
+	 * The app type.
 	 */
 	type: 'desktop' | 'mobile' | 'web' | 'node';
 
 	/**
-	 * The app's root path
+	 * The app's root path.
 	 */
 	path: string;
 
 	/**
-	 * The app's description
+	 * The app's description.
 	 */
 	description?: string;
 
 	/**
-	 * The app's keywords
+	 * The app's keywords.
 	 */
 	keywords?: string[];
 
 	/**
-	 * The app's display name
+	 * The app's display name.
 	 */
 	displayName: string;
 
 	/**
-	 * The product ID
+	 * The product ID.
 	 */
 	id: string;
 
 	/**
-	 * The app dependencies
+	 * The app dependencies.
 	 */
 	dependencies?: {
 		[name: string]: string;
@@ -50,7 +50,7 @@ export interface App {
  */
 export default interface UserConfig {
 	/**
-	 * The project version
+	 * The project version.
 	 */
 	version: string;
 
@@ -60,86 +60,86 @@ export default interface UserConfig {
 	typescript: boolean;
 
 	/**
-	 * The project author
+	 * The project author.
 	 */
 	author: string;
 
 	/**
-	 * The project environment settings
+	 * The project environment settings.
 	 */
 	node: {
 		/**
-		 * The minimum node version
+		 * The minimum node version.
 		 */
 		minVersion: string;
 
 		/**
-		 * The maximum node version
+		 * The maximum node version.
 		 */
 		maxVersion: string;
 	},
 
 	/**
-	 * Formatting settings for the Nexts generator
+	 * Formatting settings for the Nexts generator.
 	 */
 	formatting?: {
 		/**
-		 * Generation settings for the dynamic package.json files
+		 * Generation settings for the dynamic package.json files.
 		 */
 		package?: {
 			/**
-			 * The package file indent string
+			 * The package file indent string.
 			 */
 			indent?: string;
 		}
 	}
 
 	/**
-	 * The project user/server applications
+	 * The project user/server applications.
 	 */
 	apps?: App[];
 
 	/**
-	 * The project packages
+	 * The project packages.
 	 */
 	packages?: {
 		/**
-		 * The package name
+		 * The package name.
 		 */
 		name: string;
 
 		/**
-		 * The package organization
+		 * The package organization.
 		 */
 		org?: string;
 
 		/**
-		 * The path to the package root
+		 * The path to the package root.
 		 */
 		path: string;
 
 		/**
-		 * The package entry script
+		 * The package entry script.
 		 */
 		main: string;
 
 		/**
-		 * The package description
+		 * The package description.
 		 */
 		description?: string;
 
 		/**
-		 * The package keywords
+		 * The package keywords.
 		 */
 		keywords?: string[];
 
 		/**
-		 * The project license
+		 * The project license.
 		 */
 		license?: string;
 
 		/**
-		 * The package dependencies
+		 * The package dependencies.
 		 */
 		dependencies?: {
 			[name: string]: string;

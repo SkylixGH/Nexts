@@ -3,8 +3,8 @@ import {fileURLToPath} from 'url'
 import fs from 'fs/promises'
 
 /**
- * Get all the projects
- * @returns {Promise<{projects: *[], paths: *[]}>} The projects and their paths
+ * Get all the projects.
+ * @returns {Promise<{projects: *[], paths: *[]}>} The projects and their paths.
  */
 export default async function getProjects() {
 	const projectRoot = path.join(

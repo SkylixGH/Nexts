@@ -3,8 +3,8 @@ import askCLI from '../misc/askCLI'
 import askListCLI from '../misc/askListCLI'
 
 /**
- * The initialization command
- * @param program The yargs program
+ * The initialization command.
+ * @param program The yargs program.
  * @returns Nothing.
  */
 export default function initCMD(program: Argv) {
