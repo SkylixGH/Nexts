@@ -51,12 +51,6 @@ export default class ElectronReact {
 			}
 
 			try {
-				fsSync.writeFileSync(path.join(appExactPath, 'build/main.electron.esm.cjs'), [
-					'const esm = require("esm")',
-					'esm(module)',
-					'module.exports = require("./main.electron.mjs")',
-				].join('\n'))
-
 				esBuilder = await esbuild.build({
 					entryPoints: [path.join(appExactPath, 'src', 'main.ts')],
 					format: 'cjs',
