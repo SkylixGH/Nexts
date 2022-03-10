@@ -2,7 +2,7 @@
 	"name": "desk",
 	"version": "1.0.0",
 	"private": true,
-	"main": "./build/main.electron.js",
+	"main": "./build/main.electron.cjs",
 	"keywords": [
 		"desktop",
 		"app"
