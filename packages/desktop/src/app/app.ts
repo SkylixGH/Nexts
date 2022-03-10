@@ -2,9 +2,14 @@ import {app} from 'electron'
 import {EventEmitter} from 'events'
 import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service'
 import {sendDevServer} from '../internal/api/api'
+import * as windowManager from '../windowManager/windowManager'
 
 const emitter = new EventEmitter()
 let ready = app.isReady()
+
+windowManager.on('all-windows-closed', () => {
+	emitter.emit('all-windows-closed')
+})
 
 if (ready) emitter.emit('ready')
 else {
@@ -25,11 +30,27 @@ export function isReady() {
 }
 
 /**
+ * Stop and exit the app.
+ * @returns {void}
+ */
+export function exit() {
+	app.exit()
+	process.exit()
+}
+
+/**
  * Listen for when the app is ready.
  * @param event The event name.
  * @param listener The event listener.
  */
 export function on(event: 'ready', listener: () => void): void
+
+/**
+ * Listen for when all the windows have been closed.
+ * @param event The event name.
+ * @param listener The event listener.
+ */
+export function on(event: 'all-windows-closed', listener: () => void): void
 
 /**
  * Listen for events.
@@ -47,7 +68,7 @@ export function on(event: string, listener: () => void) {
  * @param listener The event listener.
  * @returns {void}
  */
-export function once(event: 'ready', listener: () => void) {
+export function once(event: string, listener: () => void) {
 	emitter.once(event, listener)
 }
 
@@ -57,7 +78,7 @@ export function once(event: 'ready', listener: () => void) {
  * @param listener The event listener.
  * @returns {void}
  */
-export function removeListener(event: 'ready', listener: () => void) {
+export function removeListener(event: string, listener: () => void) {
 	emitter.removeListener(event, listener)
 }
 

@@ -99,9 +99,21 @@ const defaultSettings: Settings = {
 }
 
 /**
+ * The window event listener overloads.
+ */
+declare interface Window {
+	/**
+	 * Listen for when the window closes.
+	 * @param event The event name.
+	 * @param listener The event listener.
+	 */
+	on(event: 'close', listener: () => void): this;
+}
+
+/**
  * A browser window.
  */
-export default class Window extends EventEmitter {
+class Window extends EventEmitter {
 	/**
 	 * The window settings.
 	 */
@@ -156,6 +168,10 @@ export default class Window extends EventEmitter {
 			if (!this.#rendererReady || !this.#windowReady) return
 		}
 
+		this.#browserWindow.once('close', () => {
+			this.emit('close')
+		})
+
 		this.#browserWindow.once('ready-to-show', () => {
 			this.#windowReady = true
 			this.#browserWindow.show()
@@ -171,3 +187,5 @@ export default class Window extends EventEmitter {
 		}
 	}
 }
+
+export default Window
