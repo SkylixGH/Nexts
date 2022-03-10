@@ -3,7 +3,7 @@ import * as app from '../app/app'
 import {DeepPartial, NextsError} from '@nexts-stack/internal'
 import {BrowserWindow} from 'electron'
 import {EventEmitter} from 'events'
-import {sendDevServer} from '../internal/api/api'
+import electronLocalShortcut from 'electron-localshortcut'
 
 /**
  * Errors for the window.
@@ -164,6 +164,12 @@ class Window extends EventEmitter {
 			},
 		})
 
+		this.#browserWindow.setMenu(null)
+
+		this.registerShortcut('CmdOrCtrl+Shift+I', () => {
+			this.#browserWindow.webContents.toggleDevTools()
+		})
+
 		const progressiveLogicAction = () => {
 			if (!this.#rendererReady || !this.#windowReady) return
 		}
@@ -185,6 +191,16 @@ class Window extends EventEmitter {
 				progressiveLogicAction()
 			})
 		}
+	}
+
+	/**
+	 * Register a shortcut in the window.
+	 * @param shortcut The shortcut.
+	 * @param listener The event listener.
+	 * @returns {void}
+	 */
+	public registerShortcut(shortcut: string, listener: () => void) {
+		electronLocalShortcut.register(this.#browserWindow, shortcut, listener)
 	}
 }
 

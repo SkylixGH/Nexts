@@ -73,7 +73,10 @@ export default class ElectronReact {
 			}
 
 			const electronExePath = path.join(electronPath, 'dist', fsSync.readFileSync(electronExePathInfo, 'utf8'))
-			const buildUpdateWatcher = chokidar.watch(path.join(appExactPath, 'build'), {
+			const buildUpdateWatcher = chokidar.watch([
+				path.join(appExactPath, 'build'),
+				path.join(appExactPath, 'node_modules'),
+			], {
 				ignoreInitial: true,
 			})
 
@@ -84,7 +87,7 @@ export default class ElectronReact {
 					cwd: appExactPath,
 					stdio: ['ipc'],
 					env: {
-						NEXTS_DEV_RENDERER: 'https://google.com',
+						NEXTS_DEV_RENDERER: 'https://calculator.platform.uno/',
 						FORCE_COLOR: '1',
 					},
 				})

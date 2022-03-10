@@ -10,12 +10,12 @@ function createWindow() {
 			width: 1200,
 			height: 600,
 		},
-	})
+	}) 
 
 	windowManager.create({
 		frame: {
-			width: 300,
-			height: 200,
+			width: 200,
+			height: 300,
 		},
 	})
 }
