@@ -3,6 +3,7 @@ import * as app from '../app/app'
 import {DeepPartial, NextsError} from '@nexts-stack/internal'
 import {BrowserWindow} from 'electron'
 import {EventEmitter} from 'events'
+import {sendDevServer} from '../internal/api/api'
 
 /**
  * Errors for the window.
@@ -152,16 +153,27 @@ export default class Window extends EventEmitter {
 		})
 
 		const progressiveLogicAction = () => {
+			if (!this.#rendererReady || !this.#windowReady) return
 
+			sendDevServer({
+				type: 'WINDOW_READY',
+				data: {
+					id: this.#browserWindow.id,
+				},
+			})
 		}
 
 		this.#browserWindow.once('ready-to-show', () => {
+			this.#windowReady = true
 			this.#browserWindow.show()
+
+			progressiveLogicAction()
 		})
 
 		if (process.env.NEXTS_DEV_RENDERER) {
 			this.#browserWindow.loadURL(process.env.NEXTS_DEV_RENDERER).then(() => {
-
+				this.#rendererReady = true
+				progressiveLogicAction()
 			})
 		}
 
