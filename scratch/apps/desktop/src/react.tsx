@@ -1,10 +1,11 @@
 import ReactDOM from 'react-dom'
+import Button from './Button'
 
 ReactDOM.render(
 	<div style={{
 		webkitAppRegion: 'drag',
 	}}>
-		<h1>Hello, world!</h1>
+		<Button>Lol Avery</Button>
 	</div>,
 	document.getElementById('root'),
 )
