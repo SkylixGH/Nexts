@@ -3,8 +3,6 @@
 </div>
 
 <p align="center">A framework for all your needs!</p>
-// TODO: https://github.com/gajus/eslint-plugin-jsdoc
-(Require periods at the ends of sentences)
 
 ## Packages NPM
  - [@nexts-stack/cli-service](https://www.npmjs.com/package/@nexts-stack/cli-service) The <ins>**NEXTS**</ins> CLI service for maintaining <ins>**NEXTS**</ins> libraries and applications.
