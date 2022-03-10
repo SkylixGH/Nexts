@@ -4,6 +4,7 @@ import {DeepPartial, NextsError} from '@nexts-stack/internal'
 import {BrowserWindow} from 'electron'
 import {EventEmitter} from 'events'
 import electronLocalShortcut from 'electron-localshortcut'
+import path from 'path'
 
 /**
  * Errors for the window.
@@ -161,13 +162,19 @@ class Window extends EventEmitter {
 				nodeIntegration: true,
 				webSecurity: false,
 				contextIsolation: false,
+				webviewTag: true,
 			},
+			frame: false,
 		})
 
 		this.#browserWindow.setMenu(null)
 
 		this.registerShortcut('CmdOrCtrl+Shift+I', () => {
 			this.#browserWindow.webContents.toggleDevTools()
+		})
+
+		this.registerShortcut('CmdOrCtrl+I', () => {
+			this.#browserWindow.webContents.reload()
 		})
 
 		const progressiveLogicAction = () => {
@@ -190,7 +197,12 @@ class Window extends EventEmitter {
 				this.#rendererReady = true
 				progressiveLogicAction()
 			})
+
+			return
 		}
+
+		// This build is relative to the build location
+		this.#browserWindow.loadFile(path.join(__dirname, '../build/renderer/index.html'))
 	}
 
 	/**

@@ -4,6 +4,8 @@ import logger from '@nexts-stack/logger'
 import {spawn} from 'child_process'
 import chokidar from 'chokidar'
 import crashError from '../../../misc/crashError'
+import {createServer} from 'vite'
+import react from '@vitejs/plugin-react'
 
 /**
  * Commands from the Electron system interacting with the dev server.
@@ -72,10 +74,22 @@ export default class ElectronReact {
 				process.exit(1)
 			}
 
+			const vite = await createServer({
+				configFile: false,
+				root: appExactPath,
+				base: './',
+				plugins: [react()],
+				publicDir: path.join(appExactPath, 'public'),
+				server: {
+					port: 5000,
+				},
+			})
+
+			const server = await vite.listen()
+
 			const electronExePath = path.join(electronPath, 'dist', fsSync.readFileSync(electronExePathInfo, 'utf8'))
 			const buildUpdateWatcher = chokidar.watch([
 				path.join(appExactPath, 'build'),
-				path.join(appExactPath, 'node_modules'),
 			], {
 				ignoreInitial: true,
 			})
@@ -87,7 +101,7 @@ export default class ElectronReact {
 					cwd: appExactPath,
 					stdio: ['ipc'],
 					env: {
-						NEXTS_DEV_RENDERER: 'https://calculator.platform.uno/',
+						NEXTS_DEV_RENDERER: 'http://localhost:5000',
 						FORCE_COLOR: '1',
 					},
 				})
