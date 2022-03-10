@@ -7,7 +7,7 @@ import {app, windowManager} from '@nexts-stack/desktop'
 function createWindow() {
 	windowManager.create({
 		frame: {
-			width: 1200,
+			width: 1000,
 			height: 800,
 		},
 	})

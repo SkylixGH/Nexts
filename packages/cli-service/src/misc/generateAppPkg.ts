@@ -19,7 +19,7 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 		name: app.name,
 		version: config.version,
 		private: true,
-		main: 'el.js', // TODO: Make this configurable.
+		main: './build/main.electron.esm.js', // TODO: Make this configurable.
 		...(app.keywords && app.keywords.length > 0 ? {keywords: app.keywords} : {}),
 		...(app.description ? {description: app.description} : {}),
 		...( app.type === 'desktop' ? {build: {

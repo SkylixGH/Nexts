@@ -1,5 +1,7 @@
 import {app} from 'electron'
 import {EventEmitter} from 'events'
+import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service'
+import {sendDevServer} from '../internal/api/api'
 
 const emitter = new EventEmitter()
 let ready = app.isReady()
@@ -8,6 +10,8 @@ if (ready) emitter.emit('ready')
 else {
 	app.once('ready', () => {
 		ready = true
+
+		sendDevServer(ElectronReactElectronServerCommand.READY)
 		emitter.emit('ready')
 	})
 }

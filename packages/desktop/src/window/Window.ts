@@ -154,13 +154,6 @@ export default class Window extends EventEmitter {
 
 		const progressiveLogicAction = () => {
 			if (!this.#rendererReady || !this.#windowReady) return
-
-			sendDevServer({
-				type: 'WINDOW_READY',
-				data: {
-					id: this.#browserWindow.id,
-				},
-			})
 		}
 
 		this.#browserWindow.once('ready-to-show', () => {

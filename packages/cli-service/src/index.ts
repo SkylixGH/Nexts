@@ -8,6 +8,8 @@ import publishCMD from './commands/publishCMD'
 import initCMD from './commands/initCMD'
 import devCMD from './commands/devCMD'
 import UserConfig from './misc/UserConfig'
+import {ElectronServerCommand as ElectronReactElectronServerCommand} from './commands/dev/electronReact/ElectronReact'
+import esm from 'esm'
 
 /**
  * The CLI binary entry point.
@@ -38,6 +40,6 @@ export function defineConfig(config: UserConfig) {
 	return config
 }
 
-export {UserConfig}
+export {UserConfig, ElectronReactElectronServerCommand, esm}
 
 bin()

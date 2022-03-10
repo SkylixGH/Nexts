@@ -13,14 +13,17 @@
 		"access": "public"
 	},
 	"dependencies": {
+		"@nexts-stack/cli-service": "*",
+		"@nexts-stack/internal": "*",
 		"deepmerge": "^4.2.2",
 		"electron": "^17.1.1",
-		"@nexts-stack/internal": "*"
+		"esm": "^3.2.25"
 	},
 	"devDependencies": {
-		"@types/deepmerge": "^2.2.0"
+		"@types/deepmerge": "^2.2.0",
+		"@types/esm": "^3.2.0"
 	},
 	"peerDependencies": {
-	    "electron": "^17.1.1"
+		"electron": "^17.1.1"
 	}
 }
