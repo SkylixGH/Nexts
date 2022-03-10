@@ -167,16 +167,6 @@ class Window extends EventEmitter {
 			frame: false,
 		})
 
-		this.#browserWindow.setMenu(null)
-
-		this.registerShortcut('CmdOrCtrl+Shift+I', () => {
-			this.#browserWindow.webContents.toggleDevTools()
-		})
-
-		this.registerShortcut('CmdOrCtrl+I', () => {
-			this.#browserWindow.webContents.reload()
-		})
-
 		const progressiveLogicAction = () => {
 			if (!this.#rendererReady || !this.#windowReady) return
 		}

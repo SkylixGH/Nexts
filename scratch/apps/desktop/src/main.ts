@@ -5,7 +5,7 @@ import {app, windowManager} from '@nexts-stack/desktop'
  * @returns {void}
  */
 function createWindow() {
-	windowManager.create({ 
+	windowManager.create({
 		frame: {
 			width: 1200,
 			height: 600,
@@ -18,4 +18,4 @@ app.on('all-windows-closed', () => {
 	app.exit()
 })
 
-app.on('ready', createWindow)
+app.on('ready', createWindow) m
