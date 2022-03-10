@@ -2,6 +2,7 @@
 	"name": "desk",
 	"version": "1.0.0",
 	"private": true,
+	"main": "el.js",
 	"keywords": [
 		"desktop",
 		"app"

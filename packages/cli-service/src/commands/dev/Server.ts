@@ -1,4 +1,5 @@
 import UserConfig, {App} from '../../misc/UserConfig'
+import ElectronReact from './electronReact/ElectronReact'
 
 /**
  * A dev server host.
@@ -20,6 +21,11 @@ export default class Server {
 	readonly #config: UserConfig
 
 	/**
+	 * The CLI relative argv path.
+	 */
+	readonly #argvPath: string
+
+	/**
 	 * If the dev server is running.
 	 */
 	#running = false
@@ -29,19 +35,28 @@ export default class Server {
 	 * @param appExactPath The exact path of the app.
 	 * @param app The app record.
 	 * @param config The project config.
+	 * @param argvPath The CLI relative argv path.
 	 */
-	public constructor(appExactPath: string, app: App, config: UserConfig) {
+	public constructor(appExactPath: string, app: App, config: UserConfig, argvPath: string) {
 		this.#config = config
 		this.#app = app
 		this.#appExactPath = appExactPath
+		this.#argvPath = argvPath
 	}
 
 	/**
 	 * Run the development server.
 	 * @returns {void}
 	 */
-	public run() {
+	public async run() {
 		if (this.#running) return
+
+		if (this.#app.type === 'desktop') {
+			const server = new ElectronReact()
+			await server.loadElectron(this.#appExactPath, this.#argvPath)
+		}
+
+		this.#running = true
 	}
 }
 

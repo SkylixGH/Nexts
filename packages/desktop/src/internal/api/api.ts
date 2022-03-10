@@ -4,5 +4,5 @@
  * @returns {void}
  */
 export function sendDevServer<MessageType extends Object>(message: MessageType) {
-
+	if (process.send) process.send(JSON.stringify(message))
 }

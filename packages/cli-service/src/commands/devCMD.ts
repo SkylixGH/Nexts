@@ -4,6 +4,7 @@ import readConfig from '../misc/readConfig'
 import fsSync from 'fs'
 import path from 'path'
 import generateAppPkg from '../misc/generateAppPkg'
+import Server from './dev/Server'
 
 /**
  * The dev command.
@@ -68,8 +69,14 @@ export default function devCMD(program: Argv) {
 				process.exit(1)
 			}
 
-			await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path))
 			logger.log('Generating app package')
+			await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path))
+
+			logger.log('Starting development server')
+			const server = new Server(path.join(process.cwd(), argv.path, app.path), app, config, argv.path)
+			await server.run()
+
+			logger.success('The development server is fully ready')
 		})
 }
 
