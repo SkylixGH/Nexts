@@ -35,11 +35,26 @@ export default class ElectronReact {
 			stdio: ['ipc'],
 			env: {
 				NEXTS_DEV_RENDERER: 'https://google.com',
+				FORCE_COLOR: '1',
 			},
 		})
 
 		electronProcess.on('message', (message) => {
 			console.log(message, message.toString())
+		})
+
+		electronProcess.stdout?.on('data', (data) => {
+			data.toString().split('\n').forEach((line: string) => {
+				if (line.length === 0 || line === '\r') return
+				logger.log(`[App] ${line}`)
+			})
+		})
+
+		electronProcess.stderr?.on('data', (data) => {
+			data.toString().split('\n').forEach((line: string) => {
+				if (line.length === 0 || line === '\r') return
+				logger.error(`[App] ${line}`)
+			})
 		})
 	}
 }

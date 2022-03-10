@@ -176,7 +176,5 @@ export default class Window extends EventEmitter {
 				progressiveLogicAction()
 			})
 		}
-
-		console.log(process.env.NEXTS_DEV_RENDERER)
 	}
 }
