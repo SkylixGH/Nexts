@@ -30,3 +30,31 @@
     }
   }
 }
+
+._outline {
+  background: transparent;
+  color: $text1;
+  border: 1px solid $subtle2;
+
+  &:hover {
+    border-color: $subtle3;
+    background: transparent;
+
+    &:active {
+      color: $text3;
+    }
+  }
+}
+
+._text {
+  background: transparent;
+  color: $text1;
+
+  &:hover {
+    background: $subtle1;
+
+    &:active {
+      color: $text3;
+    }
+  }
+}

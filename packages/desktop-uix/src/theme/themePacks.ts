@@ -156,10 +156,10 @@ export interface NextsControlsTheme extends ThemeProperties {
 }
 
 export const darkTheme: NextsControlsTheme = {
-	layerSolid1: '#121212',
-	layerSolid2: '#181818',
-	layerSolid3: '#232323',
-	layerSolid4: '#272727',
+	layerSolid1: '#202020',
+	layerSolid2: '#272727',
+	layerSolid3: '#303030',
+	layerSolid4: '#343434',
 
 	text1: '#ffffff',
 	text2: '#c3c3c3',
