@@ -5,6 +5,7 @@ import {BrowserWindow} from 'electron'
 import {EventEmitter} from 'events'
 import electronLocalShortcut from 'electron-localshortcut'
 import path from 'path'
+import {enable} from '@electron/remote/main'
 
 /**
  * Errors for the window.
@@ -167,6 +168,8 @@ class Window extends EventEmitter {
 			frame: false,
 		})
 
+		enable(this.#browserWindow.webContents)
+
 		const progressiveLogicAction = () => {
 			if (!this.#rendererReady || !this.#windowReady) return
 		}
@@ -192,7 +195,10 @@ class Window extends EventEmitter {
 		}
 
 		// This build is relative to the build location
-		this.#browserWindow.loadFile(path.join(__dirname, '../build/renderer/index.html'))
+		this.#browserWindow.loadFile(path.join(__dirname, '../build/renderer/index.html')).then(() => {
+			this.#rendererReady = true
+			progressiveLogicAction()
+		})
 	}
 
 	/**

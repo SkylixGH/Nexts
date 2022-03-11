@@ -28,8 +28,20 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 			copyright: `Copyright © ${new Date().getFullYear()} ${config.author}`,
 		}} : {}),
 		dependencies: {
-			'@nexts-stack/desktop': '',
+			...(app.type === 'desktop' ? {
+				'@nexts-stack/desktop': '*',
+				'@nexts-stack/desktop-uix': '*',
+				'react-dom': '*',
+				'react': '*',
+				'electron': '^17.1.1',
+			} : {}),
 			...(app.dependencies ? app.dependencies : {}),
+		},
+		devDependencies: {
+			...(app.type === 'desktop' ? {
+				'@types/react-dom': '*',
+				'@types/react': '*',
+			} : {}),
 		},
 	}
 

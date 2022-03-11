@@ -1,6 +1,6 @@
 {
 	"name": "@nexts-stack/desktop",
-	"version": "1.0.0-dev.5",
+	"version": "1.0.0-dev.6",
 	"main": "./build/common.cjs",
 	"type": "module",
 	"types": "./build/types/index.d.ts",
@@ -13,6 +13,7 @@
 		"access": "public"
 	},
 	"dependencies": {
+		"@electron/remote": "^2.0.7",
 		"@nexts-stack/cli-service": "*",
 		"@nexts-stack/internal": "*",
 		"deepmerge": "^4.2.2",

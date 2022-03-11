@@ -9,6 +9,7 @@ import {spawn} from 'child_process'
 import crashError from '../misc/crashError'
 import fsSync from 'fs'
 import fs from 'fs/promises'
+import generateAppPkg from '../misc/generateAppPkg'
 
 /**
  * The compile command.
@@ -59,6 +60,10 @@ export default function compileCMD(program: Argv) {
 				incremental: true,
 				target: 'ESNext',
 				sourcemap: true,
+			}
+
+			for (const app of projects.apps ?? []) {
+				await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path))
 			}
 
 			for (const pkg of projects.packages ?? []) {

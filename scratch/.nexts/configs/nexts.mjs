@@ -17,8 +17,8 @@ export default defineConfig({
             name: 'desk',
             id: 'net.skylix.desktop',
             dependencies: {
-                '@nexts-stack/desktop': 'file:../../../packages/desktop',
-                'electron': '^17.1.1',
+                '@nexts-stack/desktop': '../../../packages/desktop',
+                '@nexts-stack/desktop-uix': '../../../packages/desktop-uix',
             },
         },
         // {

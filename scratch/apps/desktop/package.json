@@ -14,7 +14,14 @@
 		"copyright": "Copyright © 2022 SkylixGH"
 	},
 	"dependencies": {
-		"@nexts-stack/desktop": "file:../../../packages/desktop",
+		"@nexts-stack/desktop": "../../../packages/desktop",
+		"@nexts-stack/desktop-uix": "../../../packages/desktop-uix",
+		"react-dom": "*",
+		"react": "*",
 		"electron": "^17.1.1"
+	},
+	"devDependencies": {
+		"@types/react-dom": "*",
+		"@types/react": "*"
 	}
 }
