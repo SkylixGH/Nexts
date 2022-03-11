@@ -9,6 +9,9 @@ tsk.on('message', (msg) => {
 
 setTimeout(() => {
 	tsk.send({'HEY': 'yo'})
-	console.error('=uwu=')
 	console.log('Ayee')
 }, 0)
+
+setInterval(() => {
+	console.log('Daemon is still alive')
+}, 1000)
