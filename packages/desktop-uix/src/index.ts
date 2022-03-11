@@ -1,12 +1,7 @@
 import Plugin, {Errors as PluginErrors} from './plugin/Plugin'
-import Theme from './theme/Theme'
+import Theme, {Properties as ThemeProperties} from './theme/Theme'
 
-const isRenderer = typeof window !== 'undefined' && window.process && window.process.type
-if (!isRenderer) {
-	throw new Error('Cannot import UIX module in the main process')
-}
-
-window.onerror = (msg, url, lineNo, columnNo, error) => {
+window.addEventListener('error', (msg, url, lineNo, columnNo, error) => {
 	document.body.innerHTML = [
 		'<div style="width: 100vw; height: 32px; background: #202020; -webkit-app-region: drag; margin-top: -10px; margin-left: -10px; display: flex; align-items: center; justify-content: flex-end;">',
 		'	<button onmouseover="this.style.color = \'#fff\'; this.style.background = \'#FF5555\'" onmouseleave="this.style.color = \'#999\'; this.style.background = \'transparent\'" class="button" style="cursor: pointer; -webkit-app-region: no-drag; width: 45px; height: 32px; color: #999; background: transparent; border: none;" onclick="window.close()">✕</button>',
@@ -21,8 +16,14 @@ window.onerror = (msg, url, lineNo, columnNo, error) => {
 
 	document.body.style.background = '#272727'
 	document.body.style.color = '#fff'
+})
+
+const isRenderer = typeof window !== 'undefined' && window.process && window.process.type
+if (!isRenderer) {
+	throw new Error('Cannot import UIX module in the main process')
 }
 
 export * from './controls/controls'
 export * as logger from './logger/logger'
-export {Plugin, PluginErrors, Theme}
+export * as themePacks from './theme/themePacks'
+export {Plugin, PluginErrors, Theme, ThemeProperties}

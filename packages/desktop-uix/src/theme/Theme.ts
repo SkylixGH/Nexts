@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events'
 
-let currentTheme: Theme;
+let currentTheme: Theme
 
 /**
  * Theme variable properties.
@@ -39,8 +39,51 @@ declare interface Theme<ThemeProperties extends Properties> {
  * A theme manager.
  */
 class Theme<ThemeProperties extends Properties> extends EventEmitter {
-	public constructor() {
-		
+	/**
+	 * The theme properties.
+	 */
+	readonly #theme: ThemeProperties
+
+	/**
+	 * Create a new global app theme.
+	 * @param theme The theme to use.
+	 */
+	public constructor(theme: ThemeProperties) {
+		super()
+
+		this.#theme = theme
+	}
+
+	/**
+	 * Load the theme into the browser.
+	 * @returns {void}
+	 */
+	public load() {
+		const themeContainer = document.createElement('style')
+		themeContainer.className = '__nexts__theme__'
+
+		themeContainer.innerHTML = this.themeToCss()
+
+		if (document.head.getElementsByClassName('__nexts__theme__').length !== 0) {
+			document.head.removeChild(document.head.getElementsByClassName('__nexts__theme__')[0])
+		}
+
+		document.head.appendChild(themeContainer)
+	}
+
+	/**
+	 * Convert the theme properties to a css variable declaration.
+	 * @returns The CSS string.
+	 */
+	private themeToCss() {
+		let result = ':root {'
+
+		Object.keys(this.#theme).forEach((key) => {
+			result += `--${key}: ${this.#theme[key]};`
+		})
+
+
+		return `${result }}`
 	}
 }
 

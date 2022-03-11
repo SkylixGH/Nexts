@@ -12,7 +12,12 @@ import {Plugin, logger, Button, Theme} from '@nexts-stack/desktop-uix'
 // 	pl.stop()
 // }, 5000)
 
-const th = new Theme()
+const th = new Theme({
+	accent: '#000',
+	accent2: '#999',
+})
+
+th.load()
 
 ReactDOM.render(
 	<div>
