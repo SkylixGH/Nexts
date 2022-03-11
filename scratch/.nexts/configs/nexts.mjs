@@ -53,5 +53,13 @@ export default defineConfig({
             description: 'This is a package for the API client',
             keywords: ['api', 'package'],
         },
+        {
+            path: './packages/my-ext',
+            name: 'my-ext',
+            main: 'plugin.ts',
+            dependencies: {
+                '@nexts-stack/desktop-plugin': '../../../packages/desktop-plugin',
+            },
+        },
     ],
 });

@@ -60,6 +60,7 @@ export default function compileCMD(program: Argv) {
 				incremental: true,
 				target: 'ESNext',
 				sourcemap: true,
+				platform: 'node',
 			}
 
 			for (const app of projects.apps ?? []) {

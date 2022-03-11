@@ -11,5 +11,8 @@
 	"publishConfig": {
 		"registry": "https://registry.npmjs.org/",
 		"access": "public"
+	},
+	"dependencies": {
+		"@nexts-stack/internal": "^1.0.0-dev.6"
 	}
 }
