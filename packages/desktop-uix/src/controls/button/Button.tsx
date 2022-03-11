@@ -1,11 +1,25 @@
 import React from 'react'
 import styles from './Button.module.scss'
 
-console.log(styles, 'e')
+/**
+ * The properties of the button.
+ */
+export interface Props {
+	/**
+	 * The text to display in the button.
+	 */
+	children: string
+}
 
-const Button = React.forwardRef(() => {
+/**
+ * The button ref.
+ */
+export interface Ref {
+}
+
+const Button = React.forwardRef<Ref, Props>((props) => {
 	return (
-		<div className={styles.root}>Text</div>
+		<button className={styles.root}>{props.children}</button>
 	)
 })
 
