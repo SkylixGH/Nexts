@@ -1,0 +1,16 @@
+{
+	"name": "my-ext",
+	"version": "1.0.0",
+	"author": "SkylixGH",
+	"main": "src/main/index.ts",
+	"exports": {
+		"require": "./build/dist.commonjs.cjs",
+		"import": "./build/dist.esm.mjs"
+	},
+	"types": "./build/types/src/main/index.d.ts",
+	"description": "This is a package for the API types",
+	"keywords": [
+		"api",
+		"package"
+	]
+}
