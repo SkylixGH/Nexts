@@ -1,7 +1,7 @@
 import {NextsError} from '@nexts-stack/internal'
 import * as logger from '../logger/logger'
 import type {ChildProcess} from 'child_process'
-import EventEmitter from 'eventemitter3'
+import {EventEmitter} from 'events'
 
 /**
  * Errors for when interacting with the plugin hosts/clients.

@@ -4,6 +4,7 @@ import getProjects from './util/getProjects.js'
 import fs from 'fs/promises'
 import * as esBuild from 'esBuild'
 import * as path from 'path'
+import scssModulePlugin from 'esbuild-plugin-sass-modules'
 
 info('Watch compiler')
 
@@ -46,9 +47,11 @@ projects.paths.forEach(async (project) => {
 					sourcemap: true,
 					watch: true,
 					platform: 'node',
+					plugins: [scssModulePlugin()],
 				}))
 			}
-		} catch {
+		} catch (error) {
+			console.error(error)
 			await buildAgain('cjs')
 		}
 
@@ -65,9 +68,11 @@ projects.paths.forEach(async (project) => {
 					sourcemap: true,
 					watch: true,
 					platform: 'node',
+					plugins: [scssModulePlugin()],
 				}))
 			}
-		} catch {
+		} catch (error) {
+			console.error(error)
 			await buildAgain('esm')
 		}
 	}

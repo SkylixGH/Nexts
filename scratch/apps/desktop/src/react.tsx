@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom'
-import Button from './Button'
 import React from 'react'
-import {Plugin, logger} from '@nexts-stack/desktop-uix'
+import {Plugin, logger, Button} from '@nexts-stack/desktop-uix'
 
 const pl = new Plugin('my-ext', 'C:\\Users\\XFaon\\CLionProjects\\nexts\\scratch\\packages\\my-ext\\build\\dist.esm.mjs')
 
@@ -14,9 +13,7 @@ setTimeout(() => {
 }, 5000)
 
 ReactDOM.render(
-	<div style={{
-		webkitAppRegion: 'drag',
-	}}>
+	<div>
 		<Button>Lol Avery</Button>
 	</div>,
 	document.getElementById('root'),

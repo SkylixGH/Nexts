@@ -10,6 +10,7 @@ import crashError from '../misc/crashError'
 import fsSync from 'fs'
 import fs from 'fs/promises'
 import generateAppPkg from '../misc/generateAppPkg'
+import scssPlugin from 'esbuild-plugin-sass-modules'
 
 /**
  * The compile command.
@@ -61,6 +62,7 @@ export default function compileCMD(program: Argv) {
 				target: 'ESNext',
 				sourcemap: true,
 				platform: 'node',
+				plugins: [scssPlugin()],
 			}
 
 			for (const app of projects.apps ?? []) {

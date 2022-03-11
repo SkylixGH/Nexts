@@ -5,5 +5,6 @@ if (!isRenderer) {
 	throw new Error('Cannot import UIX module in the main process')
 }
 
+export * from './controls/controls'
 export * as logger from './logger/logger'
 export {Plugin, PluginErrors}
