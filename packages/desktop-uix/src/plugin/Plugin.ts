@@ -1,6 +1,7 @@
 import {NextsError} from '@nexts-stack/internal'
 import * as logger from '../logger/logger'
 import type {ChildProcess} from 'child_process'
+import EventEmitter from 'eventemitter3'
 
 /**
  * Errors for when interacting with the plugin hosts/clients.
@@ -15,12 +16,29 @@ export enum Errors {
 	 * The plugin being initialized has already been initialized.
 	 */
 	PLUGIN_EXISTS = 'PLUGIN_EXISTS',
+
+	/**
+	 * The plugin was already stopped.
+	 */
+	ALREADY_STOPPED = 'ALREADY_STOPPED',
+}
+
+/**
+ * Overloads for event emitter.
+ */
+declare interface Plugin {
+	/**
+	 * Listen for when the plugin stops.
+	 * @param event The event name.
+	 * @param listener The listener.
+	 */
+	on(event: 'stop', listener: () => void): this
 }
 
 /**
  * A plugin interaction instance.
  */
-export default class Plugin {
+class Plugin extends EventEmitter {
 	/**
 	 * The name of the plugin.
 	 */
@@ -42,6 +60,8 @@ export default class Plugin {
 	 * @param esmDistroPath The path to the plugin.
 	 */
 	public constructor(name: string, esmDistroPath: string) {
+		super()
+
 		this.name = name
 		this.#esmDistroPath = esmDistroPath
 
@@ -59,6 +79,10 @@ export default class Plugin {
 			env: {
 				NEXTS_PLUGIN_ENV: 'desktop',
 			},
+		})
+
+		this.#pluginServer.on('exit', () => {
+			this.emit('stop')
 		})
 
 		this.#pluginServer.stdout?.on('data', (data: Buffer) => {
@@ -85,6 +109,12 @@ export default class Plugin {
 	 * @returns {void}
 	 */
 	public stop() {
+		if (this.#pluginServer.killed) {
+			throw new NextsError(Errors.ALREADY_STOPPED, `Plugin '${this.name}' has already been stopped.`)
+		}
+
 		this.#pluginServer.kill()
 	}
 }
+
+export default Plugin

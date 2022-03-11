@@ -13,6 +13,7 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@nexts-stack/internal": "^1.0.0-dev.6"
+		"@nexts-stack/internal": "^1.0.0-dev.6",
+		"eventemitter3": "^4.0.7"
 	}
 }
