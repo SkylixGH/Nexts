@@ -3,17 +3,30 @@
 .root {
   height: 26px;
   padding: 0 10px;
-  background: #121212;
-  color: #FFFFFF;
+  background: $accent1;
+  color: $accentText1;
   border: none;
   border-radius: 3px;
   transition: 100ms;
 
   &:hover {
-    background: #404040;
+    background: $accent2;
 
     &:active {
-      color: rgba(255, 255, 255, 40%);
+      color: $accentText2
+    }
+  }
+}
+
+._secondary {
+  background: $subtle1;
+  color: $text1;
+
+  &:hover {
+    background: $subtle2;
+
+    &:active {
+      color: $text2
     }
   }
 }

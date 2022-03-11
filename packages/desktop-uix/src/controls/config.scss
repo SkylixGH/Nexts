@@ -1,3 +1,43 @@
 * {
   box-sizing: border-box;
 }
+
+$layerSolid1: var(--layerSolid1);
+$layerSolid2: var(--layerSolid2);
+$layerSolid3: var(--layerSolid3);
+$layerSolid4: var(--layerSolid4);
+
+$text1: var(--text1);
+$text2: var(--text2);
+$text3: var(--text3);
+$text4: var(--text4);
+
+$subtle1: var(--subtle1);
+$subtle2: var(--subtle2);
+$subtle3: var(--subtle3);
+$subtle4: var(--subtle4);
+
+$subtleLighter1: var(--subtleLighter1);
+$subtleLighter2: var(--subtleLighter2);
+$subtleLighter3: var(--subtleLighter3);
+$subtleLighter4: var(--subtleLighter4);
+
+$subtleDarker1: var(--subtleDarker1);
+$subtleDarker2: var(--subtleDarker2);
+$subtleDarker3: var(--subtleDarker3);
+$subtleDarker4: var(--subtleDarker4);
+
+$accent1: var(--accent1);
+$accent2: var(--accent2);
+
+$accentText1: var(--accentText1);
+$accentText2: var(--accentText2);
+
+$success1: var(--success1);
+$success2: var(--success2);
+
+$error1: var(--error1);
+$error2: var(--error2);
+
+$warning1: var(--warning1);
+$warning2: var(--warning2);

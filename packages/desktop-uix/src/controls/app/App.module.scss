@@ -1,0 +1,13 @@
+@import "../config";
+
+.root {
+  background: $layerSolid1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  padding: 20px; // TEMP
+  gap: 10px; // TEMP
+}
