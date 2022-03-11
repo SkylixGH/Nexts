@@ -1,9 +1,18 @@
 import {EventEmitter} from 'events'
 
+let currentTheme: Theme;
+
+/**
+ * Theme variable properties.
+ */
+export interface Properties {
+	[key: string]: string;
+}
+
 /**
  * The overloads for the events.
  */
-declare interface Theme {
+declare interface Theme<ThemeProperties extends Properties> {
 	/**
 	 * Listen for when the theme is loaded.
 	 * @param event The event name.
@@ -29,8 +38,10 @@ declare interface Theme {
 /**
  * A theme manager.
  */
-class Theme extends EventEmitter {
-
+class Theme<ThemeProperties extends Properties> extends EventEmitter {
+	public constructor() {
+		
+	}
 }
 
 export default Theme

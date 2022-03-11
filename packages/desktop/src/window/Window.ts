@@ -1,7 +1,7 @@
 import deepmerge from 'deepmerge'
 import * as app from '../app/app'
 import {DeepPartial, NextsError} from '@nexts-stack/internal'
-import {BrowserWindow} from 'electron'
+import {BrowserWindow, ipcMain, dialog} from 'electron'
 import {EventEmitter} from 'events'
 import electronLocalShortcut from 'electron-localshortcut'
 import path from 'path'

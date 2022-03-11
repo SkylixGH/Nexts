@@ -18,4 +18,4 @@ app.on('all-windows-closed', () => {
 	app.exit()
 })
 
-app.on('ready', createWindow)
+app.on('ready', createWindow) 

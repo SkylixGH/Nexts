@@ -1,16 +1,18 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import {Plugin, logger, Button} from '@nexts-stack/desktop-uix'
+import {Plugin, logger, Button, Theme} from '@nexts-stack/desktop-uix'
 
-const pl = new Plugin('my-ext', 'C:\\Users\\XFaon\\CLionProjects\\nexts\\scratch\\packages\\my-ext\\build\\dist.esm.mjs')
+// const pl = new Plugin('my-ext', 'C:\\Users\\XFaon\\CLionProjects\\nexts\\scratch\\packages\\my-ext\\build\\dist.esm.mjs')
 
-pl.on('stop', () => {
-	logger.success('Plugin stopped')
-})
+// pl.on('stop', () => {
+// 	logger.success('Plugin stopped')
+// })
 
-setTimeout(() => {
-	pl.stop()
-}, 5000)
+// setTimeout(() => {
+// 	pl.stop()
+// }, 5000)
+
+const th = new Theme()
 
 ReactDOM.render(
 	<div>

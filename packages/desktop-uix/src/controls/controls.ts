@@ -1,3 +1,3 @@
-import Button from './button/Button'
+import Button, {Ref as ButtonRef, Props as ButtonProps} from './button/Button'
 
-export {Button}
+export {Button, ButtonRef, ButtonProps}
