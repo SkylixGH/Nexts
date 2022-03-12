@@ -18,6 +18,7 @@
   overflow: auto;
   color: $text2;
   font-size: 13px;
+  border-top: 1px solid $subtleDarker1;
 
   &::-webkit-scrollbar-track {
     background: $layerSolid2;

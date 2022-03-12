@@ -1,0 +1,13 @@
+@import "../../config";
+
+.root {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  background: $layerSolid2;
+  box-shadow: 0 0 5px $subtleDarker4, 0 10px 10px $subtleDarker4;
+  border-radius: 4px;
+  color: $text2;
+  min-width: 200px; // TODO: Make this dynamic
+  height: 250px; // TODO: Make this dynamic
+}

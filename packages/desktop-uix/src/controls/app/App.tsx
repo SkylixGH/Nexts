@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import styles from './App.module.scss'
 import {Icon} from '@iconify/react'
 import {appWindow, Button} from '../..'
+import Menu from './menu/Menu'
 
 /**
  * The properties of the app.
@@ -83,6 +84,8 @@ const App = React.forwardRef<Ref, Props>((props) => {
 			<div onClick={() => setReactError(null)} className={`${styles.errorBox} ${reactError ? '' : styles.errorBox_hide}`}>
 				<Icon icon={'fluent:error-circle-16-regular'} />
 			</div>
+
+			<Menu />
 		</div>
 	)
 })
