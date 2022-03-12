@@ -15,7 +15,7 @@
   background: $layerSolid2;
   width: 100vw;
   height: calc(100vh - 32px);
-  overflow: overlay;
+  overflow: auto;
   color: $text2;
   font-size: 13px;
 
@@ -26,24 +26,14 @@
 
   &::-webkit-scrollbar-thumb {
     background: $text1;
-    border-radius: 4px;
-    border: 2px solid $layerSolid2;
+    border: 3px solid $layerSolid2;
+    background: $text1;
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  &:hover::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-  }
-
-  &:hover::-webkit-scrollbar-thumb {
-    background: $text1;
-    border-width: 3px;
-    border-radius: 10px;
   }
 }
 

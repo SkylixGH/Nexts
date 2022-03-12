@@ -78,9 +78,6 @@ const App = React.forwardRef<Ref, Props>((props) => {
 
 			<div className={`${styles.content} ${titleBarVisible ? '' : styles.content_noTitleBar}`}>
 				{props.children}
-				<Button mode={'text'} onClick={() => setReactError(new Error('Test error'))}>
-					Test error
-				</Button>
 			</div>
 
 			<div onClick={() => setReactError(null)} className={`${styles.errorBox} ${reactError ? '' : styles.errorBox_hide}`}>

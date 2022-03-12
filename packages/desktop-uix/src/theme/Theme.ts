@@ -1,15 +1,22 @@
 import {EventEmitter} from 'events'
+import * as themeManager from './themeManager'
 
 /**
  * Theme variable properties.
  */
 export interface Properties {
 	[key: string]: string;
+
+	/**
+	 * The type of theme.
+	 */
+	type: 'light' | 'dark';
 }
 
 /**
  * The overloads for the events.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare interface Theme<ThemeProperties extends Properties> {
 	/**
 	 * Listen for when the theme is loaded.
@@ -17,30 +24,21 @@ declare interface Theme<ThemeProperties extends Properties> {
 	 * @param listener The event listener.
 	 */
 	on(event: 'load', listener: () => void): this
-
-	/**
-	 * Listen for when the theme changes.
-	 * @param event The event name.
-	 * @param listener The event listener.
-	 */
-	on(event: 'update', listener: () => void): this
-
-	/**
-	 * Listen for when the theme is unloaded.
-	 * @param event The event name.
-	 * @param listener The event listener.
-	 */
-	on(event: 'unload', listener: () => void): this
 }
 
 /**
- * A theme manager.
+ * A theme instance.
  */
 class Theme<ThemeProperties extends Properties> extends EventEmitter {
 	/**
 	 * The theme properties.
 	 */
-	readonly #theme: ThemeProperties
+	readonly theme: ThemeProperties
+
+	/**
+	 * The type of theme.
+	 */
+	readonly type: ThemeProperties['type']
 
 	/**
 	 * Create a new global app theme.
@@ -49,7 +47,8 @@ class Theme<ThemeProperties extends Properties> extends EventEmitter {
 	public constructor(theme: ThemeProperties) {
 		super()
 
-		this.#theme = theme
+		this.theme = theme
+		this.type = theme.type
 	}
 
 	/**
@@ -67,6 +66,8 @@ class Theme<ThemeProperties extends Properties> extends EventEmitter {
 		}
 
 		document.head.appendChild(themeContainer)
+		this.emit('load')
+		themeManager.setLoadedTheme(this)
 	}
 
 	/**
@@ -76,8 +77,8 @@ class Theme<ThemeProperties extends Properties> extends EventEmitter {
 	private themeToCss() {
 		let result = ':root {'
 
-		Object.keys(this.#theme).forEach((key) => {
-			result += `--${key}: ${this.#theme[key]};`
+		Object.keys(this.theme).forEach((key) => {
+			result += `--${key}: ${this.theme[key]};`
 		})
 
 

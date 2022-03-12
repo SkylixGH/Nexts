@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import {Browser, Button, Theme, themePacks, App} from '@nexts-stack/desktop-uix'
+import {Button, Theme, themePacks, App, logger, useThemeType} from '@nexts-stack/desktop-uix'
 import './globals.css'
 
 // const pl = new Plugin('my-ext', 'C:\\Users\\XFaon\\CLionProjects\\nexts\\scratch\\packages\\my-ext\\build\\dist.esm.mjs')
@@ -18,14 +18,20 @@ import './globals.css'
  */
 function Web() {
 	const [url, setUrl] = React.useState('https://skylix.net')
+	const themeType = useThemeType()
 
 	return (
 		<div style={{
 			margin: '20px',
-			width: 'calc(100vw - 40px)',
-			height: 'calc(100vh - 40px)',
 		}}>
-			<Browser url={url} />
+			<Button mode={'primary'}>Hello World</Button>
+			<Button mode={'secondary'} onClick={() => {
+				if (themeType === 'dark') {
+					new Theme(themePacks.lightTheme).load()
+				} else {
+					new Theme(themePacks.darkTheme).load()
+				}
+			}}>Theme: {themeType}</Button>
 		</div>
 	)
 }

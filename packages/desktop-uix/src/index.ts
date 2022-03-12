@@ -7,7 +7,9 @@ if (!isRenderer) {
 }
 
 export * from './controls/controls'
+export * from './hooks/hooks'
 export * as logger from './logger/logger'
 export * as themePacks from './theme/themePacks'
 export * as appWindow from './api/appWindow'
+export * as themeManager from './theme/themeManager'
 export {Plugin, PluginErrors, Theme, ThemeProperties}

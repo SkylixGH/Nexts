@@ -8,7 +8,7 @@ export interface Props {
 	/**
 	 * The text to display in the button.
 	 */
-	children: string
+	children: string | string[] | JSX.Element | JSX.Element[]
 
 	/**
 	 * The button style mode.
