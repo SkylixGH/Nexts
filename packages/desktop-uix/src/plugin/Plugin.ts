@@ -21,6 +21,11 @@ export enum Errors {
 	 * The plugin was already stopped.
 	 */
 	ALREADY_STOPPED = 'ALREADY_STOPPED',
+
+	/**
+	 * The environment is not compatible for running plugins.
+	 */
+	UNSUPPORTED_ENVIRONMENT = 'UNSUPPORTED_ENVIRONMENT',
 }
 
 /**
@@ -61,6 +66,11 @@ class Plugin extends EventEmitter {
 	 */
 	public constructor(name: string, esmDistroPath: string) {
 		super()
+
+		const isRenderer = process.type === 'renderer'
+		if (!isRenderer) {
+			throw new NextsError(Errors.UNSUPPORTED_ENVIRONMENT, 'Plugins are not supported in browser environments')
+		}
 
 		this.name = name
 		this.#esmDistroPath = esmDistroPath

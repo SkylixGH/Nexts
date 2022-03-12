@@ -190,8 +190,8 @@ export const darkTheme: NextsControlsTheme = {
 	success1: '#50ffab',
 	success2: 'rgba(80, 255, 171, 40%)',
 
-	error1: '#ff5555',
-	error2: 'rgba(255, 85, 85, 40%)',
+	error1: '#c4314b',
+	error2: 'rgba(196, 49, 75, 40%)',
 
 	warning1: '#ffff55',
 	warning2: 'rgba(255, 255, 85, 40%)',

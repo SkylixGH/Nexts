@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styles from './App.module.scss'
 import {Icon} from '@iconify/react'
+import {appWindow} from '../..'
 
 /**
  * The properties of the button.
@@ -19,7 +20,9 @@ export interface Ref {
 }
 
 const App = React.forwardRef<Ref, Props>((props) => {
-	const [title, setTitle] = React.useState(window.document.title)
+	const [title, setTitle] = useState(window.document.title)
+	const [windowMaximized, setWindowMaximized] = useState(false)
+	const [reactError, setReactError] = useState<null | Error>(null)
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {
@@ -45,13 +48,40 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	return (
 		<div className={styles.root}>
 			<div className={styles.titleBar}>
-				<div>
-					<span>{title}213</span>
+				<div className={styles.titleBar_app}>
+					<div>
+						<img draggable={false} src={'https://skylix.net/LogoIconDark.svg'} alt={'-'} />
+					</div>
+
+					<span>{title}</span>
+				</div>
+
+				<div className={styles.titleBar_buttons}>
+					<button onClick={() => appWindow.minimize()}>
+						<Icon style={{
+							fontSize: '17px',
+						}} icon={'fluent:minimize-16-regular'} />
+					</button>
+
+					<button onClick={() => setWindowMaximized(!windowMaximized)}>
+						<Icon icon={`fluent:${windowMaximized ? 'restore' : 'maximize'}-16-regular`} />
+					</button>
+
+					<button className={styles.titleBar_buttonsClose}>
+						<Icon icon={'fluent:dismiss-16-regular'} />
+					</button>
 				</div>
 			</div>
 
 			<div className={styles.content}>
 				{props.children}
+				{/* <button onClick={() => setReactError(new Error('Test error'))}> */}
+				{/* 	Test error */}
+				{/* </button> */}
+			</div>
+
+			<div onClick={() => setReactError(null)} className={`${styles.errorBox} ${reactError ? '' : styles.errorBox_hide}`}>
+				<Icon icon={'fluent:error-circle-16-regular'} />
 			</div>
 		</div>
 	)

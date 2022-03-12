@@ -1,7 +1,5 @@
 import {EventEmitter} from 'events'
 
-let currentTheme: Theme
-
 /**
  * Theme variable properties.
  */
