@@ -14,6 +14,11 @@ export interface Props {
 	 * The button style mode.
 	 */
 	mode?: 'primary' | 'secondary' | 'outline' | 'text'
+
+	/**
+	 * The button click listener.
+	 */
+	onClick?: () => void;
 }
 
 /**
@@ -24,7 +29,7 @@ export interface Ref {
 
 const Button = React.forwardRef<Ref, Props>((props) => {
 	return (
-		<button className={`${styles.root} ${styles[`_${props.mode}`]}`}>{props.children}</button>
+		<button onClick={() => props.onClick ? props.onClick() : void 0} className={`${styles.root} ${styles[`_${props.mode}`]}`}>{props.children}</button>
 	)
 })
 

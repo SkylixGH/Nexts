@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import styles from './App.module.scss'
 import {Icon} from '@iconify/react'
-import {appWindow} from '../..'
+import {appWindow, Button} from '../..'
 
 /**
- * The properties of the button.
+ * The properties of the app.
  */
 export interface Props {
 	/**
@@ -20,7 +20,10 @@ export interface Ref {
 }
 
 const App = React.forwardRef<Ref, Props>((props) => {
+	const isElectron = typeof window !== 'undefined' && window.process && window.process.type
+
 	const [title, setTitle] = useState(window.document.title)
+	const [titleBarVisible, setTitleBarVisible] = useState(isElectron)
 	const [windowMaximized, setWindowMaximized] = useState(false)
 	const [reactError, setReactError] = useState<null | Error>(null)
 
@@ -47,7 +50,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 
 	return (
 		<div className={styles.root}>
-			<div className={styles.titleBar}>
+			{ titleBarVisible && <div className={styles.titleBar}>
 				<div className={styles.titleBar_app}>
 					<div>
 						<img draggable={false} src={'https://skylix.net/LogoIconDark.svg'} alt={'-'} />
@@ -71,13 +74,13 @@ const App = React.forwardRef<Ref, Props>((props) => {
 						<Icon icon={'fluent:dismiss-16-regular'} />
 					</button>
 				</div>
-			</div>
+			</div> }
 
-			<div className={styles.content}>
+			<div className={`${styles.content} ${titleBarVisible ? '' : styles.content_noTitleBar}`}>
 				{props.children}
-				{/* <button onClick={() => setReactError(new Error('Test error'))}> */}
-				{/* 	Test error */}
-				{/* </button> */}
+				<Button mode={'text'} onClick={() => setReactError(new Error('Test error'))}>
+					Test error
+				</Button>
 			</div>
 
 			<div onClick={() => setReactError(null)} className={`${styles.errorBox} ${reactError ? '' : styles.errorBox_hide}`}>

@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import {Plugin, logger, Button, Theme, themePacks, App} from '@nexts-stack/desktop-uix'
+import {Browser, Button, Theme, themePacks, App} from '@nexts-stack/desktop-uix'
 import './globals.css'
 
 // const pl = new Plugin('my-ext', 'C:\\Users\\XFaon\\CLionProjects\\nexts\\scratch\\packages\\my-ext\\build\\dist.esm.mjs')
@@ -12,6 +12,20 @@ import './globals.css'
 // setTimeout(() => {
 // 	pl.stop()
 // }, 5000)
+
+/**
+ *
+ */
+function Web() {
+	const [url, setUrl] = React.useState('https://skylix.net')
+
+	return (
+		<div>
+			<input placeholder={'URL'} defaultValue={url} onChange={(e) => setUrl(e.target.value)} />
+			<Browser url={url} />
+		</div>
+	)
+}
 
 const th = new Theme(themePacks.darkTheme)
 th.load()
@@ -80,6 +94,8 @@ ReactDOM.render(
 				}} />
 			</div>
 		</div>
+
+		<Web />
 
 		<Button>Lol Avery</Button>
 		<Button mode={'secondary'}>Sky lix</Button>
