@@ -196,3 +196,45 @@ export const darkTheme: NextsControlsTheme = {
 	warning1: '#ffff55',
 	warning2: 'rgba(255, 255, 85, 40%)',
 }
+
+export const lightTheme: NextsControlsTheme = {
+	layerSolid1: '#ffffff',
+	layerSolid2: '#efefef',
+	layerSolid3: '#D8D8D8',
+	layerSolid4: '#BBBBBB',
+
+	text1: '#000000',
+	text2: '#333333',
+	text3: '#666666',
+	text4: '#888888',
+
+	subtle1: 'rgba(0, 0, 0, 5%)',
+	subtle2: 'rgba(0, 0, 0, 10%)',
+	subtle3: 'rgba(0, 0, 0, 20%)',
+	subtle4: 'rgba(0, 0, 0, 30%)',
+
+	subtleLighter1: 'rgba(0, 0, 0, 5%)',
+	subtleLighter2: 'rgba(0, 0, 0, 10%)',
+	subtleLighter3: 'rgba(0, 0, 0, 20%)',
+	subtleLighter4: 'rgba(0, 0, 0, 30%)',
+
+	subtleDarker1: 'rgba(255, 255, 255, 5%)',
+	subtleDarker2: 'rgba(255, 255, 255, 10%)',
+	subtleDarker3: 'rgba(255, 255, 255, 20%)',
+	subtleDarker4: 'rgba(255, 255, 255, 30%)',
+
+	accent1: '#202020',
+	accent2: '#404040',
+
+	accentText1: '#FFFFFF',
+	accentText2: 'rgba(255, 255, 255, 40%)',
+
+	success1: '#50ffab',
+	success2: 'rgba(80, 255, 171, 40%)',
+
+	error1: '#c4314b',
+	error2: 'rgba(196, 49, 75, 40%)',
+
+	warning1: '#ffff55',
+	warning2: 'rgba(255, 255, 85, 40%)',
+}
