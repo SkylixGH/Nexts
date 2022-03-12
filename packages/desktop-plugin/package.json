@@ -1,6 +1,6 @@
 {
 	"name": "@nexts-stack/desktop-plugin",
-	"version": "1.0.0-dev.6",
+	"version": "1.0.0-dev.7",
 	"main": "./build/common.cjs",
 	"type": "module",
 	"types": "./build/types/index.d.ts",
