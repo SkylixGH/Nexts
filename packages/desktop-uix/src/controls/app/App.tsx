@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from './App.module.scss'
+import {Icon} from '@iconify/react'
 
 /**
  * The properties of the button.
@@ -18,9 +19,40 @@ export interface Ref {
 }
 
 const App = React.forwardRef<Ref, Props>((props) => {
+	const [title, setTitle] = React.useState(window.document.title)
+
+	useEffect(() => {
+		const titleListener = new MutationObserver(function() {
+			setTitle(window.document.title)
+		})
+
+		if (!document.querySelector('title')) {
+			const titleElement = document.createElement('title')
+			document.head.appendChild(titleElement)
+		}
+
+
+		titleListener.observe(
+			document.querySelectorAll('title')[0],
+			{subtree: true, characterData: true, childList: true},
+		)
+
+		return () => {
+			titleListener.disconnect()
+		}
+	})
+
 	return (
 		<div className={styles.root}>
-			{props.children}
+			<div className={styles.titleBar}>
+				<div>
+					<span>{title}213</span>
+				</div>
+			</div>
+
+			<div className={styles.content}>
+				{props.children}
+			</div>
 		</div>
 	)
 })

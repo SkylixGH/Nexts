@@ -29,18 +29,18 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 		}} : {}),
 		dependencies: {
 			...(app.type === 'desktop' ? {
-				'@nexts-stack/desktop': '*',
-				'@nexts-stack/desktop-uix': '*',
-				'react-dom': '*',
-				'react': '*',
+				'@nexts-stack/desktop': 'latest',
+				'@nexts-stack/desktop-uix': 'latest',
+				'react-dom': 'latest',
+				'react': 'latest',
 				'electron': '^17.1.1',
 			} : {}),
 			...(app.dependencies ? app.dependencies : {}),
 		},
 		devDependencies: {
 			...(app.type === 'desktop' ? {
-				'@types/react-dom': '*',
-				'@types/react': '*',
+				'@types/react-dom': 'latest',
+				'@types/react': 'latest',
 			} : {}),
 		},
 	}

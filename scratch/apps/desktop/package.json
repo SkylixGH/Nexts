@@ -16,12 +16,12 @@
 	"dependencies": {
 		"@nexts-stack/desktop": "../../../packages/desktop",
 		"@nexts-stack/desktop-uix": "../../../packages/desktop-uix",
-		"react-dom": "*",
-		"react": "*",
+		"react-dom": "latest",
+		"react": "latest",
 		"electron": "^17.1.1"
 	},
 	"devDependencies": {
-		"@types/react-dom": "*",
-		"@types/react": "*"
+		"@types/react-dom": "latest",
+		"@types/react": "latest"
 	}
 }

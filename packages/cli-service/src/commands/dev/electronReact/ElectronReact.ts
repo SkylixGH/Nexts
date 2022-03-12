@@ -6,6 +6,7 @@ import chokidar from 'chokidar'
 import crashError from '../../../misc/crashError'
 import {createServer} from 'vite'
 import react from '@vitejs/plugin-react'
+import reactRefresh from '@vitejs/plugin-react-refresh'
 
 /**
  * Commands from the Electron system interacting with the dev server.
@@ -81,7 +82,10 @@ export default class ElectronReact {
 				plugins: [react()],
 				publicDir: path.join(appExactPath, 'public'),
 				server: {
-					port: 5000,
+					hmr: {
+						host: 'localhost',
+						protocol: 'ws',
+					},
 				},
 			})
 
@@ -101,7 +105,7 @@ export default class ElectronReact {
 					cwd: appExactPath,
 					stdio: ['ipc'],
 					env: {
-						NEXTS_DEV_RENDERER: 'http://localhost:5000',
+						NEXTS_DEV_RENDERER: `http://${(server.httpServer!.address() as any).address}:${(server.httpServer!.address() as any).port}`,
 						FORCE_COLOR: '1',
 					},
 				})

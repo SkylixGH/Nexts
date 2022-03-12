@@ -81,7 +81,7 @@ ReactDOM.render(
 		</div>
 
 		<Button>Lol Avery</Button>
-		<Button mode={'secondary'}>Lol Avery</Button>
+		<Button mode={'secondary'}>Sky lix</Button>
 		<Button mode={'outline'}>Lol Avery</Button>
 		<Button mode={'text'}>Lol Avery</Button>
 	</App>,
