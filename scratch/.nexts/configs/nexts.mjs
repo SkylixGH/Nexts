@@ -4,7 +4,7 @@ export default defineConfig({
     typescript: true,
     author: 'SkylixGH',
     node: {
-        minVersion: '17.4.0',
+        minVersion: '17.2.0',
         maxVersion: '17.6.0',
     },
     apps: [
