@@ -24,7 +24,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const isElectron = typeof window !== 'undefined' && window.process && window.process.type
 
 	const [title, setTitle] = useState(window.document.title)
-	const [titleBarVisible, setTitleBarVisible] = useState(isElectron)
+	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer')
 	const [windowMaximized, setWindowMaximized] = useState(false)
 	const [reactError, setReactError] = useState<null | Error>(null)
 
@@ -85,7 +85,18 @@ const App = React.forwardRef<Ref, Props>((props) => {
 				<Icon icon={'fluent:error-circle-16-regular'} />
 			</div>
 
-			<Menu />
+			<Menu header={[
+				{
+					action: () => {
+						setTitleBarVisible(!titleBarVisible)
+					},
+					icon: {
+						src: 'mdi:electron-framework',
+					},
+				},
+			]} footer={[
+
+			]} />
 		</div>
 	)
 })
