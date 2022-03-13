@@ -94,6 +94,15 @@ const App = React.forwardRef<Ref, Props>((props) => {
 						src: 'mdi:electron-framework',
 					},
 				},
+				{
+					action: () => {
+						appWindow.minimize()
+					},
+					icon: {
+						src: '-',
+						type: 'char',
+					},
+				},
 			]} footer={[
 
 			]} />
