@@ -38,13 +38,15 @@ function Web() {
 					if (themeType === 'dark') {
 						new Theme(themePacks.lightTheme).load()
 					} else {
-						new Theme(themePacks.darkTheme).load()
+						new Theme({
+							...themePacks.darkTheme,
+						}).load()
 					}
 				}}>Theme: {themeType}</Button>
 				<Button mode={'outline'} onClick={() => setDevTools(!devTools)}>Toggle Dev Tools</Button>
 			</div>
 			<br />
-			{/* <Browser openDevTools={devTools} url={'https://www.microsoft.com/en-us/windows/windows-11#pchealthcheck'} /> */}
+			<Browser openDevTools={devTools} url={'https://www.microsoft.com/en-us/windows/windows-11#pchealthcheck'} />
 		</div>
 	)
 }

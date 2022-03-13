@@ -117,6 +117,13 @@ const App = React.forwardRef<Ref, Props>((props) => {
 						size: 20,
 					},
 				},
+				{
+					label: 'Close Current Window',
+					icon: {
+						src: 'mdi:close',
+						size: 20,
+					},
+				},
 			]} footer={[
 				{
 					action: () => {

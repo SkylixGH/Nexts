@@ -10,14 +10,17 @@
   color: $text2;
   max-width: 250px;
   max-height: 250px;
+  gap: 5px;
+  padding: 5px 0;
 }
 
 .footer, .header {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  padding: 5px;
-  height: 45px;
+  padding: 0 5px;
+  height: 40px;
+  align-items: center;
 }
 
 .body {
@@ -25,7 +28,33 @@
   flex-direction: column;
   flex: 1;
   overflow-y: auto;
-  background: blue;
+}
+
+.body_button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: $text1;
+
+  &:hover {
+    background: $subtle1;
+
+    &:active {
+      color: $text3;
+    }
+  }
+}
+
+.body_buttonIcon {
+
+}
+
+.body_buttonIcon {
+
 }
 
 .iconButton {

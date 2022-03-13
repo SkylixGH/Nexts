@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import styles from './Browser.module.scss'
 import {Icon} from '@iconify/react'
+import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular'
 
 /**
  * The properties of the browser.
@@ -56,7 +57,7 @@ const Button = React.forwardRef<Ref, Props>((props) => {
 			{ isElectron && <webview ref={webViewRef} src={props.url} className={styles.webview} /> }
 
 			{ !isElectron && <div className={styles.error}>
-				<Icon icon={'fluent:error-circle-16-regular'} />
+				<Icon icon={ErrorCircle16Regular} />
 			</div> }
 		</div>
 	)

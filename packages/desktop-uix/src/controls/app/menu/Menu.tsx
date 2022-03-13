@@ -106,9 +106,13 @@ const Menu = (props: Props) => {
 			<div className={styles.body}>
 				{props.body.map((button) => {
 					return (
-						<button>
-							<div>
+						<button className={styles.body_button}>
+							<div className={styles.body_buttonIcon}>
 								{button.icon && renderButtonIcon(button.icon)}
+							</div>
+
+							<div className={styles.body_buttonLabel}>
+								{button.label}
 							</div>
 						</button>
 					)
