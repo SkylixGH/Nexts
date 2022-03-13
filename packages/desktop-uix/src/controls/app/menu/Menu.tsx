@@ -1,4 +1,4 @@
-import {Icon} from '@iconify/react'
+import {Icon, IconifyIcon} from '@iconify/react'
 import React from 'react'
 import styles from './Menu.module.scss'
 
@@ -18,12 +18,17 @@ export interface IconButton {
 		/**
 		 * The source of the icon.
 		 */
-		src: string;
+		src: string | IconifyIcon;
 
 		/**
 		 * The type of the icon.
 		 */
 		type?: 'icon' | 'image' | 'char';
+
+		/**
+		 * The side in number of pixels of the icon.
+		 */
+		size?: number;
 	},
 }
 
@@ -40,28 +45,51 @@ export interface Props {
 	 * The header buttons.
 	 */
 	header?: IconButton[];
+
+	/**
+	 * The menu items.
+	 */
+	body: {
+		/**
+		 * The icon for the button.
+		 */
+		icon?: IconButton['icon'];
+
+		/**
+		 * The label for the button.
+		 */
+		label: string;
+	}[];
 }
 
 const Menu = (props: Props) => {
+	const renderButtonIcon = (icon: IconButton['icon']) => {
+		return (
+			icon.type === 'icon' || !icon.type ?
+				<Icon style={{
+					fontSize: typeof icon.size !== 'undefined' ? `${icon.size}px` : '16px',
+				}} icon={icon.src} /> :
+				(
+					icon.type === 'image' ?
+						(
+							<div className={styles.iconButton_imageWrapper}>
+								<img draggable={false} src={typeof icon.src === 'string' ? icon.src : ''} alt={''} />
+							</div>
+						) :
+						<span style={{
+							fontSize: typeof icon.size !== 'undefined' ? `${icon.size}px` : '16px',
+						}} className={styles.iconButton_charWrapper}>{icon.src}</span>
+				)
+		)
+	}
+
 	const renderIconButtons = (buttons: IconButton[]) => {
 		const resultJsx = [] as JSX.Element[]
 
 		buttons.forEach((button) => {
 			resultJsx.push(
 				<button className={styles.iconButton} onClick={() => button.action()}>
-					{
-						button.icon.type === 'icon' || !button.icon.type ?
-							<Icon icon={button.icon.src} /> :
-							(
-								button.icon.type === 'image' ?
-									(
-										<div className={styles.iconButton_imageWrapper}>
-											<img draggable={false} src={button.icon.src} alt={''} />
-										</div>
-									) :
-									<span className={styles.iconButton_charWrapper}>{button.icon.src}</span>
-							)
-					}
+					{renderButtonIcon(button.icon)}
 				</button>,
 			)
 		})
@@ -76,7 +104,15 @@ const Menu = (props: Props) => {
 			</div> }
 
 			<div className={styles.body}>
-
+				{props.body.map((button) => {
+					return (
+						<button>
+							<div>
+								{button.icon && renderButtonIcon(button.icon)}
+							</div>
+						</button>
+					)
+				})}
 			</div>
 
 			{ props.footer && props.footer.length > 0 && <div className={styles.footer}>

@@ -1,8 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import styles from './App.module.scss'
 import {Icon} from '@iconify/react'
-import {appWindow, Button} from '../..'
+import {appWindow} from '../..'
 import Menu from './menu/Menu'
+import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular'
+import Restore16Regular from '@iconify/icons-fluent/restore-16-regular'
+import Minimize16Regular from '@iconify/icons-fluent/minimize-16-regular'
+import Dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular'
+import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular'
 
 /**
  * The properties of the app.
@@ -64,15 +69,15 @@ const App = React.forwardRef<Ref, Props>((props) => {
 					<button onClick={() => appWindow.minimize()}>
 						<Icon style={{
 							fontSize: '17px',
-						}} icon={'fluent:minimize-16-regular'} />
+						}} icon={Minimize16Regular} />
 					</button>
 
 					<button onClick={() => setWindowMaximized(!windowMaximized)}>
-						<Icon icon={`fluent:${windowMaximized ? 'restore' : 'maximize'}-16-regular`} />
+						<Icon icon={windowMaximized ? Restore16Regular : Maximize16Regular} />
 					</button>
 
 					<button className={styles.titleBar_buttonsClose}>
-						<Icon icon={'fluent:dismiss-16-regular'} />
+						<Icon icon={Dismiss16Regular} />
 					</button>
 				</div>
 			</div> }
@@ -82,7 +87,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 			</div>
 
 			<div onClick={() => setReactError(null)} className={`${styles.errorBox} ${reactError ? '' : styles.errorBox_hide}`}>
-				<Icon icon={'fluent:error-circle-16-regular'} />
+				<Icon icon={ErrorCircle16Regular} />
 			</div>
 
 			<Menu header={[
@@ -92,6 +97,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 					},
 					icon: {
 						src: 'mdi:electron-framework',
+						size: 20,
 					},
 				},
 				{
@@ -99,12 +105,27 @@ const App = React.forwardRef<Ref, Props>((props) => {
 						appWindow.minimize()
 					},
 					icon: {
-						src: '-',
-						type: 'char',
+						src: Minimize16Regular,
+						size: 17,
+					},
+				},
+			]} body={[
+				{
+					label: 'Reload',
+					icon: {
+						src: 'mdi:reload',
+						size: 20,
 					},
 				},
 			]} footer={[
-
+				{
+					action: () => {
+					},
+					icon: {
+						src: Dismiss16Regular,
+						size: 17,
+					},
+				},
 			]} />
 		</div>
 	)
