@@ -16,6 +16,11 @@ export default defineConfig({
             displayName: 'My Desktop App',
             name: 'desk',
             id: 'net.skylix.desktop',
+            rootElementID: 'root',
+            main: {
+                backend: './src/main.ts',
+                frontend: './src/react.tsx',
+            },
             dependencies: {
                 '@nexts-stack/desktop': '../../../packages/desktop',
                 '@nexts-stack/desktop-uix': '../../../packages/desktop-uix',
@@ -27,6 +32,9 @@ export default defineConfig({
         // 	description: 'This is a mobile app',
         // 	keywords: ['mobile', 'app'],
         // 	name: 'My Mobile App',
+        // 	main: 'sda',
+        // 	id: 'net.skylix.mobile',
+        // 	displayName: 'My Mobile App',
         // },
         // {
         // 	type: 'node',

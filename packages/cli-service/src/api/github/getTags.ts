@@ -43,7 +43,7 @@ export interface Tag {
 }
 
 /**
- * Get all tags from a github repository.
+ * Get all tags from a GitHub repository.
  * @param org The organization name.
  * @param repo The repository name.
  * @param page The page number.

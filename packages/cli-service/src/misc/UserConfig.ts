@@ -1,16 +1,11 @@
 /**
- * An app entry.
+ * The app global configuration that all apps can use.
  */
-export interface App {
+type AppCommon = {
 	/**
 	 * The app's display name.
 	 */
 	name: string;
-
-	/**
-	 * The app type.
-	 */
-	type: 'desktop' | 'mobile' | 'web' | 'node';
 
 	/**
 	 * The app's root path.
@@ -44,6 +39,56 @@ export interface App {
 		[name: string]: string;
 	}
 }
+
+/**
+ * App desktop configuration.
+ */
+export type AppDesktop = AppCommon & {
+	/**
+	 * The app type.
+	 */
+	type: 'desktop';
+
+	/**
+	 * The ID of the root element.
+	 */
+	rootElementID: string;
+
+	/**
+	 * The app's entry files.
+	 */
+	main: {
+		/**
+		 * Backend entry file.
+		 */
+		backend: string;
+
+		/**
+		 * Frontend entry file.
+		 */
+		frontend: string;
+	}
+}
+
+/**
+ * App mobile configuration.
+ */
+export type AppMobile = AppCommon & {
+	/**
+	 * The app type.
+	 */
+	type: 'mobile';
+
+	/**
+	 * The app's entry file.
+	 */
+	main: string;
+}
+
+/**
+ * App configuration.
+ */
+export type App = AppDesktop | AppMobile;
 
 /**
  * The Nexts  config.

@@ -1,12 +1,14 @@
 import path from 'path'
 import fsSync from 'fs'
+import fs from 'fs-extra'
 import logger from '@nexts-stack/logger'
 import {spawn} from 'child_process'
 import chokidar from 'chokidar'
 import crashError from '../../../misc/crashError'
 import {createServer} from 'vite'
 import react from '@vitejs/plugin-react'
-import reactRefresh from '@vitejs/plugin-react-refresh'
+import {App, AppDesktop} from '../../../misc/UserConfig'
+import validateElementID from '../../../misc/validateElementID'
 
 /**
  * Commands from the Electron system interacting with the dev server.
@@ -23,9 +25,10 @@ export default class ElectronReact {
 	 * Load the Electron server.
 	 * @param appExactPath The exact path of the app.
 	 * @param argvPath The CLI argv path relative to the CWD.
+	 * @param appConfig The app config.
 	 * @returns Promise for when the dev server is ready.
 	 */
-	public loadElectron(appExactPath: string, argvPath: string) {
+	public startServer(appExactPath: string, argvPath: string, appConfig: App) {
 		return new Promise<void>(async (resolve) => {
 			const esbuild = await import(['es', 'build'].join('')) as typeof import('esbuild')
 			const electronPath = path.join(process.cwd(), argvPath, 'node_modules', 'electron')
@@ -41,8 +44,23 @@ export default class ElectronReact {
 				process.exit(1)
 			}
 
-			let appPackage: any
+			if (typeof appConfig.main === 'string' || !fsSync.existsSync(path.join(process.cwd(), argvPath, appConfig.path, appConfig.main.backend))) {
+				logger.error('Your backend main entry location is invalid')
+				process.exit(1)
+			}
+
+			if (!fsSync.existsSync(path.join(process.cwd(), argvPath, appConfig.path, appConfig.main.frontend))) {
+				logger.error('Your frontend main entry location is invalid')
+				process.exit(1)
+			}
+
+			if (!validateElementID((appConfig as AppDesktop).rootElementID)) {
+				logger.error('Your element ID is invalid for your front end root element')
+				process.exit(1)
+			}
+
 			let esBuilder: import('esbuild').BuildResult
+			let appPackage: any
 
 			try {
 				appPackage = JSON.parse(fsSync.readFileSync(path.join(appExactPath, 'package.json'), 'utf8'))
@@ -54,8 +72,23 @@ export default class ElectronReact {
 			}
 
 			try {
+				await fs.writeFile(path.join(appExactPath, 'index.html'), [
+					'<!DOCTYPE html>',
+					'<html lang="en">',
+					['<h', 'e', 'a', 'd>'].join(''),
+					`       <title>${appPackage.name}</title>`,
+					'       <meta charset="utf-8">',
+					'       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">',
+					'   </head>',
+					'   <body>',
+					`       <div id="${(appConfig as AppDesktop).rootElementID}"></div>`,
+					`       <script src="${appConfig.main.frontend}" type="module"></script>`,
+					'   </body>',
+					'</html>',
+				].join('\n'))
+
 				esBuilder = await esbuild.build({
-					entryPoints: [path.join(appExactPath, 'src', 'main.ts')],
+					entryPoints: [path.join(appExactPath, appConfig.main.backend)],
 					format: 'cjs',
 					outfile: path.join(appExactPath, 'build', 'main.electron.cjs'),
 					target: 'ESNext',

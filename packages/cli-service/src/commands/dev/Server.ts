@@ -53,7 +53,7 @@ export default class Server {
 
 		if (this.#app.type === 'desktop') {
 			const server = new ElectronReact()
-			await server.loadElectron(this.#appExactPath, this.#argvPath)
+			await server.startServer(this.#appExactPath, this.#argvPath, this.#app)
 		}
 
 		this.#running = true
