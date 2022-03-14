@@ -1,4 +1,26 @@
+import theme from '../theme/Theme'
+
 const isElectron = typeof window !== 'undefined' && window.process && window.process.type
+import * as themeManager from '../theme/themeManager'
+
+let currentTheme = themeManager.getCurrentTheme()
+
+const themeLoad = () => {
+	const window = getCurrentWindow()
+
+	if (window) {
+		window.setBackgroundColor(currentTheme?.theme.layerSolid1 ?? '#000000')
+	}
+}
+
+if (currentTheme) {
+	themeLoad()
+}
+
+themeManager.on('change', () => {
+	currentTheme = themeManager.getCurrentTheme()
+	themeLoad()
+})
 
 /**
  * Get the current ElectronJS app window.

@@ -11,15 +11,6 @@ function createWindow() {
 			height: 600,
 		},
 	})
-
-	setTimeout(() => {
-		windowManager.create({
-			frame: {
-				width: 1000,
-				height: 600,
-			},
-		})
-	}, 10000)
 }
 
 app.on('all-windows-closed', () => {

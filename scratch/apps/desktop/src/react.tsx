@@ -77,7 +77,7 @@ function Web() {
 	)
 }
 
-const th = new Theme(themePacks.darkTheme)
+const th = new Theme(themePacks.lightTheme)
 th.load()
 
 document.title = 'Nexts App | https://skylix.net'

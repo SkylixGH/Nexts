@@ -2,7 +2,7 @@ import {EventEmitter} from 'events'
 import Theme from './Theme'
 
 const emitter = new EventEmitter()
-let currentTheme: Theme<any>
+let currentTheme: Theme<any> | null = null
 
 /**
  * Set the loaded theme so that the theme manager knows more about it.
