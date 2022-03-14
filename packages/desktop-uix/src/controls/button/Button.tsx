@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from './Button.module.scss'
+import React from 'react';
+import styles from './Button.module.scss';
 
 /**
  * The properties of the button.
@@ -30,8 +30,8 @@ export interface Ref {
 const Button = React.forwardRef<Ref, Props>((props) => {
 	return (
 		<button onClick={() => props.onClick ? props.onClick() : void 0} className={`${styles.root} ${styles[`_${props.mode}`]}`}>{props.children}</button>
-	)
-})
+	);
+});
 
-Button.displayName = 'Button'
-export default Button
+Button.displayName = 'Button';
+export default Button;

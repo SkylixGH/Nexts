@@ -1,5 +1,5 @@
-import UserConfig, {App} from '../../misc/UserConfig'
-import ElectronReact from './electronReact/ElectronReact'
+import UserConfig, {App} from '../../misc/UserConfig';
+import ElectronReact from './electronReact/ElectronReact';
 
 /**
  * A dev server host.
@@ -8,27 +8,27 @@ export default class Server {
 	/**
 	 * The exact path of the app.
 	 */
-	readonly #appExactPath: string
+	readonly #appExactPath: string;
 
 	/**
 	 * The config app record.
 	 */
-	readonly #app: App
+	readonly #app: App;
 
 	/**
 	 * The project config.
 	 */
-	readonly #config: UserConfig
+	readonly #config: UserConfig;
 
 	/**
 	 * The CLI relative argv path.
 	 */
-	readonly #argvPath: string
+	readonly #argvPath: string;
 
 	/**
 	 * If the dev server is running.
 	 */
-	#running = false
+	#running = false;
 
 	/**
 	 * Create a dev server host.
@@ -38,10 +38,10 @@ export default class Server {
 	 * @param argvPath The CLI relative argv path.
 	 */
 	public constructor(appExactPath: string, app: App, config: UserConfig, argvPath: string) {
-		this.#config = config
-		this.#app = app
-		this.#appExactPath = appExactPath
-		this.#argvPath = argvPath
+		this.#config = config;
+		this.#app = app;
+		this.#appExactPath = appExactPath;
+		this.#argvPath = argvPath;
 	}
 
 	/**
@@ -49,14 +49,14 @@ export default class Server {
 	 * @returns {void}
 	 */
 	public async run() {
-		if (this.#running) return
+		if (this.#running) return;
 
 		if (this.#app.type === 'desktop') {
-			const server = new ElectronReact()
-			await server.startServer(this.#appExactPath, this.#argvPath, this.#app)
+			const server = new ElectronReact();
+			await server.startServer(this.#appExactPath, this.#argvPath, this.#app);
 		}
 
-		this.#running = true
+		this.#running = true;
 	}
 }
 

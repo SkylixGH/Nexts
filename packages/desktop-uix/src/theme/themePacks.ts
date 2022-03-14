@@ -1,4 +1,4 @@
-import {ThemeProperties} from '..'
+import {ThemeProperties} from '..';
 
 /**
  * A Nexts theme properties structure.
@@ -197,7 +197,7 @@ export const darkTheme: NextsControlsTheme = {
 
 	warning1: '#ffff55',
 	warning2: 'rgba(255, 255, 85, 40%)',
-}
+};
 
 export const lightTheme: NextsControlsTheme = {
 	type: 'light',
@@ -241,4 +241,4 @@ export const lightTheme: NextsControlsTheme = {
 
 	warning1: '#ffff55',
 	warning2: 'rgba(255, 255, 85, 40%)',
-}
+};

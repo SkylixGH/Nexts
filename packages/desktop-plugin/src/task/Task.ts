@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events'
+import {EventEmitter} from 'events';
 
 /**
  * Extension types for the event emitter.
@@ -19,15 +19,15 @@ class Task<MessageType extends Object> extends EventEmitter {
 	/**
 	 * The name of the task.
 	 */
-	readonly #name: string
+	readonly #name: string;
 
 	/**
 	 * Create a new plugin task channel.
 	 * @param name The name of the task.
 	 */
 	public constructor(name: string) {
-		super()
-		this.#name = name
+		super();
+		this.#name = name;
 	}
 
 	/**
@@ -39,8 +39,8 @@ class Task<MessageType extends Object> extends EventEmitter {
 		process.send!({
 			type: this.#name,
 			message,
-		})
+		});
 	}
 }
 
-export default Task
+export default Task;

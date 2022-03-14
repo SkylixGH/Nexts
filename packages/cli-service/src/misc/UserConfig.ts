@@ -190,4 +190,4 @@ export default interface UserConfig {
 			[name: string]: string;
 		}
 	}[]
-}
+};;;;;;;;;;;;;;;;;;;;;;;;;;;;;

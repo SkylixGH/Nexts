@@ -1,12 +1,12 @@
-import Window, {Settings} from '../window/Window'
-import {DeepPartial} from '@nexts-stack/internal'
-import {EventEmitter} from 'events'
-import {sendDevServer} from '../internal/api/api'
-import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service'
+import Window, {Settings} from '../window/Window';
+import {DeepPartial} from '@nexts-stack/internal';
+import {EventEmitter} from 'events';
+import {sendDevServer} from '../internal/api/api';
+import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service';
 
-const windowStore = [] as Window[]
-const emitter = new EventEmitter()
-let openWindows = 0
+const windowStore = [] as Window[];
+const emitter = new EventEmitter();
+let openWindows = 0;
 
 /**
  * Create a new window in the app.
@@ -14,20 +14,20 @@ let openWindows = 0
  * @returns The new window.
  */
 export function create(settings: DeepPartial<Settings>) {
-	const window = new Window(settings)
-	windowStore.push(window)
-	openWindows++
+	const window = new Window(settings);
+	windowStore.push(window);
+	openWindows++;
 
 	window.on('close', () => {
-		openWindows--
+		openWindows--;
 
 		if (openWindows === 0) {
-			emitter.emit('all-windows-closed')
-			sendDevServer(ElectronReactElectronServerCommand.STOP)
+			emitter.emit('all-windows-closed');
+			sendDevServer(ElectronReactElectronServerCommand.STOP);
 		}
-	})
+	});
 
-	return window
+	return window;
 }
 
 /**
@@ -44,7 +44,7 @@ export function on(event: 'all-windows-closed', listener: () => void): void
  * @returns {void}
  */
 export function on(event: string, listener: () => void) {
-	emitter.on(event, listener)
+	emitter.on(event, listener);
 }
 
 /**
@@ -54,7 +54,7 @@ export function on(event: string, listener: () => void) {
  * @returns {void}
  */
 export function once(event: string, listener: () => void) {
-	emitter.once(event, listener)
+	emitter.once(event, listener);
 }
 
 /**
@@ -64,7 +64,7 @@ export function once(event: string, listener: () => void) {
  * @returns {void}
  */
 export function removeListener(event: string, listener: () => void) {
-	emitter.removeListener(event, listener)
+	emitter.removeListener(event, listener);
 }
 
 /**
@@ -74,5 +74,5 @@ export function removeListener(event: string, listener: () => void) {
  * @returns {void}
  */
 export function addListener(event: string, listener: () => void) {
-	emitter.addListener(event, listener)
+	emitter.addListener(event, listener);
 }

@@ -1,4 +1,4 @@
-import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service'
+import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service';
 
 /**
  * Send a message to the Nexts dev server.
@@ -11,6 +11,6 @@ export function sendDevServer<MessageType extends Object>(type: ElectronReactEle
 		process.send(JSON.stringify({
 			type,
 			data: message,
-		}))
+		}));
 	}
 }

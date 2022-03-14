@@ -1,7 +1,7 @@
-import logger from '@nexts-stack/logger'
-import fs from 'fs/promises'
-import path from 'path'
-import crashError from '../misc/crashError'
+import logger from '@nexts-stack/logger';
+import fs from 'fs/promises';
+import path from 'path';
+import crashError from '../misc/crashError';
 
 /**
  * Write a cache record.
@@ -11,15 +11,15 @@ import crashError from '../misc/crashError'
  * @returns {void}
  */
 export default async function cacheWrite(relativeCWDPath: string, recordPathRelative: string, content: string) {
-	const recordPath = path.join(process.cwd(), relativeCWDPath, '.nexts', recordPathRelative)
+	const recordPath = path.join(process.cwd(), relativeCWDPath, '.nexts', recordPathRelative);
 
 	try {
-		await fs.mkdir(path.dirname(recordPath), {recursive: true})
-		await fs.writeFile(recordPath, content)
+		await fs.mkdir(path.dirname(recordPath), {recursive: true});
+		await fs.writeFile(recordPath, content);
 	} catch (error) {
-		logger.error(`Failed to write cache record to '${recordPath}`)
-		crashError(error)
+		logger.error(`Failed to write cache record to '${recordPath}`);
+		crashError(error);
 
-		process.exit(1)
+		process.exit(1);
 	}
 }

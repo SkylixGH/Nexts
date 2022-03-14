@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from './progress.module.scss'
+import React from 'react';
+import styles from './progress.module.scss';
 
 /**
  * The properties of the progress bar.
@@ -32,8 +32,8 @@ const Progress = React.forwardRef<Ref, Props>((props) => {
 				`${styles.value} ${!props.mode || props.mode === 'indeterminate' ? styles.value_indeterminate : styles.value_determinate}`
 			} />
 		</div>
-	)
-})
+	);
+});
 
-Progress.displayName = 'Button'
-export default Progress
+Progress.displayName = 'Button';
+export default Progress;

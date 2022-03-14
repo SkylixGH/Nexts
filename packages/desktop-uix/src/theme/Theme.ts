@@ -1,5 +1,5 @@
-import {EventEmitter} from 'events'
-import * as themeManager from './themeManager'
+import {EventEmitter} from 'events';
+import * as themeManager from './themeManager';
 
 /**
  * Theme variable properties.
@@ -33,22 +33,22 @@ class Theme<ThemeProperties extends Properties> extends EventEmitter {
 	/**
 	 * The theme properties.
 	 */
-	readonly theme: ThemeProperties
+	readonly theme: ThemeProperties;
 
 	/**
 	 * The type of theme.
 	 */
-	readonly type: ThemeProperties['type']
+	readonly type: ThemeProperties['type'];
 
 	/**
 	 * Create a new global app theme.
 	 * @param theme The theme to use.
 	 */
 	public constructor(theme: ThemeProperties) {
-		super()
+		super();
 
-		this.theme = theme
-		this.type = theme.type
+		this.theme = theme;
+		this.type = theme.type;
 	}
 
 	/**
@@ -56,18 +56,18 @@ class Theme<ThemeProperties extends Properties> extends EventEmitter {
 	 * @returns {void}
 	 */
 	public load() {
-		const themeContainer = document.createElement('style')
-		themeContainer.className = '__nexts__theme__'
+		const themeContainer = document.createElement('style');
+		themeContainer.className = '__nexts__theme__';
 
-		themeContainer.innerHTML = this.themeToCss()
+		themeContainer.innerHTML = this.themeToCss();
 
 		if (document.head.getElementsByClassName('__nexts__theme__').length !== 0) {
-			document.head.removeChild(document.head.getElementsByClassName('__nexts__theme__')[0])
+			document.head.removeChild(document.head.getElementsByClassName('__nexts__theme__')[0]);
 		}
 
-		document.head.appendChild(themeContainer)
-		this.emit('load')
-		themeManager.setLoadedTheme(this)
+		document.head.appendChild(themeContainer);
+		this.emit('load');
+		themeManager.setLoadedTheme(this);
 	}
 
 	/**
@@ -75,15 +75,15 @@ class Theme<ThemeProperties extends Properties> extends EventEmitter {
 	 * @returns The CSS string.
 	 */
 	private themeToCss() {
-		let result = ':root {'
+		let result = ':root {';
 
 		Object.keys(this.theme).forEach((key) => {
-			result += `--${key}: ${this.theme[key]};`
-		})
+			result += `--${key}: ${this.theme[key]};`;
+		});
 
 
-		return `${result }}`
+		return `${result }}`;
 	}
 }
 
-export default Theme
+export default Theme;

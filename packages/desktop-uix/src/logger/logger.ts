@@ -6,7 +6,7 @@
  * @returns {void}
  */
 export function logWithTag(prefix: string, tagColor: string, message: string) {
-	console.log(`[%c${prefix}%c]: ${message}`, `color: ${tagColor}`, 'color: inherit')
+	console.log(`[%c${prefix}%c]: ${message}`, `color: ${tagColor}`, 'color: inherit');
 }
 
 /**
@@ -15,7 +15,7 @@ export function logWithTag(prefix: string, tagColor: string, message: string) {
  * @returns {void}
  */
 export function log(message: string) {
-	logWithTag('Info', '#999999', message)
+	logWithTag('Info', '#999999', message);
 }
 
 /**
@@ -24,7 +24,7 @@ export function log(message: string) {
  * @returns {void}
  */
 export function warning(message: string) {
-	logWithTag('Warning', '#FFFF55', message)
+	logWithTag('Warning', '#FFFF55', message);
 }
 
 /**
@@ -33,7 +33,7 @@ export function warning(message: string) {
  * @returns {void}
  */
 export function error(message: string) {
-	logWithTag('Error', '#FF5555', message)
+	logWithTag('Error', '#FF5555', message);
 }
 
 /**
@@ -42,5 +42,5 @@ export function error(message: string) {
  * @returns {void}
  */
 export function success(message: string) {
-	logWithTag('Success', '#50FFAB', message)
+	logWithTag('Success', '#50FFAB', message);
 }

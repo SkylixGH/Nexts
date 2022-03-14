@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react'
-import styles from './App.module.scss'
-import {Icon} from '@iconify/react'
-import {appWindow} from '../..'
-import Menu from './menu/Menu'
-import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular'
-import Restore16Regular from '@iconify/icons-fluent/restore-16-regular'
-import Minimize16Regular from '@iconify/icons-fluent/minimize-16-regular'
-import Dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular'
-import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular'
+import React, {useEffect, useState} from 'react';
+import styles from './App.module.scss';
+import {Icon} from '@iconify/react';
+import {appWindow} from '../..';
+import Menu from './menu/Menu';
+import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular';
+import Restore16Regular from '@iconify/icons-fluent/restore-16-regular';
+import Minimize16Regular from '@iconify/icons-fluent/minimize-16-regular';
+import Dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular';
+import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular';
 
 /**
  * The properties of the app.
@@ -26,33 +26,33 @@ export interface Ref {
 }
 
 const App = React.forwardRef<Ref, Props>((props) => {
-	const isElectron = typeof window !== 'undefined' && window.process && window.process.type
+	const isElectron = typeof window !== 'undefined' && window.process && window.process.type;
 
-	const [title, setTitle] = useState(window.document.title)
-	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer')
-	const [windowMaximized, setWindowMaximized] = useState(false)
-	const [reactError, setReactError] = useState<null | Error>(null)
+	const [title, setTitle] = useState(window.document.title);
+	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer');
+	const [windowMaximized, setWindowMaximized] = useState(false);
+	const [reactError, setReactError] = useState<null | Error>(null);
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {
-			setTitle(window.document.title)
-		})
+			setTitle(window.document.title);
+		});
 
 		if (!document.querySelector('title')) {
-			const titleElement = document.createElement('title')
-			document.head.appendChild(titleElement)
+			const titleElement = document.createElement('title');
+			document.head.appendChild(titleElement);
 		}
 
 
 		titleListener.observe(
 			document.querySelectorAll('title')[0],
 			{subtree: true, characterData: true, childList: true},
-		)
+		);
 
 		return () => {
-			titleListener.disconnect()
-		}
-	})
+			titleListener.disconnect();
+		};
+	});
 
 	return (
 		<div className={styles.root}>
@@ -125,8 +125,8 @@ const App = React.forwardRef<Ref, Props>((props) => {
 			{/* 	}, */}
 			{/* ]}/> */}
 		</div>
-	)
-})
+	);
+});
 
-App.displayName = 'App'
-export default App
+App.displayName = 'App';
+export default App;

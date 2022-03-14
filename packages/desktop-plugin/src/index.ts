@@ -1,4 +1,4 @@
-import Task from './task/Task'
+import Task from './task/Task';
 
 // if (!process.env.NEXTS_PLUGIN_ENV) {
 // 	throw new Error('The plugin is not running in a NEXTS based application')
@@ -6,5 +6,5 @@ import Task from './task/Task'
 // 	throw new Error('The plugin is not running in a desktop application')
 // }
 
-export * as plugin from './plugin/plugin'
-export {Task}
+export * as plugin from './plugin/plugin';
+export {Task};

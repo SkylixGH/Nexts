@@ -1,6 +1,6 @@
-import logger from '@nexts-stack/logger'
-import https from 'https'
-import crashError from '../../misc/crashError'
+import logger from '@nexts-stack/logger';
+import https from 'https';
+import crashError from '../../misc/crashError';
 
 /**
  * A github tag.
@@ -51,7 +51,7 @@ export interface Tag {
  */
 export default function getTags(org: string, repo: string, page?: string) {
 	return new Promise<Tag[]>((resolve, reject) => {
-		const url = `/repos/${org}/${repo}/tags${page ? `?page=${page}` : '' }`
+		const url = `/repos/${org}/${repo}/tags${page ? `?page=${page}` : '' }`;
 
 		https.get({
 			headers: {
@@ -60,37 +60,37 @@ export default function getTags(org: string, repo: string, page?: string) {
 			host: 'api.github.com',
 			path: url,
 		}, (res) => {
-			let data = ''
+			let data = '';
 
 			res.on('data', (chunk) => {
-				data += chunk
-			})
+				data += chunk;
+			});
 
 			res.on('end', () => {
-				let tags: Tag[] = []
+				let tags: Tag[] = [];
 
 				try {
-					tags = JSON.parse(data)
+					tags = JSON.parse(data);
 				} catch (error) {
-					logger.error('Github responded with an error: ')
+					logger.error('Github responded with an error: ');
 					data.split('\n').forEach((line) => {
-						logger.error(line)
-					})
+						logger.error(line);
+					});
 
-					process.exit(1)
+					process.exit(1);
 				}
 
 				if (tags.length === 0) {
-					resolve([])
+					resolve([]);
 				} else {
-					resolve(tags)
+					resolve(tags);
 				}
-			})
+			});
 		}).on('error', (error) => {
-			logger.error(`Failed to fetch tags from github repository '${org}/${repo}'`)
-			crashError(error)
+			logger.error(`Failed to fetch tags from github repository '${org}/${repo}'`);
+			crashError(error);
 
-			process.exit(1)
-		})
-	})
+			process.exit(1);
+		});
+	});
 }

@@ -1,8 +1,8 @@
-import {EventEmitter} from 'events'
-import Theme from './Theme'
+import {EventEmitter} from 'events';
+import Theme from './Theme';
 
-const emitter = new EventEmitter()
-let currentTheme: Theme<any> | null = null
+const emitter = new EventEmitter();
+let currentTheme: Theme<any> | null = null;
 
 /**
  * Set the loaded theme so that the theme manager knows more about it.
@@ -11,8 +11,8 @@ let currentTheme: Theme<any> | null = null
  * @returns {void}
  */
 export function setLoadedTheme(theme: Theme<any>) {
-	currentTheme = theme
-	emitter.emit('change')
+	currentTheme = theme;
+	emitter.emit('change');
 }
 
 /**
@@ -20,7 +20,7 @@ export function setLoadedTheme(theme: Theme<any>) {
  * @returns The currently loaded theme.
  */
 export function getCurrentTheme() {
-	return currentTheme
+	return currentTheme;
 }
 
 /**
@@ -37,7 +37,7 @@ export function on(event: 'change', listener: () => void): void
  * @returns {void}
  */
 export function on(event: string, listener: () => void) {
-	emitter.on(event, listener)
+	emitter.on(event, listener);
 }
 
 /**
@@ -47,7 +47,7 @@ export function on(event: string, listener: () => void) {
  * @returns {void}
  */
 export function once(event: string, listener: () => void) {
-	emitter.once(event, listener)
+	emitter.once(event, listener);
 }
 
 /**
@@ -57,7 +57,7 @@ export function once(event: string, listener: () => void) {
  * @returns {void}
  */
 export function removeListener(event: string, listener: () => void) {
-	emitter.removeListener(event, listener)
+	emitter.removeListener(event, listener);
 }
 
 /**
@@ -67,5 +67,5 @@ export function removeListener(event: string, listener: () => void) {
  * @returns {void}
  */
 export function addListener(event: string, listener: () => void) {
-	emitter.addListener(event, listener)
+	emitter.addListener(event, listener);
 }

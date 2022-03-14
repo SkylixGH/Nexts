@@ -1,7 +1,7 @@
-import {NextsError} from '@nexts-stack/internal'
-import * as logger from '../logger/logger'
-import type {ChildProcess} from 'child_process'
-import {EventEmitter} from 'events'
+import {NextsError} from '@nexts-stack/internal';
+import * as logger from '../logger/logger';
+import type {ChildProcess} from 'child_process';
+import {EventEmitter} from 'events';
 
 /**
  * Errors for when interacting with the plugin hosts/clients.
@@ -47,17 +47,17 @@ class Plugin extends EventEmitter {
 	/**
 	 * The name of the plugin.
 	 */
-	public readonly name: string
+	public readonly name: string;
 
 	/**
 	 * The path to the plugin.
 	 */
-	readonly #esmDistroPath: string
+	readonly #esmDistroPath: string;
 
 	/**
 	 * The plugin host process.
 	 */
-	#pluginServer: ChildProcess
+	#pluginServer: ChildProcess;
 
 	/**
 	 * Create a new plugin instance.
@@ -65,22 +65,22 @@ class Plugin extends EventEmitter {
 	 * @param esmDistroPath The path to the plugin.
 	 */
 	public constructor(name: string, esmDistroPath: string) {
-		super()
+		super();
 
-		const isRenderer = process.type === 'renderer'
+		const isRenderer = process.type === 'renderer';
 		if (!isRenderer) {
-			throw new NextsError(Errors.UNSUPPORTED_ENVIRONMENT, 'Plugins are not supported in browser environments')
+			throw new NextsError(Errors.UNSUPPORTED_ENVIRONMENT, 'Plugins are not supported in browser environments');
 		}
 
-		this.name = name
-		this.#esmDistroPath = esmDistroPath
+		this.name = name;
+		this.#esmDistroPath = esmDistroPath;
 
-		const fs = window.require!('fs') as typeof import('fs')
-		const childProcess = window.require!('child_process') as typeof import('child_process')
-		const path = window.require!('path') as typeof import('path')
+		const fs = window.require!('fs') as typeof import('fs');
+		const childProcess = window.require!('child_process') as typeof import('child_process');
+		const path = window.require!('path') as typeof import('path');
 
 		if (!fs.existsSync(esmDistroPath) || fs.statSync(esmDistroPath).isDirectory()) {
-			throw new NextsError(Errors.INVALID_PLUGIN_PATH, `Plugin '${name}' does not exist at '${esmDistroPath}'`)
+			throw new NextsError(Errors.INVALID_PLUGIN_PATH, `Plugin '${name}' does not exist at '${esmDistroPath}'`);
 		}
 
 		this.#pluginServer = childProcess.spawn('node', [esmDistroPath], {
@@ -89,29 +89,29 @@ class Plugin extends EventEmitter {
 			env: {
 				NEXTS_PLUGIN_ENV: 'desktop',
 			},
-		})
+		});
 
 		this.#pluginServer.on('exit', () => {
-			this.emit('stop')
-		})
+			this.emit('stop');
+		});
 
 		this.#pluginServer.stdout?.on('data', (data: Buffer) => {
 			data.toString().split('\n').forEach((line: string) => {
-				if (line === '') return
-				logger.logWithTag('Plugin Info', '#999999', line)
-			})
-		})
+				if (line === '') return;
+				logger.logWithTag('Plugin Info', '#999999', line);
+			});
+		});
 
 		this.#pluginServer.stderr?.on('data', (data: Buffer) => {
 			data.toString().split('\n').forEach((line: string) => {
-				if (line === '') return
-				logger.logWithTag('Plugin Error', '#FF5555', line)
-			})
-		})
+				if (line === '') return;
+				logger.logWithTag('Plugin Error', '#FF5555', line);
+			});
+		});
 
 		this.#pluginServer.on('message', (message) => {
-			console.log(message)
-		})
+			console.log(message);
+		});
 	}
 
 	/**
@@ -120,11 +120,11 @@ class Plugin extends EventEmitter {
 	 */
 	public stop() {
 		if (this.#pluginServer.killed) {
-			throw new NextsError(Errors.ALREADY_STOPPED, `Plugin '${this.name}' has already been stopped.`)
+			throw new NextsError(Errors.ALREADY_STOPPED, `Plugin '${this.name}' has already been stopped.`);
 		}
 
-		this.#pluginServer.kill()
+		this.#pluginServer.kill();
 	}
 }
 
-export default Plugin
+export default Plugin;

@@ -1,6 +1,6 @@
-import {Icon, IconifyIcon} from '@iconify/react'
-import React from 'react'
-import styles from './Menu.module.scss'
+import {Icon, IconifyIcon} from '@iconify/react';
+import React from 'react';
+import styles from './Menu.module.scss';
 
 /**
  * A single icon button.
@@ -80,22 +80,22 @@ const Menu = (props: Props) => {
 							fontSize: typeof icon.size !== 'undefined' ? `${icon.size}px` : '16px',
 						}} className={styles.iconButton_charWrapper}>{icon.src}</span>
 				)
-		)
-	}
+		);
+	};
 
 	const renderIconButtons = (buttons: IconButton[]) => {
-		const resultJsx = [] as JSX.Element[]
+		const resultJsx = [] as JSX.Element[];
 
 		buttons.forEach((button) => {
 			resultJsx.push(
 				<button className={styles.iconButton} onClick={() => button.action()}>
 					{renderButtonIcon(button.icon)}
 				</button>,
-			)
-		})
+			);
+		});
 
-		return resultJsx
-	}
+		return resultJsx;
+	};
 
 	return (
 		<div className={styles.root}>
@@ -115,7 +115,7 @@ const Menu = (props: Props) => {
 								{button.label}
 							</div>
 						</button>
-					)
+					);
 				})}
 			</div>
 
@@ -123,7 +123,7 @@ const Menu = (props: Props) => {
 				{renderIconButtons(props.footer)}
 			</div> }
 		</div>
-	)
-}
+	);
+};
 
-export default Menu
+export default Menu;

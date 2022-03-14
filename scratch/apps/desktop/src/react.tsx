@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom'
-import React, {useEffect} from 'react'
-import {Button, Theme, themePacks, App, logger, Browser, useThemeType, Plugin, Progress} from '@nexts-stack/desktop-uix'
-import './globals.css'
+import ReactDOM from 'react-dom';
+import React, {useEffect} from 'react';
+import {Button, Theme, themePacks, App, logger, Browser, useThemeType, Plugin, Progress} from '@nexts-stack/desktop-uix';
+import './globals.css';
 
 // const pl = new Plugin('my-ext', 'C:\\Users\\XFaon\\CLionProjects\\nexts\\scratch\\packages\\my-ext\\build\\dist.esm.mjs')
 //
@@ -21,28 +21,28 @@ function Entry() {
 		<App>
 			<Web />
 		</App>
-	)
+	);
 }
 
 /**
  *
  */
 function Web() {
-	const [url, setUrl] = React.useState('https://skylix.net')
-	const [devTools, setDevTools] = React.useState(false)
-	const themeType = useThemeType()
+	const [url, setUrl] = React.useState('https://skylix.net');
+	const [devTools, setDevTools] = React.useState(false);
+	const themeType = useThemeType();
 
-	const [currentMode, setCurrentMode] = React.useState('indeterminate')
-	const [currentValue, setCurrentValue] = React.useState(0)
-	const [doneInd, setDoneInd] = React.useState(false)
-	const [msPased, setMsPased] = React.useState(1)
+	const [currentMode, setCurrentMode] = React.useState('indeterminate');
+	const [currentValue, setCurrentValue] = React.useState(0);
+	const [doneInd, setDoneInd] = React.useState(false);
+	const [msPased, setMsPased] = React.useState(1);
 
-	const ms = 0
-	const li = 0
+	const ms = 0;
+	const li = 0;
 
 	setInterval(() => {
-		document.title = 'Skylix Installer'
-	}, 100)
+		document.title = 'Skylix Installer';
+	}, 100);
 
 	return (
 		<div style={{
@@ -74,17 +74,17 @@ function Web() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
-const th = new Theme(themePacks.lightTheme)
-th.load()
+const th = new Theme(themePacks.lightTheme);
+th.load();
 
-document.title = 'Nexts App | https://skylix.net'
+document.title = 'Nexts App | https://skylix.net';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Entry />
 	</React.StrictMode>,
 	document.getElementById('root'),
-)
+);

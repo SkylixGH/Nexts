@@ -1,8 +1,8 @@
-import {initialize} from '@electron/remote/main'
-export * as app from './app/app'
-export * as windowManager from './windowManager/windowManager'
-import Window, {Settings as WindowSettings, Errors as WindowErrors} from './window/Window'
+import {initialize} from '@electron/remote/main';
+export * as app from './app/app';
+export * as windowManager from './windowManager/windowManager';
+import Window, {Settings as WindowSettings, Errors as WindowErrors} from './window/Window';
 
-initialize()
+initialize();
 
-export {Window, WindowSettings, WindowErrors}
+export {Window, WindowSettings, WindowErrors};

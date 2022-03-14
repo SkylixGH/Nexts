@@ -1,39 +1,39 @@
-import theme from '../theme/Theme'
+import theme from '../theme/Theme';
 
-const isElectron = typeof window !== 'undefined' && window.process && window.process.type
-import * as themeManager from '../theme/themeManager'
+const isElectron = typeof window !== 'undefined' && window.process && window.process.type;
+import * as themeManager from '../theme/themeManager';
 
-let currentTheme = themeManager.getCurrentTheme()
+let currentTheme = themeManager.getCurrentTheme();
 
 const themeLoad = () => {
-	const window = getCurrentWindow()
+	const window = getCurrentWindow();
 
 	if (window) {
-		window.setBackgroundColor(currentTheme?.theme.layerSolid1 ?? '#000000')
+		window.setBackgroundColor(currentTheme?.theme.layerSolid1 ?? '#000000');
 	}
-}
+};
 
 if (currentTheme) {
-	themeLoad()
+	themeLoad();
 }
 
 themeManager.on('change', () => {
-	currentTheme = themeManager.getCurrentTheme()
-	themeLoad()
-})
+	currentTheme = themeManager.getCurrentTheme();
+	themeLoad();
+});
 
 /**
  * Get the current ElectronJS app window.
  * @returns The ElectronJS app window.
  */
 function getCurrentWindow() {
-	let appWindow: import('electron').BrowserWindow | null = null
+	let appWindow: import('electron').BrowserWindow | null = null;
 
 	if (isElectron) {
-		appWindow = (window as any).require('@electron/remote').getCurrentWindow()
+		appWindow = (window as any).require('@electron/remote').getCurrentWindow();
 	}
 
-	return appWindow
+	return appWindow;
 }
 
 /**
@@ -41,10 +41,10 @@ function getCurrentWindow() {
  * @returns {void}
  */
 export function minimize() {
-	const window = getCurrentWindow()
+	const window = getCurrentWindow();
 
 	if (window) {
-		window.minimize()
+		window.minimize();
 	}
 }
 
@@ -53,10 +53,10 @@ export function minimize() {
  * @returns {void}
  */
 export function close() {
-	const window = getCurrentWindow()
+	const window = getCurrentWindow();
 
 	if (window) {
-		window.close()
+		window.close();
 	}
 }
 
@@ -65,10 +65,10 @@ export function close() {
  * @returns {void}
  */
 export function restore() {
-	const window = getCurrentWindow()
+	const window = getCurrentWindow();
 
 	if (window) {
-		window.restore()
+		window.restore();
 	}
 }
 
@@ -77,9 +77,9 @@ export function restore() {
  * @returns {void}
  */
 export function maximize() {
-	const window = getCurrentWindow()
+	const window = getCurrentWindow();
 
 	if (window) {
-		window.maximize()
+		window.maximize();
 	}
 }

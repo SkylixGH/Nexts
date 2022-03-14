@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import chalk from 'chalk';
 
 /**
  * Log a formatted message.
@@ -7,7 +7,7 @@ import chalk from 'chalk'
  * @returns {void}
  */
 export function formatLog(prefix: string, message: string) {
-	console.log(`${chalk.hex('#999')('[')}${prefix}${chalk.hex('#999')(']')}: ${message}`)
+	console.log(`${chalk.hex('#999')('[')}${prefix}${chalk.hex('#999')(']')}: ${message}`);
 }
 
 /**
@@ -16,7 +16,7 @@ export function formatLog(prefix: string, message: string) {
  * @returns {void}
  */
 export function log(text: string) {
-	formatLog(chalk.hex('#999')('Info'), text)
+	formatLog(chalk.hex('#999')('Info'), text);
 }
 
 /**
@@ -25,7 +25,7 @@ export function log(text: string) {
  * @returns {void}
  */
 export function warn(text: string) {
-	formatLog(chalk.hex('#FFFF55')('Warning'), text)
+	formatLog(chalk.hex('#FFFF55')('Warning'), text);
 }
 
 /**
@@ -34,7 +34,7 @@ export function warn(text: string) {
  * @returns {void}
  */
 export function error(text: string) {
-	formatLog(chalk.hex('#FF5555')('Error'), text)
+	formatLog(chalk.hex('#FF5555')('Error'), text);
 }
 
 /**
@@ -43,7 +43,7 @@ export function error(text: string) {
  * @returns {void}
  */
 export function success(text: string) {
-	formatLog(chalk.hex('#50FFAB')('Success'), text)
+	formatLog(chalk.hex('#50FFAB')('Success'), text);
 }
 
 const logger = {
@@ -52,6 +52,6 @@ const logger = {
 	error,
 	success,
 	formatLog,
-}
+};
 
-export default logger
+export default logger;

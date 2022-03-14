@@ -19,7 +19,7 @@ export default defineConfig({
             rootElementID: 'root',
             main: {
                 backend: './src/main.ts',
-                frontend: './src/react.tsx',
+                frontend: './src/se.tsx',
             },
             dependencies: {
                 '@nexts-stack/desktop': '../../../packages/desktop',

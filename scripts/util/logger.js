@@ -4,7 +4,7 @@
  * @returns {void}
  */
 export function info(message) {
-	console.log(`[INFO] ${message}`)
+	console.log(`[INFO] ${message}`);
 }
 
 /**
@@ -13,5 +13,5 @@ export function info(message) {
  * @returns {void}
  */
 export function error(message) {
-	console.error(`[ERROR] ${message}`)
+	console.error(`[ERROR] ${message}`);
 }

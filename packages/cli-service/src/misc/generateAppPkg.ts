@@ -1,11 +1,11 @@
-import {UserConfig} from '..'
-import {App} from './UserConfig'
-import fsSync from 'fs'
-import path from 'path'
-import logger from '@nexts-stack/logger'
-import crashError from './crashError'
-import getTags from '../api/github/getTags'
-import semver from 'semver'
+import {UserConfig} from '..';
+import {App} from './UserConfig';
+import fsSync from 'fs';
+import path from 'path';
+import logger from '@nexts-stack/logger';
+import crashError from './crashError';
+import getTags from '../api/github/getTags';
+import semver from 'semver';
 
 /**
  * Generate an automatic package file for a client/server/cli application.
@@ -43,14 +43,14 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 				'@types/react': 'latest',
 			} : {}),
 		},
-	}
+	};
 
 	try {
-		fsSync.writeFileSync(path.join(appRootPathExact, 'package.json'), `${JSON.stringify(pkg, null, config.formatting?.package?.indent ?? '\t') }\n`)
+		fsSync.writeFileSync(path.join(appRootPathExact, 'package.json'), `${JSON.stringify(pkg, null, config.formatting?.package?.indent ?? '\t') }\n`);
 	} catch (error) {
-		logger.error(`Failed to write package.json file for app ${app.name}`)
-		crashError(error)
+		logger.error(`Failed to write package.json file for app ${app.name}`);
+		crashError(error);
 
-		process.exit(1)
+		process.exit(1);
 	}
 }

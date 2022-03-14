@@ -1,14 +1,14 @@
-import path from 'path'
-import fsSync from 'fs'
-import fs from 'fs-extra'
-import logger from '@nexts-stack/logger'
-import {spawn} from 'child_process'
-import chokidar from 'chokidar'
-import crashError from '../../../misc/crashError'
-import {createServer} from 'vite'
-import react from '@vitejs/plugin-react'
-import {App, AppDesktop} from '../../../misc/UserConfig'
-import validateElementID from '../../../misc/validateElementID'
+import path from 'path';
+import fsSync from 'fs';
+import fs from 'fs-extra';
+import logger from '@nexts-stack/logger';
+import {spawn} from 'child_process';
+import chokidar from 'chokidar';
+import crashError from '../../../misc/crashError';
+import {createServer} from 'vite';
+import react from '@vitejs/plugin-react';
+import {App, AppDesktop} from '../../../misc/UserConfig';
+import validateElementID from '../../../misc/validateElementID';
 
 /**
  * Commands from the Electron system interacting with the dev server.
@@ -42,12 +42,12 @@ export default class ElectronReact {
 	/**
 	 * The ESBuild server.
 	 */
-	#esBuilder?: import('esbuild').BuildResult
+	#esBuilder?: import('esbuild').BuildResult;
 
 	/**
 	 * The Vite dev server.
 	 */
-	#vite?: import('vite').ViteDevServer
+	#vite?: import('vite').ViteDevServer;
 
 	/**
 	 * Stop the development server.
@@ -56,11 +56,11 @@ export default class ElectronReact {
 	public stop() {
 		try {
 			if (this.#vite && this.#vite?.httpServer?.listening) {
-				this.#vite?.close()
+				this.#vite?.close();
 			}
 
 			if (this.#esBuilder && this.#esBuilder.stop) {
-				this.#esBuilder.stop()
+				this.#esBuilder.stop();
 			}
 		} catch {
 			//
@@ -76,44 +76,44 @@ export default class ElectronReact {
 	 */
 	public startServer(appExactPath: string, argvPath: string, appConfig: App) {
 		return new Promise<void>(async (resolve) => {
-			const esbuild = await import(['es', 'build'].join('')) as typeof import('esbuild')
-			const electronPath = path.join(process.cwd(), argvPath, 'node_modules', 'electron')
-			const electronExePathInfo = path.join(electronPath, 'path.txt')
+			const esbuild = await import(['es', 'build'].join('')) as typeof import('esbuild');
+			const electronPath = path.join(process.cwd(), argvPath, 'node_modules', 'electron');
+			const electronExePathInfo = path.join(electronPath, 'path.txt');
 
 			if (!fsSync.existsSync(electronPath)) {
-				logger.error('ElectronJS is not installed')
-				process.exit(1)
+				logger.error('ElectronJS is not installed');
+				process.exit(1);
 			}
 
 			if (fsSync.lstatSync(electronPath).isFile() || !fsSync.existsSync(electronExePathInfo)) {
-				logger.error('Your ElectronJS installation seems to be corrupted')
-				process.exit(1)
+				logger.error('Your ElectronJS installation seems to be corrupted');
+				process.exit(1);
 			}
 
 			if (typeof appConfig.main === 'string' || !fsSync.existsSync(path.join(process.cwd(), argvPath, appConfig.path, appConfig.main.backend))) {
-				logger.error('Your backend main entry location is invalid')
-				process.exit(1)
+				logger.error('Your backend main entry location is invalid');
+				process.exit(1);
 			}
 
 			if (!fsSync.existsSync(path.join(process.cwd(), argvPath, appConfig.path, appConfig.main.frontend))) {
-				logger.error('Your frontend main entry location is invalid')
-				process.exit(1)
+				logger.error('Your frontend main entry location is invalid');
+				process.exit(1);
 			}
 
 			if (!validateElementID((appConfig as AppDesktop).rootElementID)) {
-				logger.error('Your element ID is invalid for your front end root element')
-				process.exit(1)
+				logger.error('Your element ID is invalid for your front end root element');
+				process.exit(1);
 			}
 
-			let appPackage: any
+			let appPackage: any;
 
 			try {
-				appPackage = JSON.parse(fsSync.readFileSync(path.join(appExactPath, 'package.json'), 'utf8'))
+				appPackage = JSON.parse(fsSync.readFileSync(path.join(appExactPath, 'package.json'), 'utf8'));
 			} catch (error) {
-				logger.error('Failed to start dev server due to an error while loading the package file')
-				crashError(error)
+				logger.error('Failed to start dev server due to an error while loading the package file');
+				crashError(error);
 
-				process.exit(1)
+				process.exit(1);
 			}
 
 			try {
@@ -130,7 +130,7 @@ export default class ElectronReact {
 					`       <script src="${appConfig.main.frontend}" type="module"></script>`,
 					'   </body>',
 					'</html>',
-				].join('\n') }\n`)
+				].join('\n') }\n`);
 
 				this.#esBuilder = await esbuild.build({
 					entryPoints: [path.join(appExactPath, appConfig.main.backend)],
@@ -142,15 +142,15 @@ export default class ElectronReact {
 					logLevel: 'silent',
 					watch: {
 						onRebuild: () => {
-							logger.log('The app will be recompiled')
+							logger.log('The app will be recompiled');
 						},
 					},
-				})
+				});
 			} catch (error) {
-				logger.error('Failed to start dev server due to an error while building the app')
-				crashError(error)
+				logger.error('Failed to start dev server due to an error while building the app');
+				crashError(error);
 
-				process.exit(1)
+				process.exit(1);
 			}
 
 			this.#vite = await createServer({
@@ -165,18 +165,18 @@ export default class ElectronReact {
 						protocol: 'ws',
 					},
 				},
-			})
+			});
 
-			await this.#vite.listen()
+			await this.#vite.listen();
 
-			const electronExePath = path.join(electronPath, 'dist', fsSync.readFileSync(electronExePathInfo, 'utf8'))
+			const electronExePath = path.join(electronPath, 'dist', fsSync.readFileSync(electronExePathInfo, 'utf8'));
 			const buildUpdateWatcher = chokidar.watch([
 				path.join(appExactPath, 'build'),
 			], {
 				ignoreInitial: true,
-			})
+			});
 
-			let electronProcess: import('child_process').ChildProcess | null = null
+			let electronProcess: import('child_process').ChildProcess | null = null;
 
 			const bootElectron = () => {
 				electronProcess = spawn(electronExePath, ['./'], {
@@ -186,66 +186,66 @@ export default class ElectronReact {
 						NEXTS_DEV_RENDERER: `http://${(this.#vite!.httpServer!.address() as any).address}:${(this.#vite!.httpServer!.address() as any).port}`,
 						FORCE_COLOR: '1',
 					},
-				})
+				});
 
 				electronProcess.on('message', (message: string) => {
 					let messageRawJSON: {
 						type: ElectronServerCommand,
 						data: {[key: string]: any},
-					}
+					};
 
 					try {
-						messageRawJSON = JSON.parse(message)
+						messageRawJSON = JSON.parse(message);
 					} catch {
-						return
+						return;
 					}
 
 					switch (messageRawJSON.type) {
 					case ElectronServerCommand.STATUS:
-						const data = messageRawJSON.data as ElectronServerCommandStatus
+						const data = messageRawJSON.data as ElectronServerCommandStatus;
 
 						if (data.status === 'ready') {
-							resolve()
+							resolve();
 						}
-						break
+						break;
 
 					case ElectronServerCommand.STOP:
-						logger.log('The application development server for desktop applications is stopping per request by the application')
-						this.stop()
-						process.exit()
-						break
+						logger.log('The application development server for desktop applications is stopping per request by the application');
+						this.stop();
+						process.exit();
+						break;
 
 					default:
-						logger.warn(`Invalid message received from dev, type: ${messageRawJSON.type}`)
-						break
+						logger.warn(`Invalid message received from dev, type: ${messageRawJSON.type}`);
+						break;
 					}
-				})
+				});
 
 				electronProcess.stdout?.on('data', (data) => {
 					data.toString().split('\n').forEach((line: string) => {
-						if (line.length === 0 || line === '\r') return
-						logger.log(`[App] ${line}`)
-					})
-				})
+						if (line.length === 0 || line === '\r') return;
+						logger.log(`[App] ${line}`);
+					});
+				});
 
 				electronProcess.stderr?.on('data', (data) => {
 					data.toString().split('\n').forEach((line: string) => {
-						if (line.length === 0 || line === '\r') return
-						logger.error(`[App] ${line}`)
-					})
-				})
-			}
+						if (line.length === 0 || line === '\r') return;
+						logger.error(`[App] ${line}`);
+					});
+				});
+			};
 
-			bootElectron()
+			bootElectron();
 
 			buildUpdateWatcher.on('all', () => {
-				logger.log('The app has been recompiled and will restart')
+				logger.log('The app has been recompiled and will restart');
 
-				electronProcess?.kill()
-				electronProcess = null
+				electronProcess?.kill();
+				electronProcess = null;
 
-				bootElectron()
-			})
-		})
+				bootElectron();
+			});
+		});
 	}
 }

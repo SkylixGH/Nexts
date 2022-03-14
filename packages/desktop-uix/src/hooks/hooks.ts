@@ -1,3 +1,3 @@
-import useThemeType from './useThemeType/useThemeType'
+import useThemeType from './useThemeType/useThemeType';
 
-export {useThemeType}
+export {useThemeType};

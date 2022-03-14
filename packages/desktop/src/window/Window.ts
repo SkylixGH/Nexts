@@ -1,11 +1,11 @@
-import deepmerge from 'deepmerge'
-import * as app from '../app/app'
-import {DeepPartial, NextsError} from '@nexts-stack/internal'
-import {BrowserWindow, ipcMain, dialog} from 'electron'
-import {EventEmitter} from 'events'
-import electronLocalShortcut from 'electron-localshortcut'
-import path from 'path'
-import {enable} from '@electron/remote/main'
+import deepmerge from 'deepmerge';
+import * as app from '../app/app';
+import {DeepPartial, NextsError} from '@nexts-stack/internal';
+import {BrowserWindow, ipcMain, dialog} from 'electron';
+import {EventEmitter} from 'events';
+import electronLocalShortcut from 'electron-localshortcut';
+import path from 'path';
+import {enable} from '@electron/remote/main';
 
 /**
  * Errors for the window.
@@ -98,7 +98,7 @@ const defaultSettings: Settings = {
 			},
 		},
 	},
-}
+};
 
 /**
  * The window event listener overloads.
@@ -119,34 +119,34 @@ class Window extends EventEmitter {
 	/**
 	 * The window settings.
 	 */
-	#settings: Settings
+	#settings: Settings;
 
 	/**
 	 * The window.
 	 */
-	#browserWindow: BrowserWindow
+	#browserWindow: BrowserWindow;
 
 	/**
 	 * If the renderer is ready.
 	 */
-	#rendererReady = false
+	#rendererReady = false;
 
 	/**
 	 * If the window is ready.
 	 */
-	#windowReady = false
+	#windowReady = false;
 
 	/**
 	 * Create a new window.
 	 * @param settings The window settings.
 	 */
 	public constructor(settings: DeepPartial<Settings>) {
-		super()
+		super();
 
-		this.#settings = deepmerge<Settings, typeof settings>(defaultSettings, settings)
+		this.#settings = deepmerge<Settings, typeof settings>(defaultSettings, settings);
 
 		if (!app.isReady()) {
-			throw new NextsError(Errors.APP_NOT_READY, 'The Nexts app is not yet ready.')
+			throw new NextsError(Errors.APP_NOT_READY, 'The Nexts app is not yet ready.');
 		}
 
 		this.#browserWindow = new BrowserWindow({
@@ -166,39 +166,39 @@ class Window extends EventEmitter {
 				webviewTag: true,
 			},
 			frame: false,
-		})
+		});
 
-		enable(this.#browserWindow.webContents)
+		enable(this.#browserWindow.webContents);
 
 		const progressiveLogicAction = () => {
-			if (!this.#rendererReady || !this.#windowReady) return
-		}
+			if (!this.#rendererReady || !this.#windowReady) return;
+		};
 
 		this.#browserWindow.once('close', () => {
-			this.emit('close')
-		})
+			this.emit('close');
+		});
 
 		this.#browserWindow.once('ready-to-show', () => {
-			this.#windowReady = true
-			this.#browserWindow.show()
+			this.#windowReady = true;
+			this.#browserWindow.show();
 
-			progressiveLogicAction()
-		})
+			progressiveLogicAction();
+		});
 
 		if (process.env.NEXTS_DEV_RENDERER) {
 			this.#browserWindow.loadURL(process.env.NEXTS_DEV_RENDERER).then(() => {
-				this.#rendererReady = true
-				progressiveLogicAction()
-			})
+				this.#rendererReady = true;
+				progressiveLogicAction();
+			});
 
-			return
+			return;
 		}
 
 		// This build is relative to the build location
 		this.#browserWindow.loadFile(path.join(__dirname, '../build/renderer/index.html')).then(() => {
-			this.#rendererReady = true
-			progressiveLogicAction()
-		})
+			this.#rendererReady = true;
+			progressiveLogicAction();
+		});
 	}
 
 	/**
@@ -208,8 +208,8 @@ class Window extends EventEmitter {
 	 * @returns {void}
 	 */
 	public registerShortcut(shortcut: string, listener: () => void) {
-		electronLocalShortcut.register(this.#browserWindow, shortcut, listener)
+		electronLocalShortcut.register(this.#browserWindow, shortcut, listener);
 	}
 }
 
-export default Window
+export default Window;

@@ -1,4 +1,4 @@
-import {defineConfig} from '@nexts-stack/cli-service'
+import {defineConfig} from '@nexts-stack/cli-service';
 
 export default defineConfig({
 	version: '1.0.0',
@@ -20,7 +20,7 @@ export default defineConfig({
 			rootElementID: 'root',
 			main: {
 				backend: './src/main.ts',
-				frontend: './src/react.tsx',
+				frontend: './src/se.tsx',
 			},
 			dependencies: {
 				'@nexts-stack/desktop': '../../../packages/desktop',
@@ -71,4 +71,4 @@ export default defineConfig({
 			},
 		},
 	],
-})
+});

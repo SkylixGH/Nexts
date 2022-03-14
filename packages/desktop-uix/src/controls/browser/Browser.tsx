@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
-import styles from './Browser.module.scss'
-import {Icon} from '@iconify/react'
-import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular'
+import React, {useEffect} from 'react';
+import styles from './Browser.module.scss';
+import {Icon} from '@iconify/react';
+import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular';
 
 /**
  * The properties of the browser.
@@ -25,32 +25,32 @@ export interface Ref {
 }
 
 const Button = React.forwardRef<Ref, Props>((props) => {
-	const isElectron = typeof window !== 'undefined' && window.process && window.process.type
-	const webViewRef = React.useRef<any>(null)
+	const isElectron = typeof window !== 'undefined' && window.process && window.process.type;
+	const webViewRef = React.useRef<any>(null);
 
 	useEffect(() => {
 		const domLoadListener = () => {
 			if (props.openDevTools && !webViewRef.current.isDevToolsOpened()) {
-				webViewRef.current.openDevTools()
+				webViewRef.current.openDevTools();
 			} else if (webViewRef.current.isDevToolsOpened()) {
-				webViewRef.current.closeDevTools()
+				webViewRef.current.closeDevTools();
 			}
-		}
+		};
 
 		if (webViewRef.current) {
-			webViewRef.current.addEventListener('dom-ready', domLoadListener)
+			webViewRef.current.addEventListener('dom-ready', domLoadListener);
 
 			if (webViewRef.current.readyState === 'complete') {
-				domLoadListener()
+				domLoadListener();
 			}
 		}
 
 		return () => {
 			if (webViewRef.current) {
-				webViewRef.current.removeEventListener('dom-ready', domLoadListener)
+				webViewRef.current.removeEventListener('dom-ready', domLoadListener);
 			}
-		}
-	}, [webViewRef])
+		};
+	}, [webViewRef]);
 
 	return (
 		<div>
@@ -60,8 +60,8 @@ const Button = React.forwardRef<Ref, Props>((props) => {
 				<Icon icon={ErrorCircle16Regular} />
 			</div> }
 		</div>
-	)
-})
+	);
+});
 
-Button.displayName = 'Button'
-export default Button
+Button.displayName = 'Button';
+export default Button;

@@ -1,15 +1,15 @@
-import {Argv} from 'yargs'
-import {BuildOptions, BuildResult} from 'esBuild'
-import type ESBuildModuleType from 'esbuild'
-import logger from '@nexts-stack/logger'
-import readConfig from '../misc/readConfig'
-import getAppPackages from '../manager/getAppPackages'
-import path from 'path'
-import {spawn} from 'child_process'
-import crashError from '../misc/crashError'
-import fsSync from 'fs'
-import fs from 'fs/promises'
-import generateAppPkg from '../misc/generateAppPkg'
+import {Argv} from 'yargs';
+import {BuildOptions, BuildResult} from 'esBuild';
+import type ESBuildModuleType from 'esbuild';
+import logger from '@nexts-stack/logger';
+import readConfig from '../misc/readConfig';
+import getAppPackages from '../manager/getAppPackages';
+import path from 'path';
+import {spawn} from 'child_process';
+import crashError from '../misc/crashError';
+import fsSync from 'fs';
+import fs from 'fs/promises';
+import generateAppPkg from '../misc/generateAppPkg';
 
 /**
  * The compile command.
@@ -37,21 +37,21 @@ export default function compileCMD(program: Argv) {
 				alias: 'w',
 			},
 		}, async (argv) => {
-			const startTime = performance.now()
+			const startTime = performance.now();
 
-			logger.log('Checking environment for compilation')
-			logger.log('Fetching sub projects')
+			logger.log('Checking environment for compilation');
+			logger.log('Fetching sub projects');
 
 			// This dynamic import was designed to not be built by ESBuild
-			const esBuild = await import(['es', 'build'].join('')) as typeof ESBuildModuleType
-			const config = await readConfig(argv.path, argv.config)
-			const projects = await getAppPackages(argv.path, config)
-			const esBuilders = [] as BuildResult[]
-			const maxBuilds = projects.packages?.length
-			let buildsStarted = 0
-			let tsBuildsFinished = 0
-			let loggedTSStarting = false
-			logger.log('Starting ESBuild compiler')
+			const esBuild = await import(['es', 'build'].join('')) as typeof ESBuildModuleType;
+			const config = await readConfig(argv.path, argv.config);
+			const projects = await getAppPackages(argv.path, config);
+			const esBuilders = [] as BuildResult[];
+			const maxBuilds = projects.packages?.length;
+			let buildsStarted = 0;
+			let tsBuildsFinished = 0;
+			let loggedTSStarting = false;
+			logger.log('Starting ESBuild compiler');
 
 			const generalESBuildConfig: BuildOptions = {
 				logLevel: 'silent',
@@ -61,38 +61,38 @@ export default function compileCMD(program: Argv) {
 				target: 'ESNext',
 				sourcemap: true,
 				platform: 'node',
-			}
+			};
 
 			for (const app of projects.apps ?? []) {
-				await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path))
+				await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path));
 			}
 
 			for (const pkg of projects.packages ?? []) {
-				const mainPathExact = path.join(process.cwd(), argv.path, pkg.path, pkg.main)
-				const buildDirExact = path.join(process.cwd(), argv.path, pkg.path, 'build')
+				const mainPathExact = path.join(process.cwd(), argv.path, pkg.path, pkg.main);
+				const buildDirExact = path.join(process.cwd(), argv.path, pkg.path, 'build');
 
 				if (!fsSync.existsSync(path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')) && config.typescript) {
 					logger.error([
 						'This project is using TypeScript as specified in the config,',
 						`but the package called ${pkg.name} does not have a tsconfig.json file.`,
 						'Please make sure to have a tsconfig.json file in the root of the package.',
-					].join(' '))
-					process.exit(1)
+					].join(' '));
+					process.exit(1);
 				}
 
 				if (fsSync.lstatSync(path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')).isFile() && config.typescript) {
-					generalESBuildConfig.tsconfig = path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json')
+					generalESBuildConfig.tsconfig = path.join(process.cwd(), argv.path, pkg.path, 'tsconfig.json');
 				} else if (config.typescript) {
 					logger.error([
 						`The package called ${pkg.name} is using TypeScript as specified in the config,`,
 						`but tsconfig.json seems to be a directory but not a file.`,
 						`Please make sure to have a tsconfig.json file in the root of the package.`,
-					].join(' '))
-					process.exit(1)
+					].join(' '));
+					process.exit(1);
 				}
 
 				try {
-					const dtsRelativeFileName = `${pkg.main.slice(0, -2) }d.ts`
+					const dtsRelativeFileName = `${pkg.main.slice(0, -2) }d.ts`;
 
 					const packageFile = {
 						name: `${pkg.org ? `@${pkg.org}/` : ''}${pkg.name}`,
@@ -108,14 +108,14 @@ export default function compileCMD(program: Argv) {
 						...(pkg.description && {description: pkg.description}),
 						...(pkg.keywords && {keywords: pkg.keywords}),
 						...(pkg.dependencies && {dependencies: pkg.dependencies}),
-					}
+					};
 
 					await fs.writeFile(
 						path.join(process.cwd(), argv.path, pkg.path, 'package.json'),
 						`${JSON.stringify(packageFile, null, config.formatting?.package?.indent ?? '\t') }\n`,
-					)
+					);
 				} catch (error) {
-					logger.error(`Failed to generate package file for ${pkg.name}`)
+					logger.error(`Failed to generate package file for ${pkg.name}`);
 				}
 
 				const esBuilderCommon = await esBuild.build({
@@ -125,10 +125,10 @@ export default function compileCMD(program: Argv) {
 					format: 'cjs',
 					watch: argv.watch ? {
 						onRebuild: () => {
-							logger.log(`All (${maxBuilds}) project(s) will be rebuilt for CJS`)
+							logger.log(`All (${maxBuilds}) project(s) will be rebuilt for CJS`);
 						},
 					} : false,
-				})
+				});
 
 				const esBuilderESM = await esBuild.build({
 					...generalESBuildConfig,
@@ -137,25 +137,25 @@ export default function compileCMD(program: Argv) {
 					format: 'esm',
 					watch: argv.watch ? {
 						onRebuild: () => {
-							logger.log(`All (${maxBuilds}) project(s) will be rebuilt for ESM`)
+							logger.log(`All (${maxBuilds}) project(s) will be rebuilt for ESM`);
 						},
 					} : false,
-				})
+				});
 
-				esBuilders.push(esBuilderCommon, esBuilderESM)
-				buildsStarted++
+				esBuilders.push(esBuilderCommon, esBuilderESM);
+				buildsStarted++;
 
-				const getBootTime = () => Math.round(performance.now() - startTime)
+				const getBootTime = () => Math.round(performance.now() - startTime);
 
 				if (config.typescript) {
 					if (!loggedTSStarting) {
-						logger.log('Starting TypeScript type generations')
-						loggedTSStarting = true
+						logger.log('Starting TypeScript type generations');
+						loggedTSStarting = true;
 					}
 
-					let tsFinished = false
-					let tsOutDataLog = ''
-					let spawnArgs = [] as string[]
+					let tsFinished = false;
+					let tsOutDataLog = '';
+					let spawnArgs = [] as string[];
 
 					if (argv.watch) {
 						spawnArgs = [
@@ -167,7 +167,7 @@ export default function compileCMD(program: Argv) {
 							'--declaration',
 							'--declarationDir',
 							path.join(process.cwd(), argv.path, pkg.path, 'build', 'types'),
-						]
+						];
 					} else {
 						spawnArgs = [
 							path.join(process.cwd(), './node_modules/typescript/bin/tsc'),
@@ -177,52 +177,52 @@ export default function compileCMD(program: Argv) {
 							'--declaration',
 							'--declarationDir',
 							path.join(process.cwd(), argv.path, pkg.path, `build`, 'types'),
-						]
+						];
 					}
 
 					const typescriptChild = spawn(`node`, spawnArgs, {
 						cwd: path.join(process.cwd(), argv.path, pkg.path),
-					})
+					});
 
 					typescriptChild.on('error', (error) => {
-						logger.error(`Failed to start TypeScript type generation`)
-						crashError(error)
+						logger.error(`Failed to start TypeScript type generation`);
+						crashError(error);
 
-						process.exit(1)
-					})
+						process.exit(1);
+					});
 
 					const setTSDone = () => {
 						if (tsOutDataLog.split('').length == 0) {
-							tsFinished = true
+							tsFinished = true;
 						}
-					}
+					};
 
 					typescriptChild.on('exit', () => {
 						if (!argv.watch) {
-							setTSDone()
+							setTSDone();
 						}
 
 						if (tsFinished) {
-							tsBuildsFinished++
+							tsBuildsFinished++;
 						}
 
 						if (tsFinished && tsBuildsFinished === maxBuilds) {
-							logger.success(`Finished compiling all (${maxBuilds}) project(s) in ${getBootTime()}ms`)
-							process.exit(0)
+							logger.success(`Finished compiling all (${maxBuilds}) project(s) in ${getBootTime()}ms`);
+							process.exit(0);
 						} else if (tsFinished && tsBuildsFinished !== maxBuilds) {
-							return
+							return;
 						}
 
-						logger.error('The TypeScript processed seems to have crashed for an unknown reason')
-						logger.error(`Spawn Args: ${ spawnArgs.join(' ')}`)
-						logger.error(`Spawn CWD: ${ path.join(process.cwd(), argv.path)}`)
+						logger.error('The TypeScript processed seems to have crashed for an unknown reason');
+						logger.error(`Spawn Args: ${ spawnArgs.join(' ')}`);
+						logger.error(`Spawn CWD: ${ path.join(process.cwd(), argv.path)}`);
 
 						tsOutDataLog.split('\n').forEach((line) => {
-							logger.error(line)
-						})
+							logger.error(line);
+						});
 
-						process.exit(1)
-					})
+						process.exit(1);
+					});
 
 					const onStandardMessage = (text: string) => {
 						// Used for debugging the TS compiler
@@ -230,34 +230,34 @@ export default function compileCMD(program: Argv) {
 						// process.stdout.write(text)
 
 						if (!argv.watch) {
-							tsOutDataLog += text
-							setTSDone()
+							tsOutDataLog += text;
+							setTSDone();
 
-							return
+							return;
 						}
 
 						if (/Watching for file changes/.test(text) && !tsFinished) {
-							tsFinished = true
-							tsBuildsFinished++
+							tsFinished = true;
+							tsBuildsFinished++;
 
 							if (tsBuildsFinished === maxBuilds) {
-								logger.success(`Successfully watching all (${maxBuilds}) project(s) for changes after ${getBootTime()}ms`)
+								logger.success(`Successfully watching all (${maxBuilds}) project(s) for changes after ${getBootTime()}ms`);
 							}
 						} else if (/Watching for file changes/.test(text) && tsFinished) {
-							logger.log(`All (${maxBuilds}) project(s) will have their TypeScript declarations rebuild`)
+							logger.log(`All (${maxBuilds}) project(s) will have their TypeScript declarations rebuild`);
 						}
-					}
+					};
 
-					typescriptChild.stdout.on('data', (d) => onStandardMessage(d.toString()))
-					typescriptChild.stderr.on('data', (d) => onStandardMessage(d.toString()))
+					typescriptChild.stdout.on('data', (d) => onStandardMessage(d.toString()));
+					typescriptChild.stderr.on('data', (d) => onStandardMessage(d.toString()));
 				} else if (buildsStarted === maxBuilds) {
 					if (argv.watch) {
-						logger.success(`Successfully started watch compiler for all (${maxBuilds}) project(s) in ${getBootTime()}ms`)
+						logger.success(`Successfully started watch compiler for all (${maxBuilds}) project(s) in ${getBootTime()}ms`);
 					} else {
-						logger.success(`Successfully compiled all (${maxBuilds}) project(s) in ${getBootTime()}ms`)
-						process.exit(0)
+						logger.success(`Successfully compiled all (${maxBuilds}) project(s) in ${getBootTime()}ms`);
+						process.exit(0);
 					}
 				}
 			}
-		})
+		});
 }
