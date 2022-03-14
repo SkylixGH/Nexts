@@ -21,6 +21,38 @@
   padding: 0 5px;
   height: 40px;
   align-items: center;
+
+  &.footer {
+    padding-top: 5px;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      content: "";
+      display: block;
+      height: 1px;
+      width: calc(100% - 40px);
+      background: $subtle1;
+      top: 0;
+      margin-left: 15px;
+    }
+  }
+
+  &.header {
+    padding-bottom: 5px;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      content: "";
+      display: block;
+      height: 1px;
+      width: calc(100% - 40px);
+      background: $subtle1;
+      bottom: 0;
+      margin-left: 15px;
+    }
+  }
 }
 
 .body {
@@ -28,10 +60,13 @@
   flex-direction: column;
   flex: 1;
   overflow-y: auto;
+  padding: 5px;
+  gap: 5px;
 }
 
 .body_button {
   display: flex;
+  transition: 100ms;
   flex-direction: row;
   align-items: center;
   height: 30px;
@@ -39,6 +74,9 @@
   border-radius: 3px;
   background: transparent;
   color: $text1;
+  user-select: none;
+  font-size: 13px;
+  gap: 10px;
 
   &:hover {
     background: $subtle1;
@@ -50,10 +88,18 @@
 }
 
 .body_buttonIcon {
-
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-left: -1px;
 }
 
-.body_buttonIcon {
+.body_buttonLabel {
 
 }
 

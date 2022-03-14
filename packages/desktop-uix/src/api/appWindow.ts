@@ -25,3 +25,39 @@ export function minimize() {
 		window.minimize()
 	}
 }
+
+/**
+ * Close the current browser window.
+ * @returns {void}
+ */
+export function close() {
+	const window = getCurrentWindow()
+
+	if (window) {
+		window.close()
+	}
+}
+
+/**
+ * Restore the window.
+ * @returns {void}
+ */
+export function restore() {
+	const window = getCurrentWindow()
+
+	if (window) {
+		window.restore()
+	}
+}
+
+/**
+ * Maximize the window.
+ * @returns {void}
+ */
+export function maximize() {
+	const window = getCurrentWindow()
+
+	if (window) {
+		window.maximize()
+	}
+}

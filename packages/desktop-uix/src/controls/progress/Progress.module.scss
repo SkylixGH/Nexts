@@ -1,0 +1,48 @@
+@import "../config";
+
+.root {
+  display: flex;
+  height: 4px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.bar {
+  width: 100%;
+  height: 2px;
+  background: $subtle3;
+}
+
+.value {
+  height: 4px;
+  width: 35%;
+  position: absolute;
+  background: $accent1;
+  border-radius: 2px;
+  transform: translateX(-100%);
+  left: 0;
+}
+
+@keyframes :local(indeterminate) {
+  from {
+    left: 0;
+  }
+
+  to {
+    left: 100%;
+    transform: translateX(0%);
+  }
+}
+
+.value_indeterminate {
+  animation: indeterminate 1s infinite ease-in-out;
+}
+
+.value_determinate {
+  width: 0;
+  transform: translateX(0%);
+}

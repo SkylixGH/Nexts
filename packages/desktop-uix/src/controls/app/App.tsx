@@ -76,7 +76,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 						<Icon icon={windowMaximized ? Restore16Regular : Maximize16Regular} />
 					</button>
 
-					<button className={styles.titleBar_buttonsClose}>
+					<button onClick={() => appWindow.close()} className={styles.titleBar_buttonsClose}>
 						<Icon icon={Dismiss16Regular} />
 					</button>
 				</div>
@@ -90,50 +90,40 @@ const App = React.forwardRef<Ref, Props>((props) => {
 				<Icon icon={ErrorCircle16Regular} />
 			</div>
 
-			<Menu header={[
-				{
-					action: () => {
-						setTitleBarVisible(!titleBarVisible)
-					},
-					icon: {
-						src: 'mdi:electron-framework',
-						size: 20,
-					},
-				},
-				{
-					action: () => {
-						appWindow.minimize()
-					},
-					icon: {
-						src: Minimize16Regular,
-						size: 17,
-					},
-				},
-			]} body={[
-				{
-					label: 'Reload',
-					icon: {
-						src: 'mdi:reload',
-						size: 20,
-					},
-				},
-				{
-					label: 'Close Current Window',
-					icon: {
-						src: 'mdi:close',
-						size: 20,
-					},
-				},
-			]} footer={[
-				{
-					action: () => {
-					},
-					icon: {
-						src: Dismiss16Regular,
-						size: 17,
-					},
-				},
-			]} />
+			{/* <Menu header={[ */}
+			{/* 	{ */}
+			{/* 		action: () => { */}
+			{/* 			setTitleBarVisible(!titleBarVisible) */}
+			{/* 		}, */}
+			{/* 		icon: { */}
+			{/* 			src: 'mdi:electron-framework', */}
+			{/* 			size: 20, */}
+			{/* 		}, */}
+			{/* 	}, */}
+			{/* 	{ */}
+			{/* 		action: () => { */}
+			{/* 			appWindow.minimize() */}
+			{/* 		}, */}
+			{/* 		icon: { */}
+			{/* 			src: Minimize16Regular, */}
+			{/* 			size: 17, */}
+			{/* 		}, */}
+			{/* 	}, */}
+			{/* ]} body={[ */}
+			{/* 	{ */}
+			{/* 		label: 'Reload', */}
+			{/* 		icon: { */}
+			{/* 			src: 'fluent:refresh-16-regular', */}
+			{/* 			size: 20, */}
+			{/* 		}, */}
+			{/* 	}, */}
+			{/* 	{ */}
+			{/* 		label: 'Close Current Window', */}
+			{/* 		icon: { */}
+			{/* 			src: 'fluent:dismiss-16-regular', */}
+			{/* 		}, */}
+			{/* 	}, */}
+			{/* ]}/> */}
 		</div>
 	)
 })
