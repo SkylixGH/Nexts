@@ -1,6 +1,6 @@
 {
 	"name": "@nexts-stack/internal",
-	"version": "1.0.0-dev.7",
+	"version": "1.0.0-dev.8",
 	"main": "./build/common.cjs",
 	"type": "module",
 	"types": "./build/types/index.d.ts",
