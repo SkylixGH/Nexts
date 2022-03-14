@@ -72,7 +72,7 @@ export default class ElectronReact {
 			}
 
 			try {
-				await fs.writeFile(path.join(appExactPath, 'index.html'), [
+				await fs.writeFile(path.join(appExactPath, 'index.html'), `${[
 					'<!DOCTYPE html>',
 					'<html lang="en">',
 					['<h', 'e', 'a', 'd>'].join(''),
@@ -85,7 +85,7 @@ export default class ElectronReact {
 					`       <script src="${appConfig.main.frontend}" type="module"></script>`,
 					'   </body>',
 					'</html>',
-				].join('\n'))
+				].join('\n') }\n`)
 
 				esBuilder = await esbuild.build({
 					entryPoints: [path.join(appExactPath, appConfig.main.backend)],
