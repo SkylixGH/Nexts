@@ -1,6 +1,8 @@
 import Window, {Settings} from '../window/Window'
 import {DeepPartial} from '@nexts-stack/internal'
 import {EventEmitter} from 'events'
+import {sendDevServer} from '../internal/api/api'
+import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service'
 
 const windowStore = [] as Window[]
 const emitter = new EventEmitter()
@@ -21,6 +23,7 @@ export function create(settings: DeepPartial<Settings>) {
 
 		if (openWindows === 0) {
 			emitter.emit('all-windows-closed')
+			sendDevServer(ElectronReactElectronServerCommand.STOP)
 		}
 	})
 

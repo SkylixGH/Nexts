@@ -14,13 +14,59 @@ import validateElementID from '../../../misc/validateElementID'
  * Commands from the Electron system interacting with the dev server.
  */
 export enum ElectronServerCommand {
-	READY
+	/**
+	 * A status indication command.
+	 */
+	STATUS,
+
+	/**
+	 * Tell the dev server to stop.
+	 */
+	STOP
+}
+
+/**
+ * The application status indicator.
+ */
+export interface ElectronServerCommandStatus {
+	/**
+	 * The application status.
+	 */
+	status: 'ready'
 }
 
 /**
  * Electron + React dev server.
  */
 export default class ElectronReact {
+	/**
+	 * The ESBuild server.
+	 */
+	#esBuilder?: import('esbuild').BuildResult
+
+	/**
+	 * The Vite dev server.
+	 */
+	#vite?: import('vite').ViteDevServer
+
+	/**
+	 * Stop the development server.
+	 * @returns {void}
+	 */
+	public stop() {
+		try {
+			if (this.#vite && this.#vite?.httpServer?.listening) {
+				this.#vite?.close()
+			}
+
+			if (this.#esBuilder && this.#esBuilder.stop) {
+				this.#esBuilder.stop()
+			}
+		} catch {
+			//
+		}
+	}
+
 	/**
 	 * Load the Electron server.
 	 * @param appExactPath The exact path of the app.
@@ -59,7 +105,6 @@ export default class ElectronReact {
 				process.exit(1)
 			}
 
-			let esBuilder: import('esbuild').BuildResult
 			let appPackage: any
 
 			try {
@@ -87,7 +132,7 @@ export default class ElectronReact {
 					'</html>',
 				].join('\n') }\n`)
 
-				esBuilder = await esbuild.build({
+				this.#esBuilder = await esbuild.build({
 					entryPoints: [path.join(appExactPath, appConfig.main.backend)],
 					format: 'cjs',
 					outfile: path.join(appExactPath, 'build', 'main.electron.cjs'),
@@ -108,7 +153,7 @@ export default class ElectronReact {
 				process.exit(1)
 			}
 
-			const vite = await createServer({
+			this.#vite = await createServer({
 				configFile: false,
 				root: appExactPath,
 				base: './',
@@ -122,7 +167,7 @@ export default class ElectronReact {
 				},
 			})
 
-			const server = await vite.listen()
+			await this.#vite.listen()
 
 			const electronExePath = path.join(electronPath, 'dist', fsSync.readFileSync(electronExePathInfo, 'utf8'))
 			const buildUpdateWatcher = chokidar.watch([
@@ -138,7 +183,7 @@ export default class ElectronReact {
 					cwd: appExactPath,
 					stdio: ['ipc'],
 					env: {
-						NEXTS_DEV_RENDERER: `http://${(server.httpServer!.address() as any).address}:${(server.httpServer!.address() as any).port}`,
+						NEXTS_DEV_RENDERER: `http://${(this.#vite!.httpServer!.address() as any).address}:${(this.#vite!.httpServer!.address() as any).port}`,
 						FORCE_COLOR: '1',
 					},
 				})
@@ -156,8 +201,18 @@ export default class ElectronReact {
 					}
 
 					switch (messageRawJSON.type) {
-					case ElectronServerCommand.READY:
-						resolve()
+					case ElectronServerCommand.STATUS:
+						const data = messageRawJSON.data as ElectronServerCommandStatus
+
+						if (data.status === 'ready') {
+							resolve()
+						}
+						break
+
+					case ElectronServerCommand.STOP:
+						logger.log('The application development server for desktop applications is stopping per request by the application')
+						this.stop()
+						process.exit()
 						break
 
 					default:
