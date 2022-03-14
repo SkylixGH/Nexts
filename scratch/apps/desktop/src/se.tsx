@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {App, Theme, themePacks} from '@nexts-stack/desktop-uix';
+import {App, TextBox, Theme, themePacks} from '@nexts-stack/desktop-uix';
 import './globals.css';
 
 const theme = new Theme(themePacks.darkTheme);
@@ -8,7 +8,14 @@ theme.load();
 
 ReactDOM.render(
 	<App>
-		<div>Hello World</div>
+		<div style={{
+			padding: '10px',
+		}}>
+			<TextBox placeholder='Hello World' onChange={(v) => {
+				document.title = `desk | ${v}`;
+				console.log(v)
+			}} />
+		</div>
 	</App>,
 	document.getElementById('root'),
 );
