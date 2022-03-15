@@ -4,7 +4,7 @@
 		"apps/*"
 	],
   "scripts": {
-	"dev:desktop": "./nexts dev --name desk"
+	"dev:desktop": "nexts dev --name desk"
   },
 	"dependencies": {
 		"@nexts-stack/cli-service": "file:../packages/cli-service",
