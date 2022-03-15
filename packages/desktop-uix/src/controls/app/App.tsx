@@ -38,7 +38,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const [windowMaximized, setWindowMaximized] = useState(false);
 	const [reactError, setReactError] = useState<null | Error>(null);
 	const [titleBarButtonCount, setTitleBarButtonCount] = useState(3);
-	const [titleBarIconVisible, setTitleBarIconVisible] = useState(!!process.env.NEXTS_DEV_ICON_FRAME);
+	const [titleBarIconVisible, setTitleBarIconVisible] = useState(typeof process !== 'undefined' ? !!process.env.NEXTS_DEV_ICON_FRAME : false);
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {
