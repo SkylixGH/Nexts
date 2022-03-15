@@ -1,5 +1,5 @@
 import {Icon, IconifyIcon} from '@iconify/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Menu.module.scss';
 
 /**
@@ -67,6 +67,16 @@ export interface Props {
 	}
 
 	/**
+	 * Listen for when the mouse is over the menu.
+	 */
+	onMouseOver: () => void;
+
+	/**
+	 * Listen for when the mouse leaves the context menu.
+	 */
+	onMouseLeave: () => void;
+
+	/**
 	 * The menu items.
 	 */
 	body: {
@@ -83,6 +93,7 @@ export interface Props {
 }
 
 const Menu = (props: Props) => {
+	const menuRef = React.useRef<HTMLDivElement>(null);
 	const [xPos, setXPos] = React.useState(props.position.x);
 	const [yPos, setYPos] = React.useState(props.position.y);
 
@@ -121,15 +132,43 @@ const Menu = (props: Props) => {
 	};
 
 	const calculatePosition = () => {
-		const xPosTemp = props.position.x;
-		const yPosTemp = props.position.y;
+		let xPosTemp = props.position.x;
+		let yPosTemp = props.position.y;
 
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
+
+		const menuHeight = menuRef?.current!.offsetHeight;
+		const menuWidth = menuRef?.current!.offsetWidth;
+
+		if ((yPosTemp + menuHeight) > windowHeight - 10) {
+			yPosTemp = windowHeight - 10 - menuHeight;
+		}
+
+		if ((xPosTemp + menuWidth) > windowWidth - 10) {
+			xPosTemp = windowWidth - 10 - menuWidth;
+		}
+
+		setYPos(yPosTemp);
+		setXPos(xPosTemp);
 	};
 
+	useEffect(() => {
+		calculatePosition();
+
+		const windowResizeListener = () => {
+			calculatePosition();
+		};
+
+		window.addEventListener('resize', windowResizeListener);
+
+		return () => {
+			window.removeEventListener('resize', windowResizeListener);
+		};
+	});
+
 	return (
-		<div className={styles.root} style={{
+		<div onMouseEnter={() => props.onMouseOver()} onMouseLeave={() => props.onMouseLeave()} ref={menuRef} className={`${styles.root} ${props.show ? '' : styles._hide}`} style={{
 			top: `${yPos}px`,
 			left: `${xPos}px`,
 		}}>

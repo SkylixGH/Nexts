@@ -12,6 +12,13 @@
   max-height: 250px;
   gap: 5px;
   padding: 5px 0;
+  transition: transform 100ms ease, opacity 100ms ease;
+}
+
+._hide {
+	opacity: 0;
+	pointer-events: none;
+	transform: scale(0.9);
 }
 
 .footer, .header {
@@ -100,7 +107,7 @@
 }
 
 .body_buttonLabel {
-
+	white-space: nowrap;
 }
 
 .iconButton {

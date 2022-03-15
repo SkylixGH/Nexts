@@ -36,6 +36,8 @@
 .placeholder {
   position: absolute;
   color: $text3;
+  pointer-events: none;
+  user-select: none;
 }
 
 .button {
