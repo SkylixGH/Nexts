@@ -84,12 +84,22 @@ const App = React.forwardRef<Ref, Props>((props) => {
 		<div className={styles.root} onDoubleClick={(event) => {
 			setContextMenuPosition({x: event.clientX, y: event.clientY});
 			menu.open({
+				header: [
+					{
+						action: () => {
+							alert('Clicked')
+						},
+						icon: {
+							src: 'fluent:maximize-16-regular'
+						}
+					}
+				],
 				body: [
 					{
 						label: 'Reload Window (Ctrl+R)',
 						icon: {
 							src: 'mdi:reload'
-						}
+						},
 					},
 					{
 						label: 'Restart Application (Ctrl+Shift+R)',

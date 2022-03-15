@@ -28,12 +28,14 @@ export interface Ref {
 }
 
 const Progress = React.forwardRef<Ref, Props>((props) => {
+	let subtractionPixels = props.showValue ? 40 : 0;
+
 	return (
 		<div className={`${styles.root} ${props.showValue && props.mode === 'determinate' ? styles._valueShown : ''}`}>
 			<div className={`${styles.bar}` +
 				` ${props.showValue && props.mode === 'determinate' ? styles.value_percentShown : ''}`} />
 			<div style={{
-				...(props.mode === 'determinate' ? {width: `${(props.value ?? 0) > 100 ? 100 : props.value}%`} : {}),
+				...(props.mode === 'determinate' ? {width: `calc(${(props.value ?? 0) > 100 ? 100 : props.value}% - ${subtractionPixels}px)`} : {}),
 			}} className={
 				`${styles.value} ${!props.mode || props.mode === 'indeterminate' ? styles.value_indeterminate : styles.value_determinate}` +
 				` ${props.showValue && props.mode === 'determinate' ? styles.value_percentShown : ''}`
