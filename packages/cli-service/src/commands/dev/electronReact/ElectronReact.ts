@@ -32,7 +32,7 @@ export interface ElectronServerCommandStatus {
 	/**
 	 * The application status.
 	 */
-	status: 'ready'
+	status: 'ready' | 'restart'
 }
 
 /**
@@ -210,6 +210,11 @@ export default class ElectronReact {
 						if (data.status === 'ready') {
 							resolve();
 						}
+
+						if (data.status === 'restart') {
+							logger.log('The application is reloading/restarting');
+						}
+
 						break;
 
 					case ElectronServerCommand.STOP:

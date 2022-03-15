@@ -11,8 +11,6 @@ const handleTheme = () => {
 
 	const theme = new Theme(localStorage.getItem('theme') === 'dark' ? {
 		...themePacks.darkTheme,
-		accent: '#50ffab',
-		accent2: '#50ffab90',
 	} : themePacks.lightTheme);
 
 	theme.load();

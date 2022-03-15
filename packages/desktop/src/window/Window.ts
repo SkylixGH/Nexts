@@ -1,7 +1,7 @@
 import deepmerge from 'deepmerge';
 import * as app from '../app/app';
 import {DeepPartial, NextsError} from '@nexts-stack/internal';
-import {BrowserWindow, ipcMain, dialog} from 'electron';
+import {BrowserWindow} from 'electron';
 import {EventEmitter} from 'events';
 import electronLocalShortcut from 'electron-localshortcut';
 import path from 'path';
@@ -173,6 +173,10 @@ class Window extends EventEmitter {
 
 		const progressiveLogicAction = () => {
 			if (!this.#rendererReady || !this.#windowReady) return;
+
+			this.#browserWindow.webContents.once('dom-ready', () => {
+				app.restart();
+			});
 		};
 
 		this.#browserWindow.once('close', () => {

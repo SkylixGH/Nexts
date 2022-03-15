@@ -42,6 +42,19 @@ export function isReady() {
 }
 
 /**
+ * Restart the NEXTS application.
+ * @returns {void}
+ */
+export function restart() {
+	sendDevServer<ElectronReactElectronServerCommandStatus>(ElectronReactElectronServerCommand.STATUS, {
+		status: 'restart',
+	});
+
+	app.relaunch();
+	app.exit(0);
+}
+
+/**
  * Stop and exit the app.
  * @returns {void}
  */

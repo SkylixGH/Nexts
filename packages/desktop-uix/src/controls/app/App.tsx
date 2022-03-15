@@ -87,28 +87,34 @@ const App = React.forwardRef<Ref, Props>((props) => {
 				header: [
 					{
 						action: () => {
-							alert('Clicked')
+							alert('Clicked');
 						},
 						icon: {
-							src: 'fluent:maximize-16-regular'
-						}
-					}
+							src: 'fluent:maximize-16-regular',
+						},
+					},
 				],
 				body: [
 					{
 						label: 'Reload Window (Ctrl+R)',
 						icon: {
-							src: 'mdi:reload'
+							src: 'mdi:reload',
+						},
+						action: () => {
+							window.location.reload();
 						},
 					},
 					{
 						label: 'Restart Application (Ctrl+Shift+R)',
 						icon: {
-							src: 'mdi:restart'
-						}
-					}
-				]
-			})
+							src: 'mdi:restart',
+						},
+						action: () => {
+							window.location.reload();
+						},
+					},
+				],
+			});
 		}}>
 			{ titleBarVisible && <div className={styles.titleBar}>
 				<div className={styles.titleBar_app}>
@@ -149,8 +155,10 @@ const App = React.forwardRef<Ref, Props>((props) => {
 				<Icon icon={ErrorCircle16Regular} />
 			</div>
 
-			<Menu onMouseLeave={() => setMouseOverContextMenu(false)} onMouseOver={() => setMouseOverContextMenu(true)} show={contextMenuVisible} position={contextMenuPosition}
-				header={contextMenuSettings?.header ?? undefined} footer={contextMenuSettings?.footer ?? undefined} body={contextMenuSettings?.body ?? []} />
+			<Menu onCommandHide={() => {
+				setContextMenuVisible(false);
+			}} onMouseLeave={() => setMouseOverContextMenu(false)} onMouseOver={() => setMouseOverContextMenu(true)} show={contextMenuVisible} position={contextMenuPosition}
+			header={contextMenuSettings?.header ?? undefined} footer={contextMenuSettings?.footer ?? undefined} body={contextMenuSettings?.body ?? []} />
 		</div>
 	);
 });

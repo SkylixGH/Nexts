@@ -1,5 +1,5 @@
 import {Icon, IconifyIcon} from '@iconify/react';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import styles from './Menu.module.scss';
 
 /**
@@ -77,6 +77,11 @@ export interface Props {
 	onMouseLeave: () => void;
 
 	/**
+	 * Listen for when the menu demands to be closed.
+	 */
+	onCommandHide: () => void;
+
+	/**
 	 * The menu items.
 	 */
 	body: {
@@ -89,6 +94,11 @@ export interface Props {
 		 * The label for the button.
 		 */
 		label: string;
+
+		/**
+		 * The click action.
+		 */
+		action: () => void;
 	}[];
 }
 
@@ -122,7 +132,13 @@ const Menu = (props: Props) => {
 
 		buttons.forEach((button) => {
 			resultJsx.push(
-				<button className={styles.iconButton} onClick={() => button.action()}>
+				<button className={styles.iconButton} onClick={() => {
+					if (props.onCommandHide) {
+						props.onCommandHide();
+					}
+
+					button.action();
+				}}>
 					{renderButtonIcon(button.icon)}
 				</button>,
 			);
@@ -157,7 +173,7 @@ const Menu = (props: Props) => {
 		calculatePosition();
 
 		const windowResizeListener = () => {
-			calculatePosition();
+			props.onCommandHide();
 		};
 
 		window.addEventListener('resize', windowResizeListener);
@@ -179,7 +195,13 @@ const Menu = (props: Props) => {
 			<div className={styles.body}>
 				{props.body.map((button) => {
 					return (
-						<button className={styles.body_button}>
+						<button onClick={() => {
+							if (props.onCommandHide) {
+								props.onCommandHide();
+							}
+
+							button.action();
+						}} className={styles.body_button}>
 							<div className={styles.body_buttonIcon}>
 								{button.icon && renderButtonIcon(button.icon)}
 							</div>
