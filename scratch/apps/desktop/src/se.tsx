@@ -5,7 +5,7 @@ import './globals.css';
 import {NextsControlsTheme} from '@nexts-stack/desktop-uix/build/types/theme/themePacks';
 
 const theme = new Theme({
-	...themePacks.darkTheme,
+	...themePacks.lightTheme,
 } as NextsControlsTheme);
 theme.load();
 

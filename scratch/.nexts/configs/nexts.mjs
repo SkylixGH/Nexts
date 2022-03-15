@@ -17,6 +17,12 @@ export default defineConfig({
             name: 'desk',
             id: 'net.skylix.desktop',
             rootElementID: 'root',
+            icons: {
+                windowsLinux: './resources/icons/win-256x256.ico',
+                mac: './resources/icons/mac-256x256.icns',
+                titleBarDark: './resources/icons/TitleBarDark.svg',
+                titleBarLight: './resources/icons/TitleBarLight.svg',
+            },
             main: {
                 backend: './src/main.ts',
                 frontend: './src/se.tsx',

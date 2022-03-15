@@ -55,6 +55,31 @@ export type AppDesktop = AppCommon & {
 	rootElementID: string;
 
 	/**
+	 * The app icons.
+	 */
+	icons: {
+		/**
+		 * The windows .ICO file.
+		 */
+		windowsLinux: string;
+
+		/**
+		 * The macOS .ICNS file.
+		 */
+		mac: string;
+
+		/**
+		 * The icon for the window frame title bar when the app is in light mode.
+		 */
+		titleBarLight: string;
+
+		/**
+		 * The icon for the window frame title bar when the app is in dark mode.
+		 */
+		titleBarDark: string;
+	}
+
+	/**
 	 * The app's entry files.
 	 */
 	main: {

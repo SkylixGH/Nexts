@@ -184,6 +184,9 @@ export default class ElectronReact {
 					stdio: ['ipc'],
 					env: {
 						NEXTS_DEV_RENDERER: `http://${(this.#vite!.httpServer!.address() as any).address}:${(this.#vite!.httpServer!.address() as any).port}`,
+						NEXTS_DEV_ICON: path.join(process.cwd(), argvPath, appConfig.path, (appConfig as AppDesktop).icons.windowsLinux),
+						NEXTS_DEV_ICON_LIGHT_FRAME: path.join(process.cwd(), argvPath, appConfig.path, (appConfig as AppDesktop).icons.titleBarLight),
+						NEXTS_DEV_ICON_DARK_FRAME: path.join(process.cwd(), argvPath, appConfig.path, (appConfig as AppDesktop).icons.titleBarDark),
 						FORCE_COLOR: '1',
 					},
 				});

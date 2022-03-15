@@ -159,6 +159,7 @@ class Window extends EventEmitter {
 			fullscreen: this.#settings.frame.fullscreen,
 			resizable: this.#settings.frame.restrictions.resize,
 			show: false,
+			icon: process.env.NEXTS_DEV_ICON,
 			webPreferences: {
 				nodeIntegration: true,
 				webSecurity: false,

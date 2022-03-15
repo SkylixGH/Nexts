@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './App.module.scss';
 import {Icon} from '@iconify/react';
-import {appWindow} from '../..';
+import {appWindow, useThemeType} from '../..';
 import Menu from './menu/Menu';
 import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular';
 import Restore16Regular from '@iconify/icons-fluent/restore-16-regular';
@@ -32,13 +32,13 @@ export interface Ref {
 
 const App = React.forwardRef<Ref, Props>((props) => {
 	const isElectron = typeof window !== 'undefined' && window.process && window.process.type;
-
+	const themeType = useThemeType();
 	const [title, setTitle] = useState(window.document.title);
 	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer');
 	const [windowMaximized, setWindowMaximized] = useState(false);
 	const [reactError, setReactError] = useState<null | Error>(null);
 	const [titleBarButtonCount, setTitleBarButtonCount] = useState(3);
-	const [titleBarIconVisible, setTitleBarIconVisible] = useState(true);
+	const [titleBarIconVisible, setTitleBarIconVisible] = useState(!!process.env.NEXTS_DEV_ICON_FRAME);
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {
@@ -66,7 +66,10 @@ const App = React.forwardRef<Ref, Props>((props) => {
 			{ titleBarVisible && <div className={styles.titleBar}>
 				<div className={styles.titleBar_app}>
 					<div>
-						<img draggable={false} src={'https://skylix.net/LogoIconDark.svg'} alt={'-'} />
+						<img draggable={false} src={process.env.NEXTS_DEV_ICON_LIGHT_FRAME || process.env.NEXTS_DEV_ICON_DARK_FRAME ?
+							(themeType === 'dark' ? process.env.NEXTS_DEV_ICON_DARK_FRAME : process.env.NEXTS_DEV_ICON_LIGHT_FRAME) :
+							'https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg'} alt={'-'}
+						/>
 					</div>
 
 					<span style={{
