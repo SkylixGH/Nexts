@@ -12,6 +12,7 @@
 	gap: 5px;
 	border: 1px solid $subtle2;
 	border-bottom: 2px solid $subtle3;
+	overflow: hidden;
 
 	&:hover {
 		border-color: $subtle3;
@@ -30,6 +31,7 @@
 	  background: transparent;
 	  color: $text1;
 	  outline: none;
+	  overflow: hidden;
   }
 }
 
@@ -38,6 +40,11 @@
   color: $text3;
   pointer-events: none;
   user-select: none;
+  padding-left: 2px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 20px);
+  overflow: hidden;
 }
 
 .button {

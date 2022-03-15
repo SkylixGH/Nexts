@@ -9,7 +9,11 @@ const handleTheme = () => {
 		localStorage.setItem('theme', 'dark');
 	}
 
-	const theme = new Theme(localStorage.getItem('theme') === 'dark' ? themePacks.darkTheme : themePacks.lightTheme);
+	const theme = new Theme(localStorage.getItem('theme') === 'dark' ? {
+		...themePacks.darkTheme,
+		accent: '#50ffab',
+		accent2: '#50ffab90',
+	} : themePacks.lightTheme);
 
 	theme.load();
 };
@@ -45,11 +49,11 @@ function Root() {
 					color: 'var(--text1)',
 				}}>Login</h1>
 
-				<Progress showValue mode={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? 'determinate' : 'indeterminate'} value={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? (userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) : 0} />
+				<Progress showValue={false} mode={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? 'determinate' : 'indeterminate'} value={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? (userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) : 0} />
 
 				<br />
 
-				<TextBox focus={inFocus} placeholder='Username or Email' onChange={(v) => setUserName(v)}/>
+				<TextBox focus={inFocus} placeholder='Username or Email Username or Email Username or Email Username or Email Username or Email Username or Email Username or Email Username or Email ' onChange={(v) => setUserName(v)}/>
 
 				<br />
 
