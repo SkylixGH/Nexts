@@ -40,7 +40,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const [titleBarButtonCount, setTitleBarButtonCount] = useState(3);
 	const [titleBarIconVisible, setTitleBarIconVisible] = useState(typeof process !== 'undefined' ? !!process.env.NEXTS_DEV_ICON_FRAME : false);
 	const [contextMenuVisible, setContextMenuVisible] = useState(false);
-	const [contextMenuPosition, setContextMenuPosition] = useState({x: 0, y: 0});
+	const [contextMenuPosition, setContextMenuPosition] = useState({x: 100, y: 200});
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {

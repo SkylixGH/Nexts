@@ -83,6 +83,9 @@ export interface Props {
 }
 
 const Menu = (props: Props) => {
+	const [xPos, setXPos] = React.useState(props.position.x);
+	const [yPos, setYPos] = React.useState(props.position.y);
+
 	const renderButtonIcon = (icon: IconButton['icon']) => {
 		return (
 			icon.type === 'icon' || !icon.type ?
@@ -117,8 +120,19 @@ const Menu = (props: Props) => {
 		return resultJsx;
 	};
 
+	const calculatePosition = () => {
+		const xPosTemp = props.position.x;
+		const yPosTemp = props.position.y;
+
+		const windowHeight = window.innerHeight;
+		const windowWidth = window.innerWidth;
+	};
+
 	return (
-		<div className={styles.root}>
+		<div className={styles.root} style={{
+			top: `${yPos}px`,
+			left: `${xPos}px`,
+		}}>
 			{ props.header && props.header.length > 0 && <div className={styles.header}>
 				{renderIconButtons(props.header)}
 			</div> }
