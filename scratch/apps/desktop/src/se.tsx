@@ -4,10 +4,17 @@ import {App, Button, ButtonRef, Progress, TextBox, Theme, themePacks} from '@nex
 import './globals.css';
 import {NextsControlsTheme} from '@nexts-stack/desktop-uix/build/types/theme/themePacks';
 
-const theme = new Theme({
-	...themePacks.lightTheme,
-} as NextsControlsTheme);
-theme.load();
+const handleTheme = () => {
+	if (!localStorage.getItem('theme')) {
+		localStorage.setItem('theme', 'dark');
+	}
+
+	const theme = new Theme(localStorage.getItem('theme') === 'dark' ? themePacks.darkTheme : themePacks.lightTheme);
+
+	theme.load();
+};
+
+handleTheme();
 
 /**
  * This is the app root component.
@@ -60,12 +67,29 @@ function Root() {
 					flexDirection: 'row',
 					justifyContent: 'space-between',
 				}}>
-					<Button mode={'secondary'} onClick={() => {
-						setTimeout(() => {
-							setInFocus(() => false);
-							setInFocus(() => true);
-						}, 0);
-					}}>Back</Button>
+					<div style={{
+						display: 'flex',
+						gap: '10px',
+					}}>
+						<Button mode={'secondary'} onClick={() => {
+							setTimeout(() => {
+								setInFocus(() => false);
+								setInFocus(() => true);
+							}, 0);
+						}}>Back</Button>
+
+						<Button mode={'secondary'} onClick={() => {
+							const currentTheme = localStorage.getItem('theme');
+
+							if (currentTheme === 'dark') {
+								localStorage.setItem('theme', 'light');
+							} else {
+								localStorage.setItem('theme', 'dark');
+							}
+
+							handleTheme();
+						}}>Toggle Theme</Button>
+					</div>
 
 					<Button onClick={() => {
 						setTimeout(() => {
