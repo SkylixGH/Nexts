@@ -35,7 +35,7 @@ export function create(settings: DeepPartial<Settings>) {
  * @param event The event name.
  * @param listener The event listener.
  */
-export function on(event: 'all-windows-closed', listener: () => void): void
+export function on(event: 'all-windows-closed', listener: () => void): void;
 
 /**
  * Listen for events.

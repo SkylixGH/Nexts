@@ -38,7 +38,7 @@ type AppCommon = {
 	dependencies?: {
 		[name: string]: string;
 	}
-}
+};
 
 /**
  * App desktop configuration.
@@ -68,7 +68,7 @@ export type AppDesktop = AppCommon & {
 		 */
 		frontend: string;
 	}
-}
+};
 
 /**
  * App mobile configuration.
@@ -83,7 +83,7 @@ export type AppMobile = AppCommon & {
 	 * The app's entry file.
 	 */
 	main: string;
-}
+};
 
 /**
  * App configuration.
@@ -188,6 +188,6 @@ export default interface UserConfig {
 		 */
 		dependencies?: {
 			[name: string]: string;
-		}
-	}[]
-};;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		};
+	}[];
+}

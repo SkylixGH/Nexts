@@ -3,6 +3,7 @@ import {EventEmitter} from 'events';
 import {ElectronReactElectronServerCommand, ElectronReactElectronServerCommandStatus} from '@nexts-stack/cli-service';
 import {sendDevServer} from '../internal/api/api';
 import * as windowManager from '../windowManager/windowManager';
+import electronDevtoolsInstaller, {REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS} from 'electron-devtools-installer';
 
 const emitter = new EventEmitter();
 let ready = app.isReady();
@@ -14,6 +15,15 @@ windowManager.on('all-windows-closed', () => {
 if (ready) emitter.emit('ready');
 else {
 	app.once('ready', () => {
+		(async () => {
+			const requireDownload = !!process.env.UPGRADE_EXTENSIONS;
+			const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
+
+			extensions.forEach((extension) => {
+				electronDevtoolsInstaller.default(extension, requireDownload);
+			});
+		})();
+
 		ready = true;
 
 		sendDevServer<ElectronReactElectronServerCommandStatus>(ElectronReactElectronServerCommand.STATUS, {
@@ -45,14 +55,14 @@ export function exit() {
  * @param event The event name.
  * @param listener The event listener.
  */
-export function on(event: 'ready', listener: () => void): void
+export function on(event: 'ready', listener: () => void): void;
 
 /**
  * Listen for when all the windows have been closed.
  * @param event The event name.
  * @param listener The event listener.
  */
-export function on(event: 'all-windows-closed', listener: () => void): void
+export function on(event: 'all-windows-closed', listener: () => void): void;
 
 /**
  * Listen for events.

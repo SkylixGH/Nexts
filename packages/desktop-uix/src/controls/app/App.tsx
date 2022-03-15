@@ -32,6 +32,8 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer');
 	const [windowMaximized, setWindowMaximized] = useState(false);
 	const [reactError, setReactError] = useState<null | Error>(null);
+	const [titleBarButtonCount, setTitleBarButtonCount] = useState(3);
+	const [titleBarIconVisible, setTitleBarIconVisible] = useState(true);
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {
@@ -62,7 +64,9 @@ const App = React.forwardRef<Ref, Props>((props) => {
 						<img draggable={false} src={'https://skylix.net/LogoIconDark.svg'} alt={'-'} />
 					</div>
 
-					<span>{title}</span>
+					<span style={{
+						maxWidth: `calc(100vw - ${(titleBarButtonCount * 45) + (titleBarIconVisible ? 40 : 0)}px)`,
+					}} className={styles.titleBar_appTitle}>{title}</span>
 				</div>
 
 				<div className={styles.titleBar_buttons}>

@@ -120,6 +120,12 @@
   }
 }
 
+.titleBar_appTitle {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 // This doesn't use the CSS variables because chances are the theme loader failed.
 .errorBox {
   position: fixed;

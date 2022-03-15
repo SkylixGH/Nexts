@@ -28,7 +28,7 @@ export function getCurrentTheme() {
  * @param event The event name.
  * @param listener The event listener.
  */
-export function on(event: 'change', listener: () => void): void
+export function on(event: 'change', listener: () => void): void;
 
 /**
  * Listen for events.

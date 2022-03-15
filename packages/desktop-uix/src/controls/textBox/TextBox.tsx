@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './TextBox.module.scss';
-import {Icon} from '@iconify/react'
-import Dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular'
+import {Icon} from '@iconify/react';
+import Dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular';
 
 /**
  * The properties of the text box.
@@ -21,6 +21,11 @@ export interface Props {
 	 * The default text value.
 	 */
 	defaultValue?: string;
+
+	/**
+	 * Whether the text box should be focused on load.
+	 */
+	focus?: boolean;
 
 	/**
 	 * Listen for when the text box value changes.
@@ -53,11 +58,31 @@ const TextBox = React.forwardRef<Ref, Props>((props) => {
 	const [currentValue, setCurrentValue] = React.useState(props.defaultValue || '');
 	const inputRef = React.useRef<HTMLInputElement>(null);
 
+	useEffect(() => {
+		if (props.focus) {
+			inputRef.current?.focus();
+		}
+	}, [props.focus]);
+
 	return (
 		<div className={styles.root}>
 			{props.placeholder && currentValue.length === 0 && <span className={styles.placeholder}>{props.placeholder}</span>}
 
-			<input ref={inputRef} type={props.type ?? 'text'} defaultValue={currentValue} onInput={(event) => {
+			<input onFocus={() => {
+				if (props.onFocus) {
+					props.onFocus();
+				}
+			}} onBlur={() => {
+				if (props.onBlur) {
+					props.onBlur();
+				}
+			}} onKeyPress={(event) => {
+				if (event.key === 'Enter') {
+					if (props.onEnter) {
+						props.onEnter();
+					}
+				}
+			}} ref={inputRef} type={props.type ?? 'text'} defaultValue={currentValue} onInput={(event) => {
 				const value = (event.target as HTMLInputElement).value;
 
 				setCurrentValue(value);
@@ -65,11 +90,10 @@ const TextBox = React.forwardRef<Ref, Props>((props) => {
 			}} />
 
 			{currentValue.length !== 0 &&
-				<button tabIndex={-1} onClick={() => {
+				<button tabIndex={-1} onMouseDown={(event) => event.preventDefault()} onClick={() => {
 					setCurrentValue('');
 
 					if (inputRef.current) {
-						inputRef.current.focus();
 						inputRef.current.value = '';
 					}
 
@@ -83,4 +107,6 @@ const TextBox = React.forwardRef<Ref, Props>((props) => {
 });
 
 TextBox.displayName = 'Button';
+TextBox.Ac;
+
 export default TextBox;
