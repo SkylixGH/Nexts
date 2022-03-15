@@ -23,6 +23,8 @@ handleTheme();
 function Root() {
 	const [log, setLog] = React.useState([] as string[]);
 	const [inFocus, setInFocus] = React.useState(false);
+	const [userName, setUserName] = React.useState('');
+	const [password, setPassword] = React.useState('');
 
 	const logData = (text: string) => {
 		setLog([...log, text]);
@@ -42,23 +44,15 @@ function Root() {
 					color: 'var(--text1)',
 				}}>Login</h1>
 
-				<Progress showValue mode={'determinate'} value={40} />
+				<Progress showValue mode={'determinate'} value={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0)} />
 
 				<br />
 
-				<TextBox focus={inFocus} placeholder='Username or Email' onChange={(v) => {
-					document.title = `desk | ${v}`;
-				}} onFocus={() => {
-					logData('[input] Focused');
-				}} onBlur={() => {
-					logData('[input] Blurred');
-				}} onEnter={() => {
-					logData('[input] Submit');
-				}} />
+				<TextBox focus={inFocus} placeholder='Username or Email' onChange={(v) => setUserName(v)}/>
 
 				<br />
 
-				<TextBox type={'password'} placeholder={'Password'} />
+				<TextBox type={'password'} placeholder={'Password'} onChange={(v) => setPassword(v)} />
 
 				<br />
 

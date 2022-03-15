@@ -23,7 +23,7 @@
 }
 
 .bar_percentShown {
-  margin-left: 30px;
+  margin-left: 40px;
 }
 
 .value {
@@ -34,6 +34,7 @@
   border-radius: 2px;
   transform: translateX(-100%);
   left: 0;
+  transition: 100ms;
 }
 
 @keyframes :local(indeterminate) {
@@ -57,7 +58,7 @@
 }
 
 .value_percentShown {
-  margin-left: 30px;
+  margin-left: 40px;
 }
 
 .valueNumber {

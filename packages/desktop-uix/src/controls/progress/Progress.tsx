@@ -33,13 +33,13 @@ const Progress = React.forwardRef<Ref, Props>((props) => {
 			<div className={`${styles.bar}` +
 				` ${props.showValue && props.mode === 'determinate' ? styles.value_percentShown : ''}`} />
 			<div style={{
-				...(props.mode === 'determinate' ? {width: `${props.value}%`} : {}),
+				...(props.mode === 'determinate' ? {width: `${(props.value ?? 0) > 100 ? 100 : props.value}%`} : {}),
 			}} className={
 				`${styles.value} ${!props.mode || props.mode === 'indeterminate' ? styles.value_indeterminate : styles.value_determinate}` +
 				` ${props.showValue && props.mode === 'determinate' ? styles.value_percentShown : ''}`
 			} />
 
-			{props.showValue && props.mode === 'determinate' && <div className={styles.valueNumber}>{Math.round(props.value ?? 0)}%</div>}
+			{props.showValue && props.mode === 'determinate' && <div className={styles.valueNumber}>{(props.value ?? 0) > 100 ? 100 : Math.round(props.value ?? 0)}%</div>}
 		</div>
 	);
 });
