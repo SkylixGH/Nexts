@@ -25,6 +25,7 @@ function Root() {
 	const [inFocus, setInFocus] = React.useState(false);
 	const [userName, setUserName] = React.useState('');
 	const [password, setPassword] = React.useState('');
+	const [progressMode, setProgressMode] = React.useState('indeterminate');
 
 	const logData = (text: string) => {
 		setLog([...log, text]);
@@ -44,7 +45,7 @@ function Root() {
 					color: 'var(--text1)',
 				}}>Login</h1>
 
-				<Progress showValue mode={'determinate'} value={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0)} />
+				<Progress showValue mode={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? 'determinate' : 'indeterminate'} value={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? (userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) : 0} />
 
 				<br />
 
