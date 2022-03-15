@@ -18,7 +18,7 @@ import './globals.css';
  */
 function Entry() {
 	return (
-		<App>
+		<App center>
 			<Web />
 		</App>
 	);
@@ -46,38 +46,18 @@ function Web() {
 
 	return (
 		<div style={{
-			margin: '20px',
+			width: '100%',
+			height: '100%',
 			display: 'flex',
-			gap: '20px',
-			flexDirection: 'column',
-			transform: 'translateY(100%',
+			alignItems: 'center',
+			justifyContent: 'center',
 		}}>
-			<div style={{
-				display: 'flex',
-				flexDirection: 'column',
-				gap: '20px',
-				justifyContent: 'center',
-			}}>
-				<h1 style={{
-					textAlign: 'center',
-					width: '100%',
-					fontWeight: 'normal',
-				}}>Installing Skylix</h1>
-
-				<div style={{
-					width: '50%',
-					display: 'flex',
-					justifyContent: 'center',
-					transform: 'translateX(50%',
-				}}>
-					<Progress />
-				</div>
-			</div>
+			<Browser url={'https://skylix.net'} />
 		</div>
 	);
 }
 
-const th = new Theme(themePacks.lightTheme);
+const th = new Theme(themePacks.darkTheme);
 th.load();
 
 document.title = 'Nexts App | https://skylix.net';

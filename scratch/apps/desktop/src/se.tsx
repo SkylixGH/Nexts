@@ -1,9 +1,12 @@
 import React, {createRef, useRef} from 'react';
 import ReactDOM from 'react-dom';
-import {App, Button, ButtonRef, TextBox, Theme, themePacks} from '@nexts-stack/desktop-uix';
+import {App, Button, ButtonRef, Progress, TextBox, Theme, themePacks} from '@nexts-stack/desktop-uix';
 import './globals.css';
+import {NextsControlsTheme} from '@nexts-stack/desktop-uix/build/types/theme/themePacks';
 
-const theme = new Theme(themePacks.darkTheme);
+const theme = new Theme({
+	...themePacks.darkTheme,
+} as NextsControlsTheme);
 theme.load();
 
 /**
@@ -19,13 +22,25 @@ function Root() {
 	};
 
 	return (
-		<App>
+		<App center>
 			<div style={{
 				padding: '10px',
+				maxWidth: '400px',
+				width: '100%',
 			}}>
-				<TextBox focus={inFocus} placeholder='Hello World' onChange={(v) => {
+				<h1 style={{
+					width: '100%',
+					textAlign: 'center',
+					fontWeight: 'normal',
+					color: 'var(--text1)',
+				}}>Login</h1>
+
+				<Progress showValue mode={'determinate'} value={40} />
+
+				<br />
+
+				<TextBox focus={inFocus} placeholder='Username or Email' onChange={(v) => {
 					document.title = `desk | ${v}`;
-					console.log(v);
 				}} onFocus={() => {
 					logData('[input] Focused');
 				}} onBlur={() => {
@@ -36,18 +51,35 @@ function Root() {
 
 				<br />
 
-				<Button onClick={() => {
-					setTimeout(() => {
-						setInFocus(() => false);
-						setInFocus(() => true);
-					}, 1000);
-				}}>Focus</Button>
+				<TextBox type={'password'} placeholder={'Password'} />
 
 				<br />
 
-				<div>
-					{log.map((v, i) => <div key={i}>{v}</div>)}
+				<div style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+				}}>
+					<Button mode={'secondary'} onClick={() => {
+						setTimeout(() => {
+							setInFocus(() => false);
+							setInFocus(() => true);
+						}, 0);
+					}}>Back</Button>
+
+					<Button onClick={() => {
+						setTimeout(() => {
+							setInFocus(() => false);
+							setInFocus(() => true);
+						}, 0);
+					}}>Focus</Button>
 				</div>
+
+				{/* <br /> */}
+
+				{/* <div> */}
+				{/* 	{log.map((v, i) => <div key={i}>{v}</div>)} */}
+				{/* </div> */}
 			</div>
 		</App>
 	);

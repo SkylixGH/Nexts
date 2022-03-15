@@ -53,7 +53,7 @@ const Button = React.forwardRef<Ref, Props>((props) => {
 	}, [webViewRef]);
 
 	return (
-		<div>
+		<div className={styles.root}>
 			{ isElectron && <webview ref={webViewRef} src={props.url} className={styles.webview} /> }
 
 			{ !isElectron && <div className={styles.error}>

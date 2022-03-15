@@ -89,24 +89,21 @@ const TextBox = React.forwardRef<Ref, Props>((props) => {
 				if (props.onChange) props.onChange(value);
 			}} />
 
-			{currentValue.length !== 0 &&
-				<button tabIndex={-1} onMouseDown={(event) => event.preventDefault()} onClick={() => {
-					setCurrentValue('');
+			<button className={`${styles.button} ${currentValue.length === 0 ? styles.button_hide : ''}`} tabIndex={-1} onMouseDown={(event) => event.preventDefault()} onClick={() => {
+				setCurrentValue('');
 
-					if (inputRef.current) {
-						inputRef.current.value = '';
-					}
+				if (inputRef.current) {
+					inputRef.current.value = '';
+				}
 
-					if (props.onChange) props.onChange('');
-				}}>
-					<Icon icon={Dismiss16Regular} />
-				</button>
-			}
+				if (props.onChange) props.onChange('');
+			}}>
+				<Icon icon={Dismiss16Regular} />
+			</button>
 		</div>
 	);
 });
 
 TextBox.displayName = 'Button';
-TextBox.Ac;
 
 export default TextBox;

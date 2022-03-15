@@ -17,6 +17,11 @@ export interface Props {
 	 * The app view layer.
 	 */
 	children: JSX.Element | JSX.Element[];
+
+	/**
+	 * Center the body view contents.
+	 */
+	center?: boolean;
 }
 
 /**
@@ -86,7 +91,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 				</div>
 			</div> }
 
-			<div className={`${styles.content} ${titleBarVisible ? '' : styles.content_noTitleBar}`}>
+			<div className={`${styles.content} ${props.center ? styles.content_center : ''} ${titleBarVisible ? '' : styles.content_noTitleBar}`}>
 				{props.children}
 			</div>
 
