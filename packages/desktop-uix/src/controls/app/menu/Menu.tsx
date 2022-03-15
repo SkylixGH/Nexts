@@ -47,6 +47,26 @@ export interface Props {
 	header?: IconButton[];
 
 	/**
+	 * If the menu is open.
+	 */
+	show: boolean;
+
+	/**
+	 * The menu position.
+	 */
+	position: {
+		/**
+		 * The X axis position.
+		 */
+		x: number;
+
+		/**
+		 * The Y axis position.
+		 */
+		y: number;
+	}
+
+	/**
 	 * The menu items.
 	 */
 	body: {

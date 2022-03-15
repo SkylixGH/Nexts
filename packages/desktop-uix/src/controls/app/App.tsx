@@ -39,6 +39,8 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const [reactError, setReactError] = useState<null | Error>(null);
 	const [titleBarButtonCount, setTitleBarButtonCount] = useState(3);
 	const [titleBarIconVisible, setTitleBarIconVisible] = useState(typeof process !== 'undefined' ? !!process.env.NEXTS_DEV_ICON_FRAME : false);
+	const [contextMenuVisible, setContextMenuVisible] = useState(false);
+	const [contextMenuPosition, setContextMenuPosition] = useState({x: 0, y: 0});
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {
@@ -102,40 +104,40 @@ const App = React.forwardRef<Ref, Props>((props) => {
 				<Icon icon={ErrorCircle16Regular} />
 			</div>
 
-			{/* <Menu header={[ */}
-			{/* 	{ */}
-			{/* 		action: () => { */}
-			{/* 			setTitleBarVisible(!titleBarVisible) */}
-			{/* 		}, */}
-			{/* 		icon: { */}
-			{/* 			src: 'mdi:electron-framework', */}
-			{/* 			size: 20, */}
-			{/* 		}, */}
-			{/* 	}, */}
-			{/* 	{ */}
-			{/* 		action: () => { */}
-			{/* 			appWindow.minimize() */}
-			{/* 		}, */}
-			{/* 		icon: { */}
-			{/* 			src: Minimize16Regular, */}
-			{/* 			size: 17, */}
-			{/* 		}, */}
-			{/* 	}, */}
-			{/* ]} body={[ */}
-			{/* 	{ */}
-			{/* 		label: 'Reload', */}
-			{/* 		icon: { */}
-			{/* 			src: 'fluent:refresh-16-regular', */}
-			{/* 			size: 20, */}
-			{/* 		}, */}
-			{/* 	}, */}
-			{/* 	{ */}
-			{/* 		label: 'Close Current Window', */}
-			{/* 		icon: { */}
-			{/* 			src: 'fluent:dismiss-16-regular', */}
-			{/* 		}, */}
-			{/* 	}, */}
-			{/* ]}/> */}
+			<Menu show={contextMenuVisible} position={contextMenuPosition} header={[
+				{
+					action: () => {
+						setTitleBarVisible(!titleBarVisible);
+					},
+					icon: {
+						src: 'mdi:electron-framework',
+						size: 20,
+					},
+				},
+				{
+					action: () => {
+						appWindow.minimize();
+					},
+					icon: {
+						src: Minimize16Regular,
+						size: 17,
+					},
+				},
+			]} body={[
+				{
+					label: 'Reload',
+					icon: {
+						src: 'fluent:refresh-16-regular',
+						size: 20,
+					},
+				},
+				{
+					label: 'Close Current Window',
+					icon: {
+						src: 'fluent:dismiss-16-regular',
+					},
+				},
+			]}/>
 		</div>
 	);
 });
