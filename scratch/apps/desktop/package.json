@@ -18,7 +18,9 @@
 		"@nexts-stack/desktop-uix": "../../../packages/desktop-uix",
 		"react-dom": "latest",
 		"react": "latest",
-		"electron": "^17.1.1"
+		"electron": "^17.1.1",
+		"sass": "^1.49.9",
+		"postcss-scss": "^4.0.3"
 	},
 	"devDependencies": {
 		"@types/react-dom": "latest",

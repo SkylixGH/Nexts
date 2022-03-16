@@ -22,6 +22,11 @@ export interface Props {
 	 * Center the body view contents.
 	 */
 	center?: boolean;
+
+	/**
+	 * The flow direction of the app body.
+	 */
+	flowDirection?: 'row' | 'column';
 }
 
 /**
@@ -213,7 +218,11 @@ const App = React.forwardRef<Ref, Props>((props) => {
 				</div>
 			</div> }
 
-			<div className={`${styles.content} ${props.center ? styles.content_center : ''} ${titleBarVisible ? '' : styles.content_noTitleBar}`}>
+			<div className={`${styles.content} ${props.center ? styles.content_center : ''} ${titleBarVisible ? '' : styles.content_noTitleBar}`} style={{
+				...(props.center && props.flowDirection === 'row' ? {
+					flexDirection: 'row',
+				} : {}),
+			}}>
 				{props.children}
 			</div>
 

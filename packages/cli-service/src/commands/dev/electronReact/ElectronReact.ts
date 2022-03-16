@@ -2,7 +2,7 @@ import path from 'path';
 import fsSync from 'fs';
 import fs from 'fs-extra';
 import logger from '@nexts-stack/logger';
-import {spawn} from 'child_process';
+import {ChildProcess, spawn} from 'child_process';
 import chokidar from 'chokidar';
 import crashError from '../../../misc/crashError';
 import {createServer} from 'vite';
@@ -50,6 +50,11 @@ export default class ElectronReact {
 	#vite?: import('vite').ViteDevServer;
 
 	/**
+	 * The electron process.
+	 */
+	#electronServer?: ChildProcess;
+
+	/**
 	 * Stop the development server.
 	 * @returns {void}
 	 */
@@ -61,6 +66,10 @@ export default class ElectronReact {
 
 			if (this.#esBuilder && this.#esBuilder.stop) {
 				this.#esBuilder.stop();
+			}
+
+			if (this.#electronServer) {
+				this.#electronServer.kill();
 			}
 		} catch {
 			//
@@ -121,7 +130,7 @@ export default class ElectronReact {
 					'<!DOCTYPE html>',
 					'<html lang="en">',
 					['<h', 'e', 'a', 'd>'].join(''),
-					`       <title>${appPackage.name}</title>`,
+					`       <title>${appConfig.displayName ?? '...'}</title>`,
 					'       <meta charset="utf-8">',
 					'       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">',
 					'   </head>',
@@ -159,6 +168,14 @@ export default class ElectronReact {
 				base: './',
 				plugins: [react()],
 				publicDir: path.join(appExactPath, 'public'),
+				css: {
+					modules: {
+						scopeBehaviour: 'local',
+					},
+					preprocessorOptions: {
+						scss: {},
+					},
+				},
 				server: {
 					hmr: {
 						host: 'localhost',
@@ -176,10 +193,8 @@ export default class ElectronReact {
 				ignoreInitial: true,
 			});
 
-			let electronProcess: import('child_process').ChildProcess | null = null;
-
 			const bootElectron = () => {
-				electronProcess = spawn(electronExePath, ['./'], {
+				this.#electronServer = spawn(electronExePath, ['./'], {
 					cwd: appExactPath,
 					stdio: ['ipc'],
 					env: {
@@ -191,7 +206,7 @@ export default class ElectronReact {
 					},
 				});
 
-				electronProcess.on('message', (message: string) => {
+				this.#electronServer.on('message', (message: string) => {
 					let messageRawJSON: {
 						type: ElectronServerCommand,
 						data: {[key: string]: any},
@@ -229,14 +244,14 @@ export default class ElectronReact {
 					}
 				});
 
-				electronProcess.stdout?.on('data', (data) => {
+				this.#electronServer.stdout?.on('data', (data) => {
 					data.toString().split('\n').forEach((line: string) => {
 						if (line.length === 0 || line === '\r') return;
 						logger.log(`[App] ${line}`);
 					});
 				});
 
-				electronProcess.stderr?.on('data', (data) => {
+				this.#electronServer.stderr?.on('data', (data) => {
 					data.toString().split('\n').forEach((line: string) => {
 						if (line.length === 0 || line === '\r') return;
 						logger.error(`[App] ${line}`);
@@ -249,8 +264,8 @@ export default class ElectronReact {
 			buildUpdateWatcher.on('all', () => {
 				logger.log('The app has been recompiled and will restart');
 
-				electronProcess?.kill();
-				electronProcess = null;
+				this.#electronServer?.kill();
+				this.#electronServer = undefined;
 
 				bootElectron();
 			});

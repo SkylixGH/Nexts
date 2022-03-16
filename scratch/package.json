@@ -3,9 +3,9 @@
 		"packages/*",
 		"apps/*"
 	],
-  "scripts": {
-	"dev:desktop": "nexts dev --name desk"
-  },
+	"scripts": {
+		"dev:desktop": "nexts dev --name desk"
+	},
 	"dependencies": {
 		"@nexts-stack/cli-service": "file:../packages/cli-service",
 		"chalk": "^5.0.0",

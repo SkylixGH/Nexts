@@ -31,6 +31,8 @@ export default defineConfig({
 			dependencies: {
 				'@nexts-stack/desktop': '../../../packages/desktop',
 				'@nexts-stack/desktop-uix': '../../../packages/desktop-uix',
+				'sass': '^1.49.9',
+				'postcss-scss': '^4.0.3',
 			},
 		},
 		// {
