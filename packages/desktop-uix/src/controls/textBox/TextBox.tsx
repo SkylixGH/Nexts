@@ -104,6 +104,6 @@ const TextBox = React.forwardRef<Ref, Props>((props) => {
 	);
 });
 
-TextBox.displayName = 'Button';
+TextBox.displayName = 'TextBox';
 
 export default TextBox;

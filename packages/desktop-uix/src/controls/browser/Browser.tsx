@@ -63,5 +63,5 @@ const Button = React.forwardRef<Ref, Props>((props) => {
 	);
 });
 
-Button.displayName = 'Button';
+Button.displayName = 'Browser';
 export default Button;

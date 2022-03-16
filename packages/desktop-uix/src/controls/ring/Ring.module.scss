@@ -1,0 +1,14 @@
+@import "../config";
+
+.root {
+	background: red;
+
+	circle {
+		stroke-dasharray: 10 20;
+		stroke: $accent1;
+		fill: transparent;
+		stroke-linecap: round;
+		transform-box: fill-box;
+  		transform-origin: center;
+	}
+}

@@ -1,4 +1,4 @@
-import {App} from '@nexts-stack/desktop-uix';
+import {App, Ring, useMenu} from '@nexts-stack/desktop-uix';
 import React from 'react';
 import './styles.scss';
 
@@ -10,10 +10,12 @@ export default function Root() {
 	const [lines, setLines] = React.useState('1');
 	const [linesScrollTop, setLinesScrollTop] = React.useState(0);
 	const lcRef = React.useRef<HTMLTextAreaElement>(null);
+	const menu = useMenu();
 
 	return (
 		<App center flowDirection={'row'}>
-			<textarea className={'lc'} ref={lcRef} value={lines}></textarea>
+			<Ring size={10} />
+			{/* <textarea className={'lc'} ref={lcRef} value={lines}></textarea>
 
 			<textarea onScroll={(event) => {
 				setLinesScrollTop(event.target!.scrollTop ?? 0);
@@ -38,7 +40,7 @@ export default function Root() {
 					event.target.selectionStart = start + 1;
 					event.target.selectionEnd = end + 1;
 				}
-			}} className={'area'} />
+			}} className={'area'} /> */}
 		</App>
 	);
 }

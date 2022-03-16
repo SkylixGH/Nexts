@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './progress.module.scss';
+import styles from './Progress.module.scss';
 
 /**
  * The properties of the progress bar.
@@ -46,5 +46,5 @@ const Progress = React.forwardRef<Ref, Props>((props) => {
 	);
 });
 
-Progress.displayName = 'Button';
+Progress.displayName = 'Progress';
 export default Progress;

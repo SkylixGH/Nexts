@@ -5,12 +5,12 @@ import {app, windowManager} from '@nexts-stack/desktop';
  * @returns {void}
  */
 function createWindow() {
-	windowManager.create({
-		frame: {
-			width: 1200,
-			height: 600,
-		},
-	});
+	// windowManager.create({
+	// 	frame: {
+	// 		width: 1200,
+	// 		height: 600,
+	// 	},
+	// });
 }
 
 app.on('all-windows-closed', () => {
