@@ -189,7 +189,10 @@ const App = React.forwardRef<Ref, Props>((props) => {
 						}} icon={Minimize16Regular} />
 					</button>
 
-					<button onClick={() => setWindowMaximized(!windowMaximized)}>
+					<button onClick={() => {
+						if (windowMaximized) appWindow.restore();
+						else appWindow.maximize();
+					}}>
 						<Icon icon={windowMaximized ? Restore16Regular : Maximize16Regular} />
 					</button>
 
