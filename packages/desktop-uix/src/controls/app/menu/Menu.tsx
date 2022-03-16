@@ -189,7 +189,7 @@ const Menu = (props: Props) => {
 	});
 
 	return (
-		<div onMouseEnter={() => props.onMouseOver()} onMouseLeave={() => props.onMouseLeave()} ref={menuRef} className={`${styles.root} ${props.show ? '' : styles._hide}`} style={{
+		<div onContextMenu={(event) => event.preventDefault()} onMouseEnter={() => props.onMouseOver()} onMouseLeave={() => props.onMouseLeave()} ref={menuRef} className={`${styles.root} ${props.show ? '' : styles._hide}`} style={{
 			top: `${yPos}px`,
 			left: `${xPos}px`,
 		}}>
