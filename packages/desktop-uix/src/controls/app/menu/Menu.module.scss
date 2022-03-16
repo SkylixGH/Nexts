@@ -95,6 +95,11 @@
   }
 }
 
+.body_buttonDisabled {
+  pointer-events: none;
+  color: $text3;
+}
+
 .body_buttonIcon {
   width: 25px;
   height: 25px;

@@ -68,6 +68,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 
 		const windowMaximizedListener = () => {
 			setWindowMaximized(true);
+			console.log('window maximized');
 		};
 
 		const windowUnMaximizeListener = () => {
@@ -84,7 +85,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 		};
 
 		const windowClickListener = () => {
-			if (!mouseOverContextMenu) {
+			if (!mouseOverContextMenu && contextMenuVisible) {
 				setContextMenuVisible(false);
 			}
 		};
@@ -128,17 +129,19 @@ const App = React.forwardRef<Ref, Props>((props) => {
 		<div className={styles.root}>
 			{ titleBarVisible && <div className={styles.titleBar}>
 				<div className={styles.titleBar_app}>
-					<div onContextMenu={() => {
+					<div onClick={() => {
 						menu.open({
 							body: [
 								{
 									label: 'Restore',
 									action: () => {
 										appWindow.restore();
+										setWindowMaximized(false);
 									},
 									icon: {
 										src: Restore16Regular,
 									},
+									disabled: !windowMaximized,
 								},
 								{
 									label: 'Minimize',
@@ -154,10 +157,12 @@ const App = React.forwardRef<Ref, Props>((props) => {
 									label: 'Maximize',
 									action: () => {
 										appWindow.maximize();
+										setWindowMaximized(true);
 									},
 									icon: {
 										src: Maximize16Regular,
 									},
+									disabled: windowMaximized,
 								},
 								{
 									label: 'Close',
@@ -190,8 +195,13 @@ const App = React.forwardRef<Ref, Props>((props) => {
 					</button>
 
 					<button onClick={() => {
-						if (windowMaximized) appWindow.restore();
-						else appWindow.maximize();
+						if (windowMaximized) {
+							appWindow.restore();
+							setWindowMaximized(false);
+						} else {
+							appWindow.maximize();
+							setWindowMaximized(true);
+						}
 					}}>
 						<Icon icon={windowMaximized ? Restore16Regular : Maximize16Regular} />
 					</button>

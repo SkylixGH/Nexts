@@ -99,6 +99,11 @@ export interface Props {
 		 * The click action.
 		 */
 		action: () => void;
+
+		/**
+		 * Whether the button is disabled.
+		 */
+		disabled?: boolean;
 	}[];
 }
 
@@ -201,7 +206,7 @@ const Menu = (props: Props) => {
 							}
 
 							button.action();
-						}} className={styles.body_button}>
+						}} className={`${styles.body_button} ${button.disabled ? styles.body_buttonDisabled : ''}`}>
 							<div className={styles.body_buttonIcon}>
 								{button.icon && renderButtonIcon(button.icon)}
 							</div>
