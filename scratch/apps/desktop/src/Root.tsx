@@ -18,7 +18,7 @@ export default function Root() {
 			<Ring size={size} />
 			<br />
 
-			<input type="range" min="0" max="20" defaultValue={10} onChange={(e) => setSize(e.target.value)} />
+			<input type="range" min="0" max="200" defaultValue={10} onChange={(e) => setSize(e.target.value)} />
 			{/* <textarea className={'lc'} ref={lcRef} value={lines}></textarea>
 
 			<textarea onScroll={(event) => {

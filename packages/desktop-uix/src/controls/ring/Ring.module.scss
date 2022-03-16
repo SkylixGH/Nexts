@@ -8,5 +8,15 @@
 		stroke-linecap: round;
 		transform-box: fill-box;
   		transform-origin: center;
+		animation: spin 0.4s linear 0s infinite;
+	}
+}
+
+@keyframes :local(spin) {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }

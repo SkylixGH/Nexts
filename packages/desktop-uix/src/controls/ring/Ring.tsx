@@ -23,7 +23,6 @@ let incrementDirection = 'up' as 'up' | 'down';
 const Ring = React.forwardRef<Ref, Props>((props) => {
 	const [radius, setRadius] = React.useState(0);
 	const [circumference, setCircumference] = React.useState(0);
-	const [rotation, setRotation] = React.useState(0);
 	const circleRef = React.useRef<SVGCircleElement>(null);
 
 	const calculatePercent = (percent: number) => {
@@ -44,14 +43,10 @@ const Ring = React.forwardRef<Ref, Props>((props) => {
 	useEffect(() => {
 		calculatePercent(20);
 
-		const rotateLoop = setInterval(() => {
-			setRotation((rotation) => rotation + 1 > 360 ? 0 : rotation + 4);
-		});
-
 		const percentLoop = setInterval(() => {
 			if (incrementDirection === 'up' && lastPercent === 70) {
 				incrementDirection = 'down';
-			} else if (incrementDirection === 'down' && lastPercent === 20) {
+			} else if (incrementDirection === 'down' && lastPercent === 0) {
 				incrementDirection = 'up';
 			}
 
@@ -65,16 +60,13 @@ const Ring = React.forwardRef<Ref, Props>((props) => {
 		}, 10);
 
 		return () => {
-			clearInterval(rotateLoop);
 			clearInterval(percentLoop);
 		};
 	});
 
 	return (
 		<svg width={(+props.size ?? 10) * 2 + (radius / 5 < 3 ? 3 : radius / 5)} height={(+props.size ?? 10) * 2 + (radius / 5 < 3 ? 3 : radius / 5)} className={styles.root}>
-			<circle style={{
-				transform: `rotate(${rotation}deg)`,
-			}} ref={circleRef} strokeWidth={radius / 5 < 3 ? 3 : radius / 5}
+			<circle ref={circleRef} strokeWidth={radius / 5 < 3 ? 3 : radius / 5}
 			r={radius} cx={(+props.size ?? 10) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
 			cy={(+props.size ?? 10) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
 			/>
