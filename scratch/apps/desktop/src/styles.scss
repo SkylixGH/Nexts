@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
 .area {
-  width: calc(100vw - 60px);
+  width: calc(100vw - 70px);
   resize: none;
   background: var(--layerSolid2);
   height: 100%;
@@ -18,12 +18,17 @@
 .lc {
   height: 100%;
   background: var(--layerSolid1);
-  width: 60px;
+  width: 70px;
   box-sizing: border-box;
   display: flex;
-  padding: 20px;
   flex-direction: column;
   overflow: auto;
+  resize: none;
+  border: none;
+  line-height: calc(1.54 * 13px);
+  padding: 20px;
+  outline: none;
+  color: var(--text3);
 
   &::-webkit-scrollbar {
     width: 0;

@@ -7,38 +7,26 @@ import './styles.scss';
  * @returns The app root component.
  */
 export default function Root() {
-	const [lines, setLines] = React.useState([] as number[]);
+	const [lines, setLines] = React.useState('1');
 	const [linesScrollTop, setLinesScrollTop] = React.useState(0);
-	const lcRef = React.useRef<HTMLDivElement>(null);
+	const lcRef = React.useRef<HTMLTextAreaElement>(null);
 
 	return (
 		<App center flowDirection={'row'}>
-			<div className={'lc'} ref={lcRef}>
-				{lines.map((line, index) => (
-					<div key={index} className={'line'}>
-						{index}
-					</div>
-				))}
-			</div>
+			<textarea className={'lc'} ref={lcRef} value={lines}></textarea>
 
 			<textarea onScroll={(event) => {
 				setLinesScrollTop(event.target!.scrollTop ?? 0);
 				lcRef.current.scrollTop = event.target!.scrollTop ?? 0;
 
 				const lines = event.target!.value.split('\n');
-				setLines(lines);
-
-				console.clear();
-				console.log(lines);
+				setLines(lines.map((l, i) => i).join('\n'));
 			}} onChange={(event) => {
 				setLinesScrollTop(event.target!.scrollTop ?? 0);
 				lcRef.current.scrollTop = event.target!.scrollTop ?? 0;
 
 				const lines = event.target!.value.split('\n');
-				setLines(lines);
-
-				console.clear();
-				console.log(lines);
+				setLines(lines.map((l, i) => i).join('\n'));
 			}} placeholder={'Type Here...'} onKeyDown={(event) => {
 				if (event.key === 'Tab') {
 					event.preventDefault();
