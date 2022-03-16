@@ -20,7 +20,7 @@ else {
 			const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
 
 			extensions.forEach((extension) => {
-				electronDevtoolsInstaller.default(extension, requireDownload);
+				(electronDevtoolsInstaller as any).default(extension, requireDownload);
 			});
 		})();
 
@@ -29,6 +29,7 @@ else {
 		sendDevServer<ElectronReactElectronServerCommandStatus>(ElectronReactElectronServerCommand.STATUS, {
 			status: 'ready',
 		});
+
 		emitter.emit('ready');
 	});
 }

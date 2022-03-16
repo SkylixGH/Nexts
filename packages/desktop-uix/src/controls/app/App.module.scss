@@ -118,8 +118,10 @@
     align-items: center;
     justify-content: center;
     border-radius: 3px;
+    -webkit-app-region: no-drag;
 
     img {
+      -webkit-app-region: no-drag;
       max-width: 25px;
       max-height: 25px;
       width: 100%;

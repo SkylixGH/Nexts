@@ -18,7 +18,7 @@ export interface IconButton {
 		/**
 		 * The source of the icon.
 		 */
-		src: string | IconifyIcon;
+		src: string | IconifyIcon | any;
 
 		/**
 		 * The type of the icon.

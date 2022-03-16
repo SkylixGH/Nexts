@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './App.module.scss';
 import {Icon} from '@iconify/react';
-import {appWindow, menu, MenuSettings, useThemeType} from '../..';
+import {menu, MenuSettings, useAppWindow, useThemeType} from '../..';
 import Menu from './menu/Menu';
 import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular';
 import Restore16Regular from '@iconify/icons-fluent/restore-16-regular';
@@ -30,9 +30,15 @@ export interface Props {
 export interface Ref {
 }
 
+let currentMousePosition: {x: number, y: number} = {x: 0, y: 0};
+const setCurrentMousePosition = (data: typeof currentMousePosition) => {
+	currentMousePosition = data;
+};
+
 const App = React.forwardRef<Ref, Props>((props) => {
 	const isElectron = typeof window !== 'undefined' && window.process && window.process.type;
 	const themeType = useThemeType();
+	const appWindow = useAppWindow();
 	const [title, setTitle] = useState(window.document.title);
 	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer');
 	const [windowMaximized, setWindowMaximized] = useState(false);
@@ -50,8 +56,31 @@ const App = React.forwardRef<Ref, Props>((props) => {
 		});
 
 		const menuOpenListener = (menuData: MenuSettings) => {
+			setContextMenuPosition(currentMousePosition);
+
 			setContextMenuSettings(menuData);
 			setContextMenuVisible(true);
+		};
+
+		const windowMouseMoveListener = (event: MouseEvent) => {
+			setCurrentMousePosition({x: event.clientX, y: event.clientY});
+		};
+
+		const windowMaximizedListener = () => {
+			setWindowMaximized(true);
+		};
+
+		const windowUnMaximizeListener = () => {
+			console.log('UFC');
+			setWindowMaximized(false);
+		};
+
+		const windowFullscreenListener = () => {
+			setTitleBarVisible(false);
+		};
+
+		const windowUnFullscreenListener = () => {
+			setTitleBarVisible(true);
 		};
 
 		const windowClickListener = () => {
@@ -65,8 +94,16 @@ const App = React.forwardRef<Ref, Props>((props) => {
 			document.head.appendChild(titleElement);
 		}
 
-		document.addEventListener('click', windowClickListener);
 		menu.addListener('open', menuOpenListener);
+		document.addEventListener('click', windowClickListener);
+		document.addEventListener('mousemove', (event: MouseEvent) => {
+			setCurrentMousePosition({x: event.clientX, y: event.clientY});
+		});
+
+		appWindow.events.addListener('maximize', windowMaximizedListener);
+		appWindow.events.addListener('fullScreen', windowFullscreenListener);
+		appWindow.events.addListener('unFullScreen', windowUnFullscreenListener);
+		appWindow.events.addListener('unMaximize', windowUnMaximizeListener);
 
 		titleListener.observe(
 			document.querySelectorAll('title')[0],
@@ -75,50 +112,65 @@ const App = React.forwardRef<Ref, Props>((props) => {
 
 		return () => {
 			titleListener.disconnect();
-			document.removeEventListener('click', windowClickListener);
+
 			menu.removeListener('open', menuOpenListener);
+			document.removeEventListener('click', windowClickListener);
+			document.removeEventListener('mousemove', windowMouseMoveListener);
+
+			appWindow.events.removeListener('maximize', windowMaximizedListener);
+			appWindow.events.removeListener('fullScreen', windowFullscreenListener);
+			appWindow.events.removeListener('unFullScreen', windowUnFullscreenListener);
+			appWindow.events.removeListener('unMaximize', windowUnMaximizeListener);
 		};
 	});
 
 	return (
-		<div className={styles.root} onDoubleClick={(event) => {
-			setContextMenuPosition({x: event.clientX, y: event.clientY});
-			menu.open({
-				header: [
-					{
-						action: () => {
-							alert('Clicked');
-						},
-						icon: {
-							src: 'fluent:maximize-16-regular',
-						},
-					},
-				],
-				body: [
-					{
-						label: 'Reload Window (Ctrl+R)',
-						icon: {
-							src: 'mdi:reload',
-						},
-						action: () => {
-							window.location.reload();
-						},
-					},
-					{
-						label: 'Restart Application (Ctrl+Shift+R)',
-						icon: {
-							src: 'mdi:restart',
-						},
-						action: () => {
-							window.location.reload();
-						},
-					},
-				],
-			});
-		}}>
+		<div className={styles.root}>
 			{ titleBarVisible && <div className={styles.titleBar}>
 				<div className={styles.titleBar_app}>
-					<div>
+					<div onContextMenu={() => {
+						menu.open({
+							body: [
+								{
+									label: 'Restore',
+									action: () => {
+										appWindow.restore();
+									},
+									icon: {
+										src: Restore16Regular,
+									},
+								},
+								{
+									label: 'Minimize',
+									action: () => {
+										appWindow.minimize();
+									},
+									icon: {
+										src: Minimize16Regular,
+										size: 17,
+									},
+								},
+								{
+									label: 'Maximize',
+									action: () => {
+										appWindow.maximize();
+									},
+									icon: {
+										src: Maximize16Regular,
+									},
+								},
+								{
+									label: 'Close',
+									action: () => {
+										appWindow.close();
+									},
+									icon: {
+										src: Dismiss16Regular,
+									},
+								},
+							],
+						});
+					}}>
 						<img draggable={false} src={process.env.NEXTS_DEV_ICON_LIGHT_FRAME || process.env.NEXTS_DEV_ICON_DARK_FRAME ?
 							(themeType === 'dark' ? process.env.NEXTS_DEV_ICON_DARK_FRAME : process.env.NEXTS_DEV_ICON_LIGHT_FRAME) :
 							'https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg'} alt={'-'}
