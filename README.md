@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="readme/nexts-logo.svg" alt="nexts-logo" width="200" height="200" />
+    <img src="readme/nexts-logo.svg" alt="nexts-logo" width="100" height="200" />
 </div>
 
 <p align="center">A framework for all your needs!</p>
