@@ -11,10 +11,14 @@ export default function Root() {
 	const [linesScrollTop, setLinesScrollTop] = React.useState(0);
 	const lcRef = React.useRef<HTMLTextAreaElement>(null);
 	const menu = useMenu();
+	const [size, setSize] = React.useState(10);
 
 	return (
 		<App center flowDirection={'row'}>
-			<Ring size={10} />
+			<Ring size={size} />
+			<br />
+
+			<input type="range" min="0" max="20" defaultValue={10} onChange={(e) => setSize(e.target.value)} />
 			{/* <textarea className={'lc'} ref={lcRef} value={lines}></textarea>
 
 			<textarea onScroll={(event) => {

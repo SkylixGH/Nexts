@@ -68,13 +68,16 @@ const Ring = React.forwardRef<Ref, Props>((props) => {
 			clearInterval(rotateLoop);
 			clearInterval(percentLoop);
 		};
-	}, [circleRef]);
+	});
 
 	return (
-		<svg width={120} height={120} className={styles.root}>
+		<svg width={(+props.size ?? 10) * 2 + (radius / 5 < 3 ? 3 : radius / 5)} height={(+props.size ?? 10) * 2 + (radius / 5 < 3 ? 3 : radius / 5)} className={styles.root}>
 			<circle style={{
 				transform: `rotate(${rotation}deg)`,
-			}} ref={circleRef} strokeWidth={radius / 5 < 3 ? 3 : radius / 5} r={radius} cx={60} cy={60} />
+			}} ref={circleRef} strokeWidth={radius / 5 < 3 ? 3 : radius / 5}
+			r={radius} cx={(+props.size ?? 10) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
+			cy={(+props.size ?? 10) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
+			/>
 		</svg>
 	);
 });
