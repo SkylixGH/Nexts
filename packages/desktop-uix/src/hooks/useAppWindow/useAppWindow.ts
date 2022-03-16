@@ -93,27 +93,27 @@ interface EventTypes extends EventMap {
 	/**
 	 * Listen for when the window is minimized.
 	 */
-	minimize: () => void;
+	minimize(): void;
 
 	/**
 	 * Listen for when the window is maximized.
 	 */
-	maximize: () => void;
+	maximize(): void;
 
 	/**
 	 * Listen for when the window is un maximized.
 	 */
-	unMaximize: () => void;
+	unMaximize(): void;
 
 	/**
 	 * Listen for when the window is full screened.
 	 */
-	fullScreen: () => void;
+	fullScreen(): void;
 
 	/**
 	 * Listen for when the window leaves full screen.
 	 */
-	unFullScreen: () => void;
+	unFullScreen(): void;
 }
 
 

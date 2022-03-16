@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './App.module.scss';
 import {Icon} from '@iconify/react';
-import {menu, MenuSettings, useAppWindow, useThemeType} from '../..';
+import {useMenu, UseMenuSettings, useAppWindow, useThemeType} from '../..';
 import Menu from './menu/Menu';
 import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular';
 import Restore16Regular from '@iconify/icons-fluent/restore-16-regular';
@@ -39,6 +39,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const isElectron = typeof window !== 'undefined' && window.process && window.process.type;
 	const themeType = useThemeType();
 	const appWindow = useAppWindow();
+	const menu = useMenu();
 	const [title, setTitle] = useState(window.document.title);
 	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer');
 	const [windowMaximized, setWindowMaximized] = useState(false);
@@ -48,14 +49,14 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const [contextMenuVisible, setContextMenuVisible] = useState(false);
 	const [contextMenuPosition, setContextMenuPosition] = useState({x: 0, y: 0});
 	const [mouseOverContextMenu, setMouseOverContextMenu] = useState(false);
-	const [contextMenuSettings, setContextMenuSettings] = useState<MenuSettings>();
+	const [contextMenuSettings, setContextMenuSettings] = useState<UseMenuSettings>();
 
 	useEffect(() => {
 		const titleListener = new MutationObserver(function() {
 			setTitle(window.document.title);
 		});
 
-		const menuOpenListener = (menuData: MenuSettings) => {
+		const menuOpenListener = (menuData: UseMenuSettings) => {
 			setContextMenuPosition(currentMousePosition);
 
 			setContextMenuSettings(menuData);
@@ -95,7 +96,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 			document.head.appendChild(titleElement);
 		}
 
-		menu.addListener('open', menuOpenListener);
+		menu.events.addListener('open', menuOpenListener);
 		document.addEventListener('click', windowClickListener);
 		document.addEventListener('mousemove', (event: MouseEvent) => {
 			setCurrentMousePosition({x: event.clientX, y: event.clientY});
@@ -114,7 +115,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 		return () => {
 			titleListener.disconnect();
 
-			menu.removeListener('open', menuOpenListener);
+			menu.events.removeListener('open', menuOpenListener);
 			document.removeEventListener('click', windowClickListener);
 			document.removeEventListener('mousemove', windowMouseMoveListener);
 

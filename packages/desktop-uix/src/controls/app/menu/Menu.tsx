@@ -47,12 +47,12 @@ export interface Props {
 	header?: IconButton[];
 
 	/**
-	 * If the menu is open.
+	 * If the useMenu is open.
 	 */
 	show: boolean;
 
 	/**
-	 * The menu position.
+	 * The useMenu position.
 	 */
 	position: {
 		/**
@@ -67,22 +67,22 @@ export interface Props {
 	}
 
 	/**
-	 * Listen for when the mouse is over the menu.
+	 * Listen for when the mouse is over the useMenu.
 	 */
 	onMouseOver: () => void;
 
 	/**
-	 * Listen for when the mouse leaves the context menu.
+	 * Listen for when the mouse leaves the context useMenu.
 	 */
 	onMouseLeave: () => void;
 
 	/**
-	 * Listen for when the menu demands to be closed.
+	 * Listen for when the useMenu demands to be closed.
 	 */
 	onCommandHide: () => void;
 
 	/**
-	 * The menu items.
+	 * The useMenu items.
 	 */
 	body: {
 		/**

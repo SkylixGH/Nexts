@@ -6,10 +6,10 @@ import {themeManager} from '../..';
  * @returns The current theme type.
  */
 export default function useThemeType() {
-	const [themeType, setThemeType] = useState<'light' | 'dark'>(themeManager.getCurrentTheme().type);
+	const [themeType, setThemeType] = useState<'light' | 'dark'>(themeManager.getCurrentTheme()?.type);
 
 	const themeChangeListener = () => {
-		setThemeType(themeManager.getCurrentTheme().type);
+		setThemeType(themeManager.getCurrentTheme()?.type);
 	};
 
 	useEffect(() => {
