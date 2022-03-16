@@ -5,7 +5,7 @@
   top: 100px;
   left: 100px;
   background: $layerSolid2;
-  box-shadow: 0 0 5px $subtleDarker1, 0 10px 10px $subtleDarker2;
+  box-shadow: 0 0 5px $subtleDarker2, 0 10px 30px $subtleDarker4;
   border-radius: 4px;
   color: $text2;
   max-width: 250px;
@@ -84,7 +84,7 @@
   user-select: none;
   font-size: 12px;
   gap: 10px;
-  min-width: 150px;
+  min-width: 200px;
 
   &:hover {
     background: $subtle1;

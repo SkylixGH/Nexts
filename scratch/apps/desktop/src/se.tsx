@@ -1,6 +1,6 @@
 import React, {createRef, useRef} from 'react';
 import ReactDOM from 'react-dom';
-import {App, Button, ButtonRef, Progress, TextBox, Theme, themePacks} from '@nexts-stack/desktop-uix';
+import {App, Button, ButtonRef, Progress, TextBox, Theme, themePacks, menu, logger} from '@nexts-stack/desktop-uix';
 import './globals.css';
 import {NextsControlsTheme} from '@nexts-stack/desktop-uix/build/types/theme/themePacks';
 
@@ -35,7 +35,52 @@ function Root() {
 
 	return (
 		<App center>
-			<div style={{
+			<div onContextMenu={(event) => {
+				event.preventDefault();
+				logger.log('Context Menu Opened');
+				menu.open({
+					header: [
+						{
+							icon: {
+								src: 'mdi:github',
+							},
+							action: () => {
+								window.open('https://github.com');
+							},
+						},
+						{
+							icon: {
+								src: 'mdi:google',
+							},
+							action: () => {
+								window.open('https://google.com');
+							},
+						},
+						{
+							icon: {
+								src: 'mdi:microsoft',
+							},
+							action: () => {
+								window.open('https://microsoft.com');
+							},
+						},
+					],
+					body: [
+						{
+							label: 'Restart App',
+							action: () => {
+								window.location.reload();
+							},
+						},
+						{
+							label: 'Nexts Github',
+							action: () => {
+								window.open('https://github.com/skylixgh/nexts');
+							},
+						},
+					],
+				});
+			}} style={{
 				padding: '10px',
 				maxWidth: '400px',
 				width: '100%',
@@ -47,7 +92,7 @@ function Root() {
 					color: 'var(--text1)',
 				}}>Login</h1>
 
-				<Progress showValue={false} mode={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? 'determinate' : 'indeterminate'} value={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? (userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) : 0} />
+				<Progress showValue={true} mode={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? 'determinate' : 'indeterminate'} value={(userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) > 0 ? (userName.length > 0 ? 50 : 0) + (password.length > 0 ? 50 : 0) : 0} />
 
 				<br />
 

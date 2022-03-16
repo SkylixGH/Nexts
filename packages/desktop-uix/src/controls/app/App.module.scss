@@ -93,11 +93,12 @@
 
 .titleBar_buttonsClose {
   &:hover {
-    background: $error1 !important;
+    background: $accent1 !important;
+    color: $accentText1 !important;
 
     &:active {
-      color: $text1 !important;
-      background: $error2 !important;
+      color: $accentText2 !important;
+      background: $accent2 !important;
     }
   }
 }
