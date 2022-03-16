@@ -1,8 +1,7 @@
-import React, {createRef, useRef} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import {App, Button, ButtonRef, Progress, TextBox, Theme, themePacks, menu, logger} from '@nexts-stack/desktop-uix';
+import {App, Button, Progress, TextBox, Theme, themePacks, useMenu, logger} from '@nexts-stack/desktop-uix';
 import './globals.css';
-import {NextsControlsTheme} from '@nexts-stack/desktop-uix/build/types/theme/themePacks';
 
 const handleTheme = () => {
 	if (!localStorage.getItem('theme')) {
@@ -23,15 +22,10 @@ handleTheme();
  * @returns The app root component.
  */
 function Root() {
-	const [log, setLog] = React.useState([] as string[]);
+	const menu = useMenu();
 	const [inFocus, setInFocus] = React.useState(false);
 	const [userName, setUserName] = React.useState('');
 	const [password, setPassword] = React.useState('');
-	const [progressMode, setProgressMode] = React.useState('indeterminate');
-
-	const logData = (text: string) => {
-		setLog([...log, text]);
-	};
 
 	return (
 		<App center>
