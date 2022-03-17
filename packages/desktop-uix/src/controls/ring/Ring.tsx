@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import styles from './Ring.module.scss';
 
 /**
@@ -8,7 +8,7 @@ export interface Props {
 	/**
 	 * The side of the spinner.
 	 */
-	size: number;
+	size?: number;
 }
 
 /**
@@ -65,12 +65,16 @@ const Ring = React.forwardRef<Ref, Props>((props) => {
 	});
 
 	return (
-		<svg width={(+props.size ?? 10) * 2 + (radius / 5 < 3 ? 3 : radius / 5)} height={(+props.size ?? 10) * 2 + (radius / 5 < 3 ? 3 : radius / 5)} className={styles.root}>
-			<circle ref={circleRef} strokeWidth={radius / 5 < 3 ? 3 : radius / 5}
-			r={radius} cx={(+props.size ?? 10) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
-			cy={(+props.size ?? 10) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
-			/>
-		</svg>
+		<div className={styles.root}>
+			<svg width={(+(props.size ?? 10)) * 2 + (radius / 5 < 3 ? 3 : radius / 5)}
+			    height={(+(props.size ?? 10)) * 2 + (radius / 5 < 3 ? 3 : radius / 5)}
+			    className={styles.svg}>
+				<circle ref={circleRef} strokeWidth={radius / 5 < 3 ? 3 : radius / 5} r={radius}
+				    cx={(+(props.size ?? 10)) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
+					cy={(+(props.size ?? 10)) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
+				/>
+			</svg>
+		</div>
 	);
 });
 
