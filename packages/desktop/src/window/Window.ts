@@ -173,10 +173,6 @@ class Window extends EventEmitter {
 
 		const progressiveLogicAction = () => {
 			if (!this.#rendererReady || !this.#windowReady) return;
-
-			this.#browserWindow.webContents.once('dom-ready', () => {
-				app.restart();
-			});
 		};
 
 		this.#browserWindow.once('close', () => {

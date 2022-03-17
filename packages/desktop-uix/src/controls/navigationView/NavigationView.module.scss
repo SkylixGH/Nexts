@@ -1,0 +1,53 @@
+@import "../config";
+
+.root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.sideBar {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sideBar_rail {
+  background: $layerSolid1;
+  width: 60px;
+  height: 100%;
+  display: flex;
+}
+
+.sideBar_body {
+  width: 300px;
+  background: $layerSolid1;
+  height: 100%;
+  display: flex;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+  border-radius: 4px 0 0 0;
+}
+
+.content_body {
+  height: calc(100% - 35px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.content_bodyMetaBarHide {
+  height: 100%;
+}
+
+.content_metaBar {
+  width: 100%;
+  height: 35px;
+  background: $layerSolid1;
+}
