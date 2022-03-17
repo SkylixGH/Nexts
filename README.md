@@ -5,6 +5,7 @@
 <p align="center">A framework for all your needs!</p>
 
 [//]: # (TODO: Use typed-emitter for all event emitters in all packages)
+[//]: # (TODO: Clear all electron remote listeners before page unnload)
 
 ## Packages NPM
  - [@nexts-stack/cli-service](https://www.npmjs.com/package/@nexts-stack/cli-service) The <ins>**NEXTS**</ins> CLI service for maintaining <ins>**NEXTS**</ins> libraries and applications.

@@ -85,6 +85,7 @@ export default function useRouter(appURL: ReturnType<typeof useAppURL>) {
 	const events = new EventEmitter() as TypedEmitter<EventTypes>;
 	const [routes, setRoutes] = useState<Route[]>([]);
 	const [currentView, setCurrentView] = useState<JSX.Element | null>(null);
+	const [currentRoute, setCurrentRoute] = useState<Route | null>(null);
 
 	return {
 		/**
@@ -105,6 +106,7 @@ export default function useRouter(appURL: ReturnType<typeof useAppURL>) {
 		navigate: (url: string) => {
 			const matched = navigate(events, appURL, url, routes);
 			setCurrentView(matched?.component ?? null);
+			setCurrentRoute(matched ?? null);
 		},
 
 		/**
@@ -148,6 +150,15 @@ export default function useRouter(appURL: ReturnType<typeof useAppURL>) {
 			}
 
 			return React.createElement('div');
+		},
+
+		/**
+		 * Check if a provided URL matches the current route.
+		 * @param url The match URL.
+		 * @returns If the URL matches the current route.
+		 */
+		matches: (url: string) => {
+			return currentRoute?.patternMatcher.match(url) ?? false;
 		},
 	};
 }

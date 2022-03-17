@@ -1,9 +1,6 @@
 import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView} from '@nexts-stack/desktop-uix';
 import React, {useEffect, useState} from 'react';
 import './styles.scss';
-import Plus from '@iconify/icons-fluent/add-16-regular';
-import Sub from '@iconify/icons-fluent/subtract-16-regular';
-import * as events from 'events';
 
 /**
  *
@@ -30,11 +27,55 @@ function About() {
 export default function Root() {
 	const url = useAppURL();
 	const router = useRouter(url);
+	const menu = useMenu();
+
+	useEffect(() => {
+		router.addRoute('/about', <About />);
+		router.addRoute('/', <Home />);
+
+		return () => {
+			router.removeRoute('/about');
+			router.removeRoute('/');
+		};
+	}, []);
 
 	return (
 		<App center flowDirection={'row'}>
-			<NavigationView metaBar sideBar sideRail>
-				<h1>Hello World!</h1>
+			<NavigationView metaBar sideBar sideRail={[
+				{
+					icon: {
+						src: 'fluent:home-16-regular',
+						size: 16,
+					},
+					action: () => {
+						router.navigate('/');
+					},
+					active: router.matches('/'),
+				},
+				{
+					icon: {
+						src: 'fluent:info-16-regular',
+						size: 16,
+					},
+					action: () => {
+						router.navigate('/about');
+					},
+					contextMenu: () => {
+						menu.open({
+							body: [
+								{
+									label: 'Quick Info',
+									action: () => {
+										router.navigate('/about');
+									},
+								},
+							],
+						});
+					},
+					active: router.matches('/about'),
+				},
+			]}>
+				{router.render()}
 			</NavigationView>
 		</App>
 	);
