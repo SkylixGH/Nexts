@@ -166,10 +166,13 @@ export default function useAppWindow() {
 	});
 
 	return {
-		minimize,
 		close,
 		restore,
 		maximize,
+
+		/**
+		 * The event emitter.
+		 */
 		events,
 	};
 }

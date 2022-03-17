@@ -23,16 +23,16 @@ interface EventTypes extends EventMap {
 	change(oldURL: string, newURL: string): void;
 }
 
-const events = new EventEmitter() as TypedEmitter<EventTypes>;
-
 /**
- * Update the APP URL internaly.
+ * Update the APP URL internally.
+ * @param events The event emitter.
  * @param settings The settings for the URL manager.
  * @param newURL The new URL.
  * @returns {void}
  */
-function updateAppURL(settings: Settings, newURL: string) {
+function updateAppURL(events: TypedEmitter<EventTypes>, settings: Settings, newURL: string) {
 	window.history.pushState(null, '', newURL);
+	events.emit('change', newURL, newURL);
 }
 
 /**
@@ -41,18 +41,30 @@ function updateAppURL(settings: Settings, newURL: string) {
  * @returns The React URL manager hook.
  */
 export default function useAppURL(settings: PartialDeep<Settings> = {}) {
-	const [urlPathName, setUrlPathName] = useState('/');
+	const events = new EventEmitter() as TypedEmitter<EventTypes>;
+	const [urlPathName, setUrlPathName] = useState(window.location.pathname);
 	const defaultSettings: Settings = {};
 	const fullSettings = deepmerge<Settings>(defaultSettings, settings);
 
 	return {
+		/**
+		 * The URL path name.
+		 */
 		urlPathName,
+
+		/**
+		 * The event emitter.
+		 */
 		events,
+
+		/**
+		 * Update the URL.
+		 * @param newURL The new URL.
+		 * @returns {void}
+		 */
 		updateAppURL: (newURL: string) => {
 			setUrlPathName(newURL);
-			updateAppURL(fullSettings, newURL);
-
-			events.emit('change', urlPathName, newURL);
+			updateAppURL(events, fullSettings, newURL);
 		},
 	};
 }

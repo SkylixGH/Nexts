@@ -8,40 +8,19 @@ import * as events from 'events';
 /**
  *
  */
-function useMicro() {
-	const [volume, setVolume] = React.useState(0);
+function Home() {
+	return (
+		<div>Home</div>
+	);
+}
 
-	navigator.mediaDevices.getUserMedia({
-		audio: true,
-		video: false,
-	})
-		.then(function(stream) {
-			const audioContext = new AudioContext();
-			const analyser = audioContext.createAnalyser();
-			const microphone = audioContext.createMediaStreamSource(stream);
-			const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
-
-			analyser.smoothingTimeConstant = 0.8;
-			analyser.fftSize = 1024;
-
-			microphone.connect(analyser);
-			analyser.connect(scriptProcessor);
-			scriptProcessor.connect(audioContext.destination);
-			scriptProcessor.onaudioprocess = function() {
-				const array = new Uint8Array(analyser.frequencyBinCount);
-				analyser.getByteFrequencyData(array);
-				const arraySum = array.reduce((a, value) => a + value, 0);
-				const average = arraySum / array.length;
-				setVolume(Math.round(average));
-				// colorPids(average);
-			};
-		})
-		.catch(function(err) {
-			/* handle the error */
-			console.error(err);
-		});
-
-	return volume;
+/**
+ *
+ */
+function About() {
+	return (
+		<div>About</div>
+	);
 }
 
 /**
@@ -58,11 +37,15 @@ export default function Root() {
 		};
 
 		router.events.on('change', routeChangeURL);
+		router.addRoute('/', <Home />);
+		router.addRoute('/about', <About />);
 
 		return () => {
 			router.events.removeListener('change', routeChangeURL);
+			router.removeRoute('/');
+			router.removeRoute('/about');
 		};
-	});
+	}, []);
 
 	return (
 		<App center flowDirection={'row'}>
@@ -84,6 +67,8 @@ export default function Root() {
 					router.navigate('/about');
 				}}>About</a>
 			</div>
+
+			{router.currentView}
 		</App>
 	);
 }

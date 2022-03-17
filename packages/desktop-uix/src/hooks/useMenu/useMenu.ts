@@ -33,14 +33,13 @@ export interface Settings {
 	footer?: MenuProps['footer'];
 }
 
-const events = new EventEmitter() as TypedEmitter<EventTypes>;
-
 /**
  * Open a context useMenu.
+ * @param events The event emitter.
  * @param options The context options.
  * @returns {void}
  */
-function open(options: Settings) {
+function open(events: TypedEmitter<EventTypes>, options: Settings) {
 	events.emit('open', options);
 }
 
@@ -49,8 +48,21 @@ function open(options: Settings) {
  * @returns The context menu hook.
  */
 export default function useMenu() {
+	const events = new EventEmitter() as TypedEmitter<EventTypes>;
+
 	return {
-		open,
+		/**
+		 * The event emitter.
+		 */
 		events,
+
+		/**
+		 * Open a context menu..
+		 * @param options The context menu options.
+		 * @returns {void}
+		 */
+		open: (options: Settings) => {
+			open(events, options);
+		},
 	};
 }
