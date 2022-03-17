@@ -1,7 +1,7 @@
 import TypedEmitter, {EventMap} from 'typed-emitter';
 import {EventEmitter} from 'events';
 import {useAppURL} from '../hooks';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import URLPattern from 'url-pattern';
 
 /**
@@ -158,7 +158,27 @@ export default function useRouter(appURL: ReturnType<typeof useAppURL>) {
 		 * @returns If the URL matches the current route.
 		 */
 		matches: (url: string) => {
-			return currentRoute?.patternMatcher.match(url) ?? false;
+			const [matched, setMatched] = useState<boolean>(false);
+
+			const calculate = () => {
+				setMatched(!!currentRoute?.patternMatcher.match(url));
+			};
+
+			useEffect(() => {
+				calculate();
+
+				const changeListener = () => {
+					calculate();
+				};
+
+				events.on('change', changeListener);
+
+				return () => {
+					events.off('change', changeListener);
+				};
+			});
+
+			return matched;
 		},
 	};
 }

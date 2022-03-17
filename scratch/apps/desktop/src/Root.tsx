@@ -28,12 +28,18 @@ export default function Root() {
 	const url = useAppURL();
 	const router = useRouter(url);
 	const menu = useMenu();
+	const [loading, setLoading] = useState(true);
+	const matchesAbout = router.matches('/about');
 
 	useEffect(() => {
 		router.addRoute('/about', <About />);
 		router.addRoute('/', <Home />);
 
+		setLoading(false);
+
 		return () => {
+			setLoading(true);
+
 			router.removeRoute('/about');
 			router.removeRoute('/');
 		};
@@ -50,7 +56,7 @@ export default function Root() {
 					action: () => {
 						router.navigate('/');
 					},
-					active: router.matches('/'),
+					active: '/',
 				},
 				{
 					icon: {
@@ -72,10 +78,10 @@ export default function Root() {
 							],
 						});
 					},
-					active: router.matches('/about'),
+					active: '/about',
 				},
 			]}>
-				{router.render()}
+				{loading ? <Progress /> : router.render()}
 			</NavigationView>
 		</App>
 	);

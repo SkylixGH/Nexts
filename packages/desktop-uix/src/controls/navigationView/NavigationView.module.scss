@@ -88,6 +88,11 @@
   }
 }
 
+.sideBar_railButtonActive {
+  color: $text1;
+  background: $subtle2;
+}
+
 .sideBar_railButtonActive .sideBar_railButtonCursor {
   transform: translateY(-50%) scaleY(1);
 }
