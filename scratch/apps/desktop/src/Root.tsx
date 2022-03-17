@@ -30,6 +30,7 @@ function About() {
 export default function Root() {
 	const url = useAppURL();
 	const router = useRouter(url);
+	const menu = useMenu();
 
 	useEffect(() => {
 		const routeChangeURL = (old: string, newURL: string) => {
@@ -38,12 +39,12 @@ export default function Root() {
 
 		router.events.on('change', routeChangeURL);
 		router.addRoute('/', <Home />);
-		router.addRoute('/about', <About />);
+		router.addRoute('/about/:ceo', <About />);
 
 		return () => {
 			router.events.removeListener('change', routeChangeURL);
 			router.removeRoute('/');
-			router.removeRoute('/about');
+			router.removeRoute('/about/:ceo');
 		};
 	}, []);
 
@@ -57,18 +58,44 @@ export default function Root() {
 				gap: '10px',
 				color: 'var(--text1)',
 			}}>
-				<a href={'/'} onClick={function(events) {
+				<a onContextMenu={(event) => {
+					event.preventDefault();
+
+					menu.open({
+						body: [
+							{
+								label: 'Open',
+								action: () => {
+									router.navigate('/');
+								},
+							},
+						],
+					});
+				}} href={'/'} onClick={function(events) {
 					events.preventDefault();
 					router.navigate('/');
 				}}>Home</a>
 
-				<a href={'/about'} onClick={function(events) {
+				<a onContextMenu={(event) => {
+					event.preventDefault();
+
+					menu.open({
+						body: [
+							{
+								label: 'Open',
+								action: () => {
+									router.navigate('/about/xfaon');
+								},
+							},
+						],
+					});
+				}} href={'/about'} onClick={function(events) {
 					events.preventDefault();
-					router.navigate('/about');
+					router.navigate('/about/xfaon');
 				}}>About</a>
 			</div>
 
-			{router.currentView}
+			{router.render()}
 		</App>
 	);
 }

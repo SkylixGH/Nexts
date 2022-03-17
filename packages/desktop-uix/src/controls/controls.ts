@@ -2,7 +2,7 @@ import Button, {Ref as ButtonRef, Props as ButtonProps} from './button/Button';
 import App, {Ref as AppRef, Props as AppProps} from './app/App';
 import Browser, {Ref as BrowserRef, Props as BrowserProps} from './browser/Browser';
 import Progress, {Ref as ProgressRef, Props as ProgressProps} from './progress/Progress';
-import TextBox, {Ref as TextBoxRef, Props as TextBoxProps} from './textbox/TextBox';
+import TextBox, {Ref as TextBoxRef, Props as TextBoxProps} from './textBox/TextBox';
 import Ring, {Ref as RingRef, Props as RingProps} from './ring/Ring';
 
 export {Button, ButtonRef, ButtonProps};

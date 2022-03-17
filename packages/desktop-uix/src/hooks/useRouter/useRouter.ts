@@ -1,7 +1,7 @@
 import TypedEmitter, {EventMap} from 'typed-emitter';
 import {EventEmitter} from 'events';
 import {useAppURL} from '../hooks';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import URLPattern from 'url-pattern';
 
 /**
@@ -136,6 +136,18 @@ export default function useRouter(appURL: ReturnType<typeof useAppURL>) {
 		 */
 		removeRoute: (url: string) => {
 			setRoutes((routes) => routes.filter((route) => !route.patternMatcher.match(url)));
+		},
+
+		/**
+		 * Render the view.
+		 * @returns The dynamic view.
+		 */
+		render() {
+			if (currentView) {
+				return currentView;
+			}
+
+			return React.createElement('div');
 		},
 	};
 }

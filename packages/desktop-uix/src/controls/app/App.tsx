@@ -74,11 +74,9 @@ const App = React.forwardRef<Ref, Props>((props) => {
 
 		const windowMaximizedListener = () => {
 			setWindowMaximized(true);
-			console.log('window maximized');
 		};
 
 		const windowUnMaximizeListener = () => {
-			console.log('UFC');
 			setWindowMaximized(false);
 		};
 

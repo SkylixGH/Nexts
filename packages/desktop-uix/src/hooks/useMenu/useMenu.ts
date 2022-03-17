@@ -35,21 +35,20 @@ export interface Settings {
 
 /**
  * Open a context useMenu.
- * @param events The event emitter.
  * @param options The context options.
  * @returns {void}
  */
-function open(events: TypedEmitter<EventTypes>, options: Settings) {
+function open(options: Settings) {
 	events.emit('open', options);
 }
+
+const events = new EventEmitter() as TypedEmitter<EventTypes>;
 
 /**
  * A React hook for using context menus.
  * @returns The context menu hook.
  */
 export default function useMenu() {
-	const events = new EventEmitter() as TypedEmitter<EventTypes>;
-
 	return {
 		/**
 		 * The event emitter.
@@ -62,7 +61,7 @@ export default function useMenu() {
 		 * @returns {void}
 		 */
 		open: (options: Settings) => {
-			open(events, options);
+			open(options);
 		},
 	};
 }
