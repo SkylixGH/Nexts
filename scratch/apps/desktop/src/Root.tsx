@@ -1,4 +1,4 @@
-import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView} from '@nexts-stack/desktop-uix';
+import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView, RouterView} from '@nexts-stack/desktop-uix';
 import React, {useEffect, useState} from 'react';
 import './styles.scss';
 
@@ -29,7 +29,6 @@ export default function Root() {
 	const router = useRouter(url);
 	const menu = useMenu();
 	const [loading, setLoading] = useState(true);
-	const matchesAbout = router.matches('/about');
 
 	useEffect(() => {
 		router.addRoute('/about', <About />);
@@ -47,7 +46,7 @@ export default function Root() {
 
 	return (
 		<App center flowDirection={'row'}>
-			<NavigationView metaBar sideBar sideRail={[
+			<NavigationView router={router} metaBar sideBar sideRail={[
 				{
 					icon: {
 						src: 'fluent:home-16-regular',
@@ -81,7 +80,7 @@ export default function Root() {
 					active: '/about',
 				},
 			]}>
-				{loading ? <Progress /> : router.render()}
+				{loading ? <Progress /> : <RouterView router={router} />}
 			</NavigationView>
 		</App>
 	);

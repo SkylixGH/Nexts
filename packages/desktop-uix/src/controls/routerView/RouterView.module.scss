@@ -1,0 +1,29 @@
+@import "../config";
+
+.root {
+	width: 100%;
+	height: 100%;
+}
+
+.view {
+	width: 100%;
+	height: 100%;
+	animation-name: slideUp;
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
+	transition: 300ms;
+}
+
+@keyframes :local(slideUp) {
+	from {
+		transform: translateY(40px);
+		opacity: 0;
+		height: calc(100% - 40px);
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+		height: 100%;
+	}
+}

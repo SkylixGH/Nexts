@@ -59,7 +59,6 @@ export interface Route {
  */
 function navigate(events: TypedEmitter<EventTypes>, appURL: ReturnType<typeof useAppURL>, url: string, routes: Route[]) {
 	const oldURL = appURL.urlPathName;
-
 	const matchedRoutes = routes.filter((route) => route.patternMatcher.match(url));
 
 	if (matchedRoutes.length === 0) {

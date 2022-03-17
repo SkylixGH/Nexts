@@ -5,6 +5,7 @@ import Progress, {Ref as ProgressRef, Props as ProgressProps} from './progress/P
 import TextBox, {Ref as TextBoxRef, Props as TextBoxProps} from './textBox/TextBox';
 import Ring, {Ref as RingRef, Props as RingProps} from './ring/Ring';
 import NavigationView, {Ref as NavigationViewRef, Props as NavigationViewProps} from './navigationView/NavigationView';
+import RouterView, {Ref as RouterViewRef, Props as RouterViewProps} from './routerView/RouterView';
 
 export {Button, ButtonRef, ButtonProps};
 export {App, AppRef, AppProps};
@@ -13,3 +14,4 @@ export {Progress, ProgressRef, ProgressProps};
 export {TextBox, TextBoxRef, TextBoxProps};
 export {Ring, RingRef, RingProps};
 export {NavigationView, NavigationViewRef, NavigationViewProps};
+export {RouterView, RouterViewRef, RouterViewProps};

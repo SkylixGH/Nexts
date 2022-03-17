@@ -28,7 +28,7 @@ export interface Ref {
 }
 
 const Progress = React.forwardRef<Ref, Props>((props) => {
-	let subtractionPixels = props.showValue ? 40 : 0;
+	const subtractionPixels = props.showValue ? 40 : 0;
 
 	return (
 		<div className={`${styles.root} ${props.showValue && props.mode === 'determinate' ? styles._valueShown : ''}`}>

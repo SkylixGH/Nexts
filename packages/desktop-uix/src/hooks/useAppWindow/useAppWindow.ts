@@ -1,7 +1,7 @@
 import {EventEmitter} from 'events';
 import TypedEmitter, {EventMap} from 'typed-emitter';
 import * as themeManager from '../../theme/themeManager';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 const isElectron = typeof window !== 'undefined' && window.process && window.process.type;
 
@@ -87,6 +87,29 @@ function maximize() {
 }
 
 /**
+ * Get the current window state.
+ * @returns The current window state.
+ */
+function getWindowState() {
+	let result: 'fullScreen' | 'maximized' | 'normal' | 'minimized' | null = null;
+	const window = getCurrentWindow();
+
+	if (window) {
+		if (window.isFullScreen()) {
+			result = 'fullScreen';
+		} else if (window.isMaximized()) {
+			result = 'maximized';
+		} else if (window.isMinimized()) {
+			result = 'minimized';
+		} else {
+			result = 'normal';
+		}
+	}
+
+	return result;
+}
+
+/**
  * The event types for the event emitter.
  */
 interface EventTypes extends EventMap {
@@ -124,32 +147,42 @@ interface EventTypes extends EventMap {
 export default function useAppWindow() {
 	const events = new EventEmitter() as TypedEmitter<EventTypes>;
 	const window = getCurrentWindow();
+	const [currentWindowState, setCurrentWindowState] = useState(getWindowState());
 
 	useEffect(() => {
+		const windowEvent = () => {
+			setCurrentWindowState(getWindowState());
+		};
+
 		const windowMinimizeListener = () => {
 			events.emit('minimize');
+			windowEvent();
 		};
 
 		const windowMaximizeListener = () => {
 			events.emit('maximize');
+			windowEvent();
 		};
 
-		const windowUnmaximizeListener = () => {
+		const windowUnMaximizeListener = () => {
 			events.emit('unMaximize');
+			windowEvent();
 		};
 
 		const windowFullscreenListener = () => {
 			events.emit('fullScreen');
+			windowEvent();
 		};
 
 		const windowLeaveFullscreenListener = () => {
 			events.emit('unFullScreen');
+			windowEvent();
 		};
 
 		if (window) {
 			window.addListener('minimize', windowMinimizeListener);
 			window.addListener('maximize', windowMaximizeListener);
-			window.addListener('unmaximize', windowUnmaximizeListener);
+			window.addListener('unmaximize', windowUnMaximizeListener);
 			window.addListener('enter-full-screen', windowFullscreenListener);
 			window.addListener('leave-full-screen', windowLeaveFullscreenListener);
 		}
@@ -158,7 +191,7 @@ export default function useAppWindow() {
 			if (window) {
 				window.removeListener('minimize', windowMinimizeListener);
 				window.removeListener('maximize', windowMaximizeListener);
-				window.removeListener('unmaximize', windowUnmaximizeListener);
+				window.removeListener('unmaximize', windowUnMaximizeListener);
 				window.removeListener('enter-full-screen', windowFullscreenListener);
 				window.removeListener('leave-full-screen', windowLeaveFullscreenListener);
 			}
@@ -170,6 +203,12 @@ export default function useAppWindow() {
 		restore,
 		maximize,
 		minimize,
+		getWindowState,
+
+		/**
+		 * The current state of the window.
+		 */
+		currentWindowState,
 
 		/**
 		 * The event emitter.

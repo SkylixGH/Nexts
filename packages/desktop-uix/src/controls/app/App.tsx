@@ -46,8 +46,8 @@ const App = React.forwardRef<Ref, Props>((props) => {
 	const appWindow = useAppWindow();
 	const menu = useMenu();
 	const [title, setTitle] = useState(window.document.title);
-	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer');
-	const [windowMaximized, setWindowMaximized] = useState(false);
+	const [titleBarVisible, setTitleBarVisible] = useState(isElectron === 'renderer' && appWindow.currentWindowState !== 'fullScreen');
+	const [windowMaximized, setWindowMaximized] = useState(appWindow.currentWindowState === 'maximized');
 	const [reactError, setReactError] = useState<null | Error>(null);
 	const [titleBarButtonCount, setTitleBarButtonCount] = useState(3);
 	const [titleBarIconVisible, setTitleBarIconVisible] = useState(typeof process !== 'undefined' ? !!process.env.NEXTS_DEV_ICON_FRAME : false);

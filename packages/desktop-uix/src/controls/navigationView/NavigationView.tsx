@@ -1,9 +1,11 @@
 import {Icon, IconifyIcon} from '@iconify/react';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
+import {useRouter} from '../..';
 import styles from './NavigationView.module.scss';
+import URLPattern from 'url-pattern';
 
 /**
- *
+ * A single side rail item.
  */
 interface SideRailItem {
 	/**
@@ -27,9 +29,9 @@ interface SideRailItem {
 	}
 
 	/**
-	 * The button action.
+	 * The button action, or the router URL.
 	 */
-	action: () => void;
+	action: () => void | string;
 
 	/**
 	 * A function that is triggered to render a context menu.
@@ -37,9 +39,9 @@ interface SideRailItem {
 	contextMenu?: () => void;
 
 	/**
-	 * If the current item is active.
+	 * If the current item is active, or the URL to trigger the URL to be active.
 	 */
-	active?: boolean;
+	active?: boolean | string;
 }
 
 /**
@@ -59,6 +61,11 @@ export interface Props {
 	sideBar?: boolean;
 
 	metaBar?: boolean;
+
+	/**
+	 * The app router.
+	 */
+	router: ReturnType<typeof useRouter>;
 }
 
 /**
@@ -75,6 +82,14 @@ const NavigationView = React.forwardRef<Ref, Props>((props) => {
 			}} className={styles.sideBar}>
 				{ props.sideRail && props.sideRail.length > 0 && <div className={styles.sideBar_rail}>
 					{props.sideRail.map((button, index) => {
+						let isActive = false;
+
+						if (button.active === true) {
+							isActive = true;
+						} else if (new URLPattern(button.active || '').match(window.location.pathname)) {
+							isActive = true;
+						}
+
 						return (
 							<button onContextMenu={(event) => {
 								event.preventDefault();
@@ -83,10 +98,12 @@ const NavigationView = React.forwardRef<Ref, Props>((props) => {
 									button.contextMenu();
 								}
 							}} onClick={() => {
-								if (button.action) {
+								if (typeof button.action === 'function') {
 									button.action();
+								} else {
+									props.router.navigate(button.action);
 								}
-							}} key={`sideRail_button_${index}`} className={`${styles.sideBar_railButton} ${button.active ? styles.sideBar_railButtonActive : ''}`}>
+							}} key={`sideRail_button_${index}`} className={`${styles.sideBar_railButton} ${isActive ? styles.sideBar_railButtonActive : ''}`}>
 								<svg className={styles.sideBar_railButtonCursor} width={3} height={15}>
 									<rect ry={2} fill={'var(--accent1)'} width={3} height={15}/>
 								</svg>
