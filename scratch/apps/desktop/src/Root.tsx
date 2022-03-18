@@ -1,4 +1,4 @@
-import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView, RouterView} from '@nexts-stack/desktop-uix';
+import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView, RouterView, useChannel} from '@nexts-stack/desktop-uix';
 import React, {useEffect, useState} from 'react';
 import './styles.scss';
 
@@ -6,8 +6,16 @@ import './styles.scss';
  *
  */
 function Home() {
+	const helloChannel = useChannel('hello');
+
 	return (
-		<div>Home</div>
+		<div>
+			<Button onClick={() => {
+				helloChannel.send({
+					name: 'Renderer',
+				});
+			}}>Send Message To Main</Button>
+		</div>
 	);
 }
 

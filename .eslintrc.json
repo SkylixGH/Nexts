@@ -33,6 +33,7 @@
 		"no-unused-vars": ["off"],
 		"jsdoc/require-jsdoc": ["error", {"contexts": ["TSInterfaceDeclaration", "TSTypeAliasDeclaration", "TSEnumDeclaration"]}],
 	  	"prefer-template": ["error"],
+		"constructor-super":  ["off"],
 		"valid-jsdoc": ["error", {
 			"requireReturn": true,
 			"requireParamDescription": true,

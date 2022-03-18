@@ -5,11 +5,19 @@ import {app, windowManager} from '@nexts-stack/desktop';
  * @returns {void}
  */
 function createWindow() {
-	windowManager.create({
+	const mainWindow = windowManager.create({
 		frame: {
 			width: 1200,
 			height: 600,
 		},
+	});
+
+	mainWindow.on('ready', () => {
+		const helloChannel = mainWindow.channel('hello');
+
+		helloChannel.on('message', (message) => {
+			console.log(JSON.stringify(message, null, 4));
+		});
 	});
 }
 

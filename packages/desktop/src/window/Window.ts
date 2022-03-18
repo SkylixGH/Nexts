@@ -110,6 +110,11 @@ interface EventTypes extends EventMap {
 	 * Listen for when the window is closed.
 	 */
 	close(): void;
+
+	/**
+	 * Listen for when the window is ready.
+	 */
+	ready(): void;
 }
 
 /**
@@ -173,6 +178,7 @@ export default class Window extends (EventEmitter as unknown as new () => TypedE
 
 		const progressiveLogicAction = () => {
 			if (!this.#rendererReady || !this.#windowReady) return;
+			this.emit('ready');
 		};
 
 		this.#browserWindow.once('close', () => {
