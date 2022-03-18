@@ -27,7 +27,14 @@ function Home() {
 	return (
 		<div>
 			<Button onClick={() => {
-				helloChannel.send({});
+				helloChannel.executeTask('add', {
+					a: 1,
+					b: 10,
+				}).then((sum) => {
+					alert(`Sum = ${sum}`);
+				}).catch((err) => {
+					alert(`Error: ${err}`);
+				});
 			}}>About</Button>
 
 			<br />

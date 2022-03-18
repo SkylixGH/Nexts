@@ -13,6 +13,25 @@ function createWindow() {
 	});
 
 	const helloChannel = mainWindow.channel('hello');
+
+	/**
+	 * Addition params.
+	 */
+	interface AddParams {
+		a: number;
+		b: number;
+	}
+
+	helloChannel.registerTask<AddParams, number>('add', (args) => {
+		console.log(`Add Task: a=${args.a}, b=${args.b}`);
+
+		if (typeof args.a !== 'number' || typeof args.b !== 'number') {
+			throw new Error('Invalid params, both a and b must be numbers');
+		}
+
+		return args.a + args.b;
+	});
+
 	helloChannel.on('message', () => {
 		console.log('Message received from renderer');
 
@@ -22,7 +41,7 @@ function createWindow() {
 	});
 
 	mainWindow.on('ready', () => {
-
+		console.log('Window ready');
 	});
 }
 

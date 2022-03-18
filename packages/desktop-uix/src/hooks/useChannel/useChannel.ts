@@ -78,5 +78,29 @@ export default function useChannel(name: string) {
 				channel: name,
 			});
 		},
+
+		/**
+		 * Execute a task on the main process.
+		 * @param taskName The name of the task.
+		 * @param props The props to pass to the task.
+		 * @returns A promise for the result of the task.
+		 */
+		async executeTask<PropTypes extends Object, ReturnType>(taskName: string, props: PropTypes) {
+			return new Promise<ReturnType>((resolve, reject) => {
+				if (!ipcRenderer) return;
+
+				ipcRenderer.invoke(`${taskName}-:-${name}`, {
+					windowID: appWindow?.id,
+					channel: name,
+					body: props,
+				}).then((result) => {
+					if (result instanceof Error) {
+						reject(result);
+					} else {
+						resolve(result);
+					}
+				});
+			});
+		},
 	};
 }

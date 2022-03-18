@@ -15,6 +15,16 @@ interface EventTypes extends EventMap {
 }
 
 /**
+ * Errors for when interacting with the channel.
+ */
+export enum Errors {
+	/**
+	 * The task you are trying to register already exists and is registered.
+	 */
+	TASK_ALREADY_EXITS = 'TASK_ALREADY_EXITS',
+}
+
+/**
  * A messaging channel for communicating between the host window and its child renderer.
  */
 export default class Channel extends (EventEmitter as unknown as new () => TypedEmitter<EventTypes>) {
@@ -27,6 +37,11 @@ export default class Channel extends (EventEmitter as unknown as new () => Typed
 	 * The window that owns this channel.
 	 */
 	readonly #window: Window;
+
+	/**
+	 * The registered tasks.
+	 */
+	readonly #registeredTasks: string[] = [];
 
 	/**
 	 * Creates a new channel.
@@ -60,6 +75,42 @@ export default class Channel extends (EventEmitter as unknown as new () => Typed
 			channel: this.#name,
 			body: message,
 			windowID: this.#window.id,
+		});
+	}
+
+	/**
+	 * Register a new task for the renderer to use.
+	 * @param name The name of the task.
+	 * @param handle The task handle.
+	 * @returns {void}
+	 */
+	public registerTask<PropsTypes extends Object, ReturnType>(name: string, handle: (props: PropsTypes) => (ReturnType | Promise<ReturnType>)) {
+		if (this.#registeredTasks.includes(name)) {
+			throw new Error(Errors.TASK_ALREADY_EXITS);
+		}
+
+		this.#registeredTasks.push(name);
+
+		ipcMain.handle(`${name}-:-${this.#name}`, async (event, props) => {
+			if (typeof props.windowID !== 'number') return;
+			if (typeof props.channel !== 'string') return;
+			if (typeof props.body !== 'object') return;
+
+			if (props.windowID !== this.#window.id || props.channel !== this.#name) {
+				return;
+			}
+
+			try {
+				const promiseOrResult = handle(props.body as PropsTypes);
+
+				if (promiseOrResult instanceof Promise) {
+					return await promiseOrResult;
+				}
+
+				return promiseOrResult;
+			} catch (error) {
+				return error;
+			}
 		});
 	}
 }
