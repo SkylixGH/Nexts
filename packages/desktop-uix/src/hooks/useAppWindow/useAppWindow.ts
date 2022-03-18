@@ -147,6 +147,7 @@ interface EventTypes extends EventMap {
 export default function useAppWindow() {
 	const events = new EventEmitter() as TypedEmitter<EventTypes>;
 	const currentWindow = getCurrentWindow();
+	const windowID = currentWindow?.id ?? 0;
 	const [currentWindowState, setCurrentWindowState] = useState(getWindowState());
 
 	useEffect(() => {
@@ -214,5 +215,10 @@ export default function useAppWindow() {
 		 * The event emitter.
 		 */
 		events,
+
+		/**
+		 * The ID of the window.
+		 */
+		windowID,
 	};
 }

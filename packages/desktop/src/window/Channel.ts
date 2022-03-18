@@ -49,4 +49,17 @@ export default class Channel extends (EventEmitter as unknown as new () => Typed
 			}
 		});
 	}
+
+	/**
+	 * Send a message to the renderer.
+	 * @param message The message to send.
+	 * @returns {void}
+	 */
+	public send<MessageType extends Object>(message: MessageType) {
+		this.#window.writeWebContentsData('ipc-from-main', {
+			channel: this.#name,
+			body: message,
+			windowID: this.#window.id,
+		});
+	}
 }

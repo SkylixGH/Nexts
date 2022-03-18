@@ -1,4 +1,4 @@
-import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView, RouterView, useChannel} from '@nexts-stack/desktop-uix';
+import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView, RouterView, useChannel, useAppWindow} from '@nexts-stack/desktop-uix';
 import React, {useEffect, useState} from 'react';
 import './styles.scss';
 
@@ -7,14 +7,34 @@ import './styles.scss';
  */
 function Home() {
 	const helloChannel = useChannel('hello');
+	const appWin = useAppWindow();
+
+	useEffect(() => {
+		const mainMessageListener = (msg: any) => {
+			console.log(msg);
+			alert(`Message From main: ${msg.msg}`);
+		};
+
+		helloChannel.events.on('message', mainMessageListener);
+
+		return () => {
+			helloChannel.events.removeListener('message', mainMessageListener);
+		};
+	});
+
+	document.title = `My Desktop App | ID = ${appWin.windowID}`;
 
 	return (
 		<div>
 			<Button onClick={() => {
-				helloChannel.send({
-					name: 'Renderer',
-				});
-			}}>Send Message To Main</Button>
+				helloChannel.send({});
+			}}>About</Button>
+
+			<br />
+
+			<ul>
+				<li>Window ID: {appWin.windowID}</li>
+			</ul>
 		</div>
 	);
 }
@@ -54,7 +74,7 @@ export default function Root() {
 
 	return (
 		<App center flowDirection={'row'}>
-			<NavigationView router={router} metaBar sideBar sideRail={[
+			<NavigationView router={router} sideRail={[
 				{
 					icon: {
 						src: 'fluent:home-16-regular',

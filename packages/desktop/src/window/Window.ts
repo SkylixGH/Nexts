@@ -17,6 +17,11 @@ export enum Errors {
 	 * The Nexts app is not yet ready.
 	 */
 	APP_NOT_READY = 'APP_NOT_READY',
+
+	/**
+	 * You can't act on this window because it's closed.
+	 */
+	WINDOW_CLOSED = 'WINDOW_CLOSED',
 }
 
 /**
@@ -82,6 +87,11 @@ export interface Settings {
 			}
 		}
 	};
+
+	/**
+	 * The default URL path.
+	 */
+	defaultPath: string;
 }
 
 const defaultSettings: Settings = {
@@ -100,6 +110,7 @@ const defaultSettings: Settings = {
 			},
 		},
 	},
+	defaultPath: '/',
 };
 
 /**
@@ -140,6 +151,11 @@ export default class Window extends (EventEmitter as unknown as new () => TypedE
 	 * If the window is ready.
 	 */
 	#windowReady = false;
+
+	/**
+	 * If the window is closed.
+	 */
+	#closed = false;
 
 	/**
 	 * The window ID.
@@ -188,6 +204,7 @@ export default class Window extends (EventEmitter as unknown as new () => TypedE
 		};
 
 		this.#browserWindow.once('close', () => {
+			this.#closed = true;
 			this.emit('close');
 		});
 
@@ -199,7 +216,7 @@ export default class Window extends (EventEmitter as unknown as new () => TypedE
 		});
 
 		if (process.env.NEXTS_DEV_RENDERER) {
-			this.#browserWindow.loadURL(process.env.NEXTS_DEV_RENDERER).then(() => {
+			this.#browserWindow.loadURL(new URL(this.#settings.defaultPath, process.env.NEXTS_DEV_RENDERER).href).then(() => {
 				this.#rendererReady = true;
 				progressiveLogicAction();
 			});
@@ -231,5 +248,41 @@ export default class Window extends (EventEmitter as unknown as new () => TypedE
 	 */
 	public channel(name: string) {
 		return new Channel(this, name);
+	}
+
+	/**
+	 * Close the window.
+	 * @returns {void}
+	 */
+	public close() {
+		if (this.#closed) {
+			throw new NextsError(Errors.WINDOW_CLOSED, 'The window is already closed');
+		}
+
+		this.#browserWindow.close();
+		this.#rendererReady = false;
+		this.#windowReady = false;
+		this.#closed = true;
+	}
+
+	/**
+	 * If the window is already closed.
+	 */
+	public get closed() {
+		return this.#closed;
+	}
+
+	/**
+	 * Write a message to the web contents IPC listeners.
+	 * @param channel The channel name.
+	 * @param exactMessage The exact message.
+	 * @returns {void}
+	 */
+	public writeWebContentsData(channel: string, exactMessage: { [key: string]: any }) {
+		if (this.#closed) {
+			throw new NextsError(Errors.WINDOW_CLOSED, 'The window is already closed');
+		}
+
+		this.#browserWindow.webContents.send(channel, exactMessage);
 	}
 }

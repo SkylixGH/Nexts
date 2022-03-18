@@ -1,4 +1,4 @@
-import {app, windowManager} from '@nexts-stack/desktop';
+import {app, Window, windowManager} from '@nexts-stack/desktop';
 
 /**
  * Create the main browser window.
@@ -12,29 +12,17 @@ function createWindow() {
 		},
 	});
 
+	const helloChannel = mainWindow.channel('hello');
+	helloChannel.on('message', () => {
+		console.log('Message received from renderer');
+
+		helloChannel.send({
+			msg: 'Hey Renderer!',
+		});
+	});
+
 	mainWindow.on('ready', () => {
-		const helloChannel = mainWindow.channel('hello');
 
-		helloChannel.on('message', (message) => {
-			console.log('Message from MAIN_WINDOW:');
-			console.log(JSON.stringify(message, null, 4));
-		});
-	});
-
-	const secondWindow = windowManager.create({
-		frame: {
-			width: 1200,
-			height: 600,
-		},
-	});
-
-	secondWindow.on('ready', () => {
-		const helloChannel = secondWindow.channel('hello');
-
-		helloChannel.on('message', (message) => {
-			console.log('Message from SECOND_WINDOW:');
-			console.log(JSON.stringify(message, null, 4));
-		});
 	});
 }
 
