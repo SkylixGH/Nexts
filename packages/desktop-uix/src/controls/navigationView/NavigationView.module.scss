@@ -99,9 +99,22 @@
 
 .sideBar_body {
   width: 300px;
-  background: $layerSolid1;
+  background: $layerSolid2;
   height: 100%;
   display: flex;
+  padding: 10px;
+  position: relative;
+
+  &:after {
+	  content: '';
+	  display: flex;
+	  position: absolute;
+	  width: 1px;
+	  height: calc(100% - 40px);
+	  background: $subtle1;
+	  top: 20px;
+	  right: 0;
+  }
 }
 
 .content {

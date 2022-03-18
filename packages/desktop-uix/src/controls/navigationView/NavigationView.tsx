@@ -58,8 +58,14 @@ export interface Props {
 	 */
 	sideRail?: SideRailItem[];
 
-	sideBar?: boolean;
+	/**
+	 * The sidebar content.
+	 */
+	sideBar?: JSX.Element;
 
+	/**
+	 * The meta bar items.
+	 */
 	metaBar?: boolean;
 
 	/**
@@ -120,7 +126,7 @@ const NavigationView = React.forwardRef<Ref, Props>((props) => {
 				</div> }
 
 				{ props.sideBar && <div className={styles.sideBar_body}>
-
+					{props.sideBar}
 				</div> }
 			</div>
 

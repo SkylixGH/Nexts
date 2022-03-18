@@ -1,6 +1,9 @@
-import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView, RouterView, useChannel, useAppWindow} from '@nexts-stack/desktop-uix';
-import React, {useEffect, useState} from 'react';
+import {App, Progress, Ring, useAppURL, useMenu, Button, useRouter, NavigationView, RouterView, useChannel, useAppWindow, Browser} from '@nexts-stack/desktop-uix';
+import React, {useEffect, useRef, useState} from 'react';
 import './styles.scss';
+import {EventEmitter} from 'events';
+
+const emter = new EventEmitter();
 
 /**
  *
@@ -11,6 +14,21 @@ function HTTPServer() {
 	const service = useChannel('service');
 
 	useEffect(() => {
+		const serverStateList = () => {
+			(async () => {
+				setLoading(true);
+
+				setTimeout(async () => {
+					const isRunning = await service.executeTask<object, boolean>('server:status', {});
+					setServerRunning(isRunning);
+
+					setLoading(false);
+				}, 1000);
+			})();
+		};
+
+		emter.on('u', serverStateList);
+
 		(async () => {
 			setTimeout(async () => {
 				const isRunning = await service.executeTask<object, boolean>('server:status', {});
@@ -19,6 +37,10 @@ function HTTPServer() {
 				setLoading(false);
 			}, 1000);
 		})();
+
+		return () => {
+			emter.removeListener('u', serverStateList);
+		}
 	}, []);
 
 	const toggleServer = () => {
@@ -31,12 +53,33 @@ function HTTPServer() {
 		}
 	};
 
+	const htmlRendererThing = useRef<HTMLDivElement>(null);
+
 	return (
 		<div>
 			<h1>HTTP Server</h1>
-			{loading ? <Ring /> : (
+			{loading ? <div style={{
+				display: 'flex',
+				gap: '10px',
+				alignItems: 'center'
+			}}>
+				<Ring />
+				<Progress />
+			</div> : (
 				serverRunning ? <Button onClick={() => toggleServer()}>Stop</Button> : <Button onClick={() => toggleServer()}>Start</Button>
 			)}
+
+			<br />
+
+			<textarea onInput={(event) => {
+				service.executeTask('server:set-html', {
+					html: event.currentTarget.value ?? '',
+				});
+			}} placeholder='Render HTML'>
+
+			</textarea>
+
+			{serverRunning ? <Browser url="http://localhost:8090" /> : null}
 		</div>
 	);
 }
@@ -115,6 +158,7 @@ export default function Root() {
 	const router = useRouter(url);
 	const menu = useMenu();
 	const [loading, setLoading] = useState(true);
+	const service = useChannel('service');
 
 	useEffect(() => {
 		router.addRoute('/about', <About />);
@@ -134,7 +178,7 @@ export default function Root() {
 
 	return (
 		<App center flowDirection={'row'}>
-			<NavigationView router={router} sideRail={[
+			<NavigationView sideBar={<Button>Login</Button>} router={router} sideRail={[
 				{
 					icon: {
 						src: 'fluent:home-16-regular',
@@ -179,6 +223,26 @@ export default function Root() {
 					},
 					action: () => {
 						router.navigate('/http');
+					},
+					contextMenu: () => {
+						menu.open({
+							body: [
+								{
+									label: 'Start HTTP Server',
+									action: () => {
+										service.executeTask('server:start', {});
+										emter.emit('u')
+									},
+								},
+								{
+									label: 'Stop HTTP Server',
+									action: () => {
+										service.executeTask('server:stop', {});
+										emter.emit('u')
+									},
+								},
+							],
+						});
 					},
 					active: '/http',
 				},
