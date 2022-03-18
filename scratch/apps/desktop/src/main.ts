@@ -1,5 +1,5 @@
 import {app, Window, windowManager} from '@nexts-stack/desktop';
-import http from 'http';
+import http, {Server} from 'http';
 
 /**
  * Create the main browser window.
@@ -16,17 +16,44 @@ function createWindow() {
 	const helloChannel = mainWindow.channel('hello');
 	const serviceChannel = mainWindow.channel('service');
 
-	serviceChannel.registerTask<any, void>('start:http', (props) => {
-		return new Promise((resolve) => {
-			const server = http.createServer((req, res) => {
-				res.writeHead(200, {'Content-Type': 'text/plain'});
-				res.end('Hello World\n');
+	let httpRunning = false;
+	let server: Server;
+	let renderPageData = '<h1>Err</h1>';
+
+	serviceChannel.registerTask('server:set-html', (props) => {
+		renderPageData = props.html;
+	});
+
+	serviceChannel.registerTask('server:start', () => {
+		if (httpRunning) {
+			return;
+		}
+
+		httpRunning = true;
+
+		server = http.createServer((req, res) => {
+			res.writeHead(200, {
+				'Content-Type': 'text/plain',
 			});
 
-			server.listen(props.port, () => {
-				resolve();
-			});
+			res.end(renderPageData);
 		});
+
+		server.listen(8090);
+	});
+
+	serviceChannel.registerTask('server:stop', () => {
+		if (!httpRunning) {
+			return;
+		}
+
+		httpRunning = false;
+
+		server.close();
+	});
+
+	serviceChannel.registerTask('server:status', () => {
+		return httpRunning;
 	});
 
 	/**

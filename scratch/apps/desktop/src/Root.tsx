@@ -5,6 +5,45 @@ import './styles.scss';
 /**
  *
  */
+function HTTPServer() {
+	const [serverRunning, setServerRunning] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const service = useChannel('service');
+
+	useEffect(() => {
+		(async () => {
+			setTimeout(async () => {
+				const isRunning = await service.executeTask<object, boolean>('server:status', {});
+				setServerRunning(isRunning);
+
+				setLoading(false);
+			}, 1000);
+		})();
+	}, []);
+
+	const toggleServer = () => {
+		if (serverRunning) {
+			service.executeTask('server:stop', {});
+			setServerRunning(false);
+		} else {
+			service.executeTask('server:start', {});
+			setServerRunning(true);
+		}
+	};
+
+	return (
+		<div>
+			<h1>HTTP Server</h1>
+			{loading ? <Ring /> : (
+				serverRunning ? <Button onClick={() => toggleServer()}>Stop</Button> : <Button onClick={() => toggleServer()}>Start</Button>
+			)}
+		</div>
+	);
+}
+
+/**
+ *
+ */
 function Home() {
 	const helloChannel = useChannel('hello');
 	const serviceChannel = useChannel('service');
@@ -80,6 +119,7 @@ export default function Root() {
 	useEffect(() => {
 		router.addRoute('/about', <About />);
 		router.addRoute('/', <Home />);
+		router.addRoute('/http', <HTTPServer />);
 
 		setLoading(false);
 
@@ -88,6 +128,7 @@ export default function Root() {
 
 			router.removeRoute('/about');
 			router.removeRoute('/');
+			router.removeRoute('/http');
 		};
 	}, []);
 
@@ -131,6 +172,15 @@ export default function Root() {
 						});
 					},
 					active: '/about',
+				},
+				{
+					icon: {
+						src: 'fluent:server-multiple-20-regular',
+					},
+					action: () => {
+						router.navigate('/http');
+					},
+					active: '/http',
 				},
 			]}>
 				{loading ? <Progress /> : <RouterView router={router} />}
