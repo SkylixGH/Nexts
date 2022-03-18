@@ -142,6 +142,11 @@ export default class Window extends (EventEmitter as unknown as new () => TypedE
 	#windowReady = false;
 
 	/**
+	 * The window ID.
+	 */
+	public readonly id: number;
+
+	/**
 	 * Create a new window.
 	 * @param settings The window settings.
 	 */
@@ -174,6 +179,7 @@ export default class Window extends (EventEmitter as unknown as new () => TypedE
 			frame: false,
 		});
 
+		this.id = this.#browserWindow.id;
 		enable(this.#browserWindow.webContents);
 
 		const progressiveLogicAction = () => {

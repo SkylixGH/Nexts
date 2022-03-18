@@ -16,6 +16,23 @@ function createWindow() {
 		const helloChannel = mainWindow.channel('hello');
 
 		helloChannel.on('message', (message) => {
+			console.log('Message from MAIN_WINDOW:');
+			console.log(JSON.stringify(message, null, 4));
+		});
+	});
+
+	const secondWindow = windowManager.create({
+		frame: {
+			width: 1200,
+			height: 600,
+		},
+	});
+
+	secondWindow.on('ready', () => {
+		const helloChannel = secondWindow.channel('hello');
+
+		helloChannel.on('message', (message) => {
+			console.log('Message from SECOND_WINDOW:');
 			console.log(JSON.stringify(message, null, 4));
 		});
 	});

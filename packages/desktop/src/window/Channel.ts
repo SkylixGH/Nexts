@@ -42,8 +42,9 @@ export default class Channel extends (EventEmitter as unknown as new () => Typed
 		ipcMain.on('ipc-from-renderer', (event, message) => {
 			if (typeof message.channel !== 'string') return;
 			if (typeof message.body !== 'object') return;
+			if (typeof message.windowID !== 'number') return;
 
-			if (message.channel === this.#name) {
+			if (message.channel === this.#name && message.windowID === this.#window.id) {
 				this.emit('message', message.body);
 			}
 		});
