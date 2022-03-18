@@ -74,6 +74,12 @@ export default function Root() {
 										router.navigate('/about');
 									},
 								},
+								{
+									label: 'UwU',
+									action: () => {
+										alert('UwU');
+									},
+								},
 							],
 						});
 					},

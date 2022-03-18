@@ -146,7 +146,7 @@ interface EventTypes extends EventMap {
  */
 export default function useAppWindow() {
 	const events = new EventEmitter() as TypedEmitter<EventTypes>;
-	const window = getCurrentWindow();
+	const currentWindow = getCurrentWindow();
 	const [currentWindowState, setCurrentWindowState] = useState(getWindowState());
 
 	useEffect(() => {
@@ -179,21 +179,21 @@ export default function useAppWindow() {
 			windowEvent();
 		};
 
-		if (window) {
-			window.addListener('minimize', windowMinimizeListener);
-			window.addListener('maximize', windowMaximizeListener);
-			window.addListener('unmaximize', windowUnMaximizeListener);
-			window.addListener('enter-full-screen', windowFullscreenListener);
-			window.addListener('leave-full-screen', windowLeaveFullscreenListener);
+		if (currentWindow) {
+			currentWindow.addListener('minimize', windowMinimizeListener);
+			currentWindow.addListener('maximize', windowMaximizeListener);
+			currentWindow.addListener('unmaximize', windowUnMaximizeListener);
+			currentWindow.addListener('enter-full-screen', windowFullscreenListener);
+			currentWindow.addListener('leave-full-screen', windowLeaveFullscreenListener);
 		}
 
 		return () => {
-			if (window) {
-				window.removeListener('minimize', windowMinimizeListener);
-				window.removeListener('maximize', windowMaximizeListener);
-				window.removeListener('unmaximize', windowUnMaximizeListener);
-				window.removeListener('enter-full-screen', windowFullscreenListener);
-				window.removeListener('leave-full-screen', windowLeaveFullscreenListener);
+			if (currentWindow) {
+				currentWindow.removeListener('minimize', windowMinimizeListener);
+				currentWindow.removeListener('maximize', windowMaximizeListener);
+				currentWindow.removeListener('unmaximize', windowUnMaximizeListener);
+				currentWindow.removeListener('enter-full-screen', windowFullscreenListener);
+				currentWindow.removeListener('leave-full-screen', windowLeaveFullscreenListener);
 			}
 		};
 	});

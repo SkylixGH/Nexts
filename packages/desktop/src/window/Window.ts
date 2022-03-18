@@ -6,6 +6,8 @@ import {EventEmitter} from 'events';
 import electronLocalShortcut from 'electron-localshortcut';
 import path from 'path';
 import {enable} from '@electron/remote/main';
+import Channel from './Channel';
+import TypedEmitter, {EventMap} from 'typed-emitter';
 
 /**
  * Errors for the window.
@@ -101,21 +103,19 @@ const defaultSettings: Settings = {
 };
 
 /**
- * The window event listener overloads.
+ * The event types.
  */
-declare interface Window {
+interface EventTypes extends EventMap {
 	/**
-	 * Listen for when the window closes.
-	 * @param event The event name.
-	 * @param listener The event listener.
+	 * Listen for when the window is closed.
 	 */
-	on(event: 'close', listener: () => void): this;
+	close(): void;
 }
 
 /**
  * A browser window.
  */
-class Window extends EventEmitter {
+export default class Window extends (EventEmitter as unknown as new () => TypedEmitter<EventTypes>) {
 	/**
 	 * The window settings.
 	 */
@@ -124,7 +124,7 @@ class Window extends EventEmitter {
 	/**
 	 * The window.
 	 */
-	#browserWindow: BrowserWindow;
+	readonly #browserWindow: BrowserWindow;
 
 	/**
 	 * If the renderer is ready.
@@ -211,6 +211,13 @@ class Window extends EventEmitter {
 	public registerShortcut(shortcut: string, listener: () => void) {
 		electronLocalShortcut.register(this.#browserWindow, shortcut, listener);
 	}
-}
 
-export default Window;
+	/**
+	 * Create a new communication channel.
+	 * @param name The channel name.
+	 * @returns {void}
+	 */
+	public channel(name: string) {
+		return new Channel(this, name);
+	}
+}

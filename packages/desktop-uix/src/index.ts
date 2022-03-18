@@ -6,6 +6,10 @@ if (!isRenderer) {
 	throw new Error('Cannot import UIX module in the main process');
 }
 
+(window as any)['__nexts__stack__desktop__uix__'] = {
+	remote: window.require ? window.require('@electron/remote') : null,
+};
+
 export * from './controls/controls';
 export * from './hooks/hooks';
 export * as logger from './logger/logger';

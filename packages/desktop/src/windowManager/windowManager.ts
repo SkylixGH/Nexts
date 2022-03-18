@@ -3,9 +3,20 @@ import {DeepPartial} from '@nexts-stack/internal';
 import {EventEmitter} from 'events';
 import {sendDevServer} from '../internal/api/api';
 import {ElectronReactElectronServerCommand} from '@nexts-stack/cli-service';
+import TypedEmitter, {EventMap} from 'typed-emitter';
+
+/**
+ * Event emitter types.
+ */
+interface EventTypes extends EventMap {
+	/**
+	 * Listen for when all the windows are closed.
+	 */
+	allWindowsClosed(): void;
+}
 
 const windowStore = [] as Window[];
-const emitter = new EventEmitter();
+const events = new EventEmitter() as TypedEmitter<EventTypes>;
 let openWindows = 0;
 
 /**
@@ -22,7 +33,7 @@ export function create(settings: DeepPartial<Settings>) {
 		openWindows--;
 
 		if (openWindows === 0) {
-			emitter.emit('all-windows-closed');
+			events.emit('allWindowsClosed');
 			sendDevServer(ElectronReactElectronServerCommand.STOP);
 		}
 	});
@@ -30,49 +41,9 @@ export function create(settings: DeepPartial<Settings>) {
 	return window;
 }
 
-/**
- * Listen for when all the windows have been closed.
- * @param event The event name.
- * @param listener The event listener.
- */
-export function on(event: 'all-windows-closed', listener: () => void): void;
-
-/**
- * Listen for events.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function on(event: string, listener: () => void) {
-	emitter.on(event, listener);
-}
-
-/**
- * Listen for events once.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function once(event: string, listener: () => void) {
-	emitter.once(event, listener);
-}
-
-/**
- * Remove an event listener.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function removeListener(event: string, listener: () => void) {
-	emitter.removeListener(event, listener);
-}
-
-/**
- * Remove an event listener.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function addListener(event: string, listener: () => void) {
-	emitter.addListener(event, listener);
-}
+export {
+	/**
+	 * The event emitter.
+	 */
+	events,
+};

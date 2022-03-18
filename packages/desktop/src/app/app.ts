@@ -4,15 +4,31 @@ import {ElectronReactElectronServerCommand, ElectronReactElectronServerCommandSt
 import {sendDevServer} from '../internal/api/api';
 import * as windowManager from '../windowManager/windowManager';
 import electronDevtoolsInstaller, {REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS} from 'electron-devtools-installer';
+import TypedEmitter, {EventMap} from 'typed-emitter';
 
-const emitter = new EventEmitter();
+/**
+ * Event emitter types.
+ */
+interface EventTypes extends EventMap {
+	/**
+	 * Listen for when the app is ready.
+	 */
+	ready(): void;
+
+	/**
+	 * Listen for when all windows are closed.
+	 */
+	allWindowsClosed(): void;
+}
+
+const events = new EventEmitter() as TypedEmitter<EventTypes>;
 let ready = app.isReady();
 
-windowManager.on('all-windows-closed', () => {
-	emitter.emit('all-windows-closed');
+windowManager.events.on('allWindowsClosed', () => {
+	events.emit('allWindowsClosed');
 });
 
-if (ready) emitter.emit('ready');
+if (ready) events.emit('ready');
 else {
 	app.once('ready', () => {
 		(async () => {
@@ -30,7 +46,7 @@ else {
 			status: 'ready',
 		});
 
-		emitter.emit('ready');
+		events.emit('ready');
 	});
 }
 
@@ -64,56 +80,6 @@ export function exit() {
 	process.exit();
 }
 
-/**
- * Listen for when the app is ready.
- * @param event The event name.
- * @param listener The event listener.
- */
-export function on(event: 'ready', listener: () => void): void;
-
-/**
- * Listen for when all the windows have been closed.
- * @param event The event name.
- * @param listener The event listener.
- */
-export function on(event: 'all-windows-closed', listener: () => void): void;
-
-/**
- * Listen for events.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function on(event: string, listener: () => void) {
-	emitter.on(event, listener);
-}
-
-/**
- * Listen for events once.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function once(event: string, listener: () => void) {
-	emitter.once(event, listener);
-}
-
-/**
- * Remove an event listener.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function removeListener(event: string, listener: () => void) {
-	emitter.removeListener(event, listener);
-}
-
-/**
- * Remove an event listener.
- * @param event The event name.
- * @param listener The event listener.
- * @returns {void}
- */
-export function addListener(event: string, listener: () => void) {
-	emitter.addListener(event, listener);
-}
+export {
+	events,
+};

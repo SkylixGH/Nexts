@@ -13,9 +13,9 @@ function createWindow() {
 	});
 }
 
-app.on('all-windows-closed', () => {
+app.events.on('all-windows-closed', () => {
 	console.log('All windows have been closed, stopping app');
 	app.exit();
 });
 
-app.on('ready', createWindow);
+app.events.on('ready', createWindow);

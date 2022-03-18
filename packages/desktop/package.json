@@ -19,7 +19,8 @@
 		"deepmerge": "^4.2.2",
 		"electron": "^17.1.1",
 		"electron-devtools-installer": "^3.2.0",
-		"electron-localshortcut": "^3.2.1"
+		"electron-localshortcut": "^3.2.1",
+		"typed-emitter": "^2.1.0"
 	},
 	"devDependencies": {
 		"@types/deepmerge": "^2.2.0",

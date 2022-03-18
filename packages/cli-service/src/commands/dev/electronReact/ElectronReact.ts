@@ -189,6 +189,7 @@ export default class ElectronReact {
 			const electronExePath = path.join(electronPath, 'dist', fsSync.readFileSync(electronExePathInfo, 'utf8'));
 			const buildUpdateWatcher = chokidar.watch([
 				path.join(appExactPath, 'build'),
+				path.join(appExactPath, 'node_modules'),
 			], {
 				ignoreInitial: true,
 			});
