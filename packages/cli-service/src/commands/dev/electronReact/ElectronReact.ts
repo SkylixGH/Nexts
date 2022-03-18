@@ -149,6 +149,7 @@ export default class ElectronReact {
 					bundle: true,
 					external: Object.keys(appPackage.dependencies || {}) as string[],
 					logLevel: 'silent',
+					platform: 'node',
 					watch: {
 						onRebuild: () => {
 							logger.log('The app will be recompiled');

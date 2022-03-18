@@ -1,4 +1,5 @@
 import {app, Window, windowManager} from '@nexts-stack/desktop';
+import http from 'http';
 
 /**
  * Create the main browser window.
@@ -13,6 +14,20 @@ function createWindow() {
 	});
 
 	const helloChannel = mainWindow.channel('hello');
+	const serviceChannel = mainWindow.channel('service');
+
+	serviceChannel.registerTask<any, void>('start:http', (props) => {
+		return new Promise((resolve) => {
+			const server = http.createServer((req, res) => {
+				res.writeHead(200, {'Content-Type': 'text/plain'});
+				res.end('Hello World\n');
+			});
+
+			server.listen(props.port, () => {
+				resolve();
+			});
+		});
+	});
 
 	/**
 	 * Addition params.

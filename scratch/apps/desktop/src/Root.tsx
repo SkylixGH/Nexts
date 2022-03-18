@@ -7,6 +7,8 @@ import './styles.scss';
  */
 function Home() {
 	const helloChannel = useChannel('hello');
+	const serviceChannel = useChannel('service');
+
 	const appWin = useAppWindow();
 
 	useEffect(() => {
@@ -29,13 +31,23 @@ function Home() {
 			<Button onClick={() => {
 				helloChannel.executeTask('add', {
 					a: 1,
-					b: 10,
+					b: '10',
 				}).then((sum) => {
 					alert(`Sum = ${sum}`);
 				}).catch((err) => {
 					alert(`Error: ${err}`);
 				});
 			}}>About</Button>
+
+			<Button onClick={() => {
+				serviceChannel.executeTask('start:http', {
+					port: 8090,
+				}).then(() => {
+					alert(`Server running at 8090`);
+				}).catch((err) => {
+					alert(`Error: ${err}`);
+				});
+			}}>HTTP Server</Button>
 
 			<br />
 
