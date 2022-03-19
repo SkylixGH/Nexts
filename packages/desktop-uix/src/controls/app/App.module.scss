@@ -155,3 +155,26 @@
   pointer-events: none;
   transform: scale(0);
 }
+
+.loadingFrame {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $layerSolid1;
+  width: 100vw;
+  height: 100vh;
+  transition: 300ms;
+}
+
+.loadingFrame_titleBarVisible {
+  top: 32px;
+  height: calc(100vh - 32px);
+}
+
+.loadingFrame_hide {
+  opacity: 0;
+  pointer-events: none;
+}

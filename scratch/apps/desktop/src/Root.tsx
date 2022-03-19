@@ -80,11 +80,6 @@ function HTTPServer() {
 			}} placeholder='Render HTML'>
 			</textarea>
 
-			<Ring />
-			<Ring />
-			<Ring />
-			<Ring />
-
 			{serverRunning ? <Browser url="http://localhost:8090" /> : null}
 		</div>
 	);
@@ -165,11 +160,16 @@ export default function Root() {
 	const menu = useMenu();
 	const [loading, setLoading] = useState(true);
 	const service = useChannel('service');
+	const [ar, setAr] = useState(false);
 
 	useEffect(() => {
 		router.addRoute('/about', <About />);
 		router.addRoute('/', <Home />);
 		router.addRoute('/http', <HTTPServer />);
+
+		setTimeout(() => {
+			setAr(true);
+		}, 1000);
 
 		setLoading(false);
 
@@ -183,7 +183,7 @@ export default function Root() {
 	}, []);
 
 	return (
-		<App center flowDirection={'row'}>
+		<App appReady={ar} center flowDirection={'row'}>
 			<NavigationView sideBar={<HTTPServer />} router={router} sideRail={[
 				{
 					icon: {

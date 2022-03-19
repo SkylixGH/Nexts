@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './App.module.scss';
 import {Icon} from '@iconify/react';
-import {useMenu, UseMenuSettings, useAppWindow, useThemeType} from '../..';
+import {useMenu, UseMenuSettings, useAppWindow, useThemeType, Ring} from '../..';
 import Menu from './menu/Menu';
 import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular';
 import Restore16Regular from '@iconify/icons-fluent/restore-16-regular';
@@ -27,6 +27,11 @@ export interface Props {
 	 * The flow direction of the app body.
 	 */
 	flowDirection?: 'row' | 'column';
+
+	/**
+	 * If the app is still loading.
+	 */
+	appReady?: boolean;
 }
 
 /**
@@ -225,15 +230,15 @@ const App = React.forwardRef<Ref, Props>((props) => {
 					flexDirection: 'row',
 				} : {}),
 			}}>
-				{props.children}
+				{props.appReady && props.children}
 			</div>
 
 			<div onClick={() => setReactError(null)} className={`${styles.errorBox} ${reactError ? '' : styles.errorBox_hide}`}>
 				<Icon icon={ErrorCircle16Regular} />
 			</div>
 
-			<div className={`${styles.loadingFrame} ${titleBarVisible ? styles.loadingFrame_titleBarVisible : ''}`}>
-				<AppIcon />
+			<div className={`${styles.loadingFrame} ${titleBarVisible ? styles.loadingFrame_titleBarVisible : ''} ${props.appReady ? styles.loadingFrame_hide : ''}`}>
+				<Ring size={30} />
 			</div>
 
 			<Menu onCommandHide={() => {
