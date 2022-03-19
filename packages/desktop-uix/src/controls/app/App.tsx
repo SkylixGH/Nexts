@@ -3,11 +3,11 @@ import styles from './App.module.scss';
 import {Icon} from '@iconify/react';
 import {useMenu, UseMenuSettings, useAppWindow, useThemeType, Ring} from '../..';
 import Menu from './menu/Menu';
-import Maximize16Regular from '@iconify/icons-fluent/maximize-16-regular';
-import Restore16Regular from '@iconify/icons-fluent/restore-16-regular';
-import Minimize16Regular from '@iconify/icons-fluent/minimize-16-regular';
-import Dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular';
-import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular';
+import Maximize16Regular from '@iconify-icons/fluent/maximize-16-regular';
+import Restore16Regular from '@iconify-icons/fluent/restore-16-regular';
+import Minimize16Regular from '@iconify-icons/fluent/minimize-16-regular';
+import Dismiss16Regular from '@iconify-icons/fluent/dismiss-16-regular';
+import ErrorCircle16Regular from '@iconify-icons/fluent/error-circle-16-regular';
 
 /**
  * The properties of the app.

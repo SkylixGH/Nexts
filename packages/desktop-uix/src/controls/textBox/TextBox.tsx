@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import styles from './TextBox.module.scss';
 import {Icon} from '@iconify/react';
-import Dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular';
+import Dismiss16Regular from '@iconify-icons/fluent/dismiss-16-regular';
 
 /**
  * The properties of the text box.

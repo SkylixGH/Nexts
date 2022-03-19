@@ -13,7 +13,7 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@iconify/icons-fluent": "^1.2.3",
+		"@iconify-icons/fluent": "^1.2.3",
 		"@iconify/react": "^3.1.4",
 		"@nexts-stack/internal": "^1.0.0-dev.6",
 		"deepmerge": "^4.2.2",

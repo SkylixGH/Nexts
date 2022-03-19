@@ -80,7 +80,7 @@ export default class Node implements DevServer {
 			});
 
 			const startNode = () => {
-				this.#appProcess = spawn('node', [path.join(appExactPath, 'dist', 'main.node.mjs'), argvPath], {
+				this.#appProcess = spawn('node', [path.join(appExactPath, 'build', 'main.node.mjs'), argvPath], {
 					cwd: appExactPath,
 					stdio: 'inherit',
 				});

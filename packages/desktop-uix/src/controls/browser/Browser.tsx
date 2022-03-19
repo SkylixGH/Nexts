@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import styles from './Browser.module.scss';
 import {Icon} from '@iconify/react';
-import ErrorCircle16Regular from '@iconify/icons-fluent/error-circle-16-regular';
+import ErrorCircle16Regular from '@iconify-icons/fluent/error-circle-16-regular';
 
 /**
  * The properties of the browser.
