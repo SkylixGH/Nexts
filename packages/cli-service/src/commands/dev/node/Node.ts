@@ -4,6 +4,8 @@ import {App, AppNode} from '../../../misc/UserConfig';
 import path from 'path';
 import logger from '@nexts-stack/logger';
 import crashError from '../../../misc/crashError';
+import {ChildProcess, spawn} from 'child_process';
+import chokidar from 'chokidar';
 
 /**
  * A NodeJS development server.
@@ -15,10 +17,20 @@ export default class Node implements DevServer {
 	#esBuilder?: import('esbuild').BuildResult;
 
 	/**
+	 * The app process.
+	 */
+	#appProcess?: ChildProcess;
+
+	/**
 	 * Stop the development server.
 	 * @returns {void}
 	 */
 	public stop() {
+		try {
+			this.#esBuilder!.stop!();
+		} catch {
+			//
+		}
 	}
 
 	/**
@@ -56,6 +68,35 @@ export default class Node implements DevServer {
 			});
 		} catch (error) {
 			logger.error('Failed tp start ESBuild server');
+			crashError(error);
+
+			process.exit(1);
+		}
+
+		try {
+			const buildChangeWatcher = chokidar.watch([path.join(appExactPath, 'dist'), path.join(appExactPath, 'node_modules')], {
+				ignored: /(^|[/\\])\../,
+				ignoreInitial: true,
+			});
+
+			const startNode = () => {
+				this.#appProcess = spawn('node', [path.join(appExactPath, 'dist', 'main.node.mjs'), argvPath], {
+					cwd: appExactPath,
+					stdio: 'inherit',
+				});
+			};
+
+			buildChangeWatcher.on('all', () => {
+				if (this.#appProcess) {
+					this.#appProcess.kill();
+				}
+
+				startNode();
+			});
+
+			startNode();
+		} catch (error) {
+			logger.error('Failed to start NodeJS server');
 			crashError(error);
 
 			process.exit(1);
