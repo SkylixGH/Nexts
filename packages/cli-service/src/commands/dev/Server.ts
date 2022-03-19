@@ -1,5 +1,6 @@
 import UserConfig, {App} from '../../misc/UserConfig';
 import ElectronReact from './electronReact/ElectronReact';
+import Node from './node/Node';
 
 /**
  * A dev server host.
@@ -53,6 +54,9 @@ export default class Server {
 
 		if (this.#app.type === 'desktop') {
 			const server = new ElectronReact();
+			await server.startServer(this.#appExactPath, this.#argvPath, this.#app);
+		} else if (this.#app.type === 'node') {
+			const server = new Node();
 			await server.startServer(this.#appExactPath, this.#argvPath, this.#app);
 		}
 

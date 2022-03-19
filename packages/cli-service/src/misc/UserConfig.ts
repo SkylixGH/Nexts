@@ -111,9 +111,24 @@ export type AppMobile = AppCommon & {
 };
 
 /**
+ * Config for a NodeJS app/.
+ */
+export type AppNode = AppCommon & {
+	/**
+	 * The app type.
+	 */
+	type: 'node';
+
+	/**
+	 * The app's entry file.
+	 */
+	main: string;
+};
+
+/**
  * App configuration.
  */
-export type App = AppDesktop | AppMobile;
+export type App = AppDesktop | AppMobile | AppNode;
 
 /**
  * The Nexts  config.

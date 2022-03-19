@@ -9,6 +9,7 @@ import {createServer} from 'vite';
 import react from '@vitejs/plugin-react';
 import {App, AppDesktop} from '../../../misc/UserConfig';
 import validateElementID from '../../../misc/validateElementID';
+import DevServer from '../DevServer';
 
 /**
  * Commands from the Electron system interacting with the dev server.
@@ -38,7 +39,7 @@ export interface ElectronServerCommandStatus {
 /**
  * Electron + React dev server.
  */
-export default class ElectronReact {
+export default class ElectronReact implements DevServer {
 	/**
 	 * The ESBuild server.
 	 */

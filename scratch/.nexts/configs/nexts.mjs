@@ -44,13 +44,16 @@ export default defineConfig({
         // 	id: 'net.skylix.mobile',
         // 	displayName: 'My Mobile App',
         // },
-        // {
-        // 	type: 'node',
-        // 	path: './apps/server',
-        // 	description: 'This is a server app',
-        // 	keywords: ['server', 'app'],
-        // 	name: 'My Server App',
-        // },
+        {
+            type: 'node',
+            path: './apps/cli',
+            description: 'This is a server app',
+            keywords: ['server', 'app'],
+            name: 'cli',
+            main: 'cli.ts',
+            id: 'net.skylix.server',
+            displayName: 'My Server App',
+        },
     ],
     packages: [
     // {

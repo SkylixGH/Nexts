@@ -19,7 +19,8 @@ export default async function generateAppPkg(config: UserConfig, app: App, appRo
 		name: app.name,
 		version: config.version,
 		private: true,
-		main: './build/main.electron.cjs', // TODO: Make this configurable.
+		...(app.type === 'desktop' ? {main: './build/main.electron.cjs'} : {}),
+		...(app.type === 'node' ? {main: './build/main.node.mjs', type: 'module'} : {}),
 		...(app.keywords && app.keywords.length > 0 ? {keywords: app.keywords} : {}),
 		...(app.description ? {description: app.description} : {}),
 		...( app.type === 'desktop' ? {build: {
