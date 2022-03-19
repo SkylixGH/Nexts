@@ -19,6 +19,8 @@ export interface Ref {
 
 let lastPercent = 20;
 let incrementDirection = 'up' as 'up' | 'down';
+let percLoop: NodeJS.Timer | undefined;
+const calculationJobs = [] as CallableFunction[];
 
 const Ring = React.forwardRef<Ref, Props>((props) => {
 	const [radius, setRadius] = React.useState(0);
@@ -42,35 +44,45 @@ const Ring = React.forwardRef<Ref, Props>((props) => {
 
 	useEffect(() => {
 		calculatePercent(20);
+		let index: number | undefined;
 
-		const percentLoop = setInterval(() => {
-			if (incrementDirection === 'up' && lastPercent === 70) {
-				incrementDirection = 'down';
-			} else if (incrementDirection === 'down' && lastPercent === 0) {
-				incrementDirection = 'up';
-			}
+		const len = calculationJobs.push(calculatePercent);
+		index = len - 1;
 
-			if (incrementDirection === 'up') {
-				lastPercent += 1;
-			} else {
-				lastPercent -= 1;
-			}
+		if (!percLoop) {
+			percLoop = setInterval(() => {
+				if (incrementDirection === 'up' && lastPercent === 70) {
+					incrementDirection = 'down';
+				} else if (incrementDirection === 'down' && lastPercent === 0) {
+					incrementDirection = 'up';
+				}
 
-			calculatePercent(lastPercent);
-		}, 10);
+				if (incrementDirection === 'up') {
+					lastPercent += 1;
+				} else {
+					lastPercent -= 1;
+				}
+
+				calculationJobs.forEach((job) => job(lastPercent));
+			}, 10);
+		}
 
 		return () => {
-			clearInterval(percentLoop);
+			if (percLoop) {
+				clearInterval(percLoop);
+				delete calculationJobs[index!];
+				percLoop = undefined;
+			}
 		};
 	});
 
 	return (
 		<div className={styles.root}>
 			<svg width={(+(props.size ?? 10)) * 2 + (radius / 5 < 3 ? 3 : radius / 5)}
-			    height={(+(props.size ?? 10)) * 2 + (radius / 5 < 3 ? 3 : radius / 5)}
-			    className={styles.svg}>
+				height={(+(props.size ?? 10)) * 2 + (radius / 5 < 3 ? 3 : radius / 5)}
+				className={styles.svg}>
 				<circle ref={circleRef} strokeWidth={radius / 5 < 3 ? 3 : radius / 5} r={radius}
-				    cx={(+(props.size ?? 10)) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
+					cx={(+(props.size ?? 10)) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
 					cy={(+(props.size ?? 10)) + ((radius / 5 < 3 ? 3 : radius / 5)) / 2}
 				/>
 			</svg>

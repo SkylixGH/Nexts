@@ -40,7 +40,7 @@ function HTTPServer() {
 
 		return () => {
 			emter.removeListener('u', serverStateList);
-		}
+		};
 	}, []);
 
 	const toggleServer = () => {
@@ -56,12 +56,14 @@ function HTTPServer() {
 	const htmlRendererThing = useRef<HTMLDivElement>(null);
 
 	return (
-		<div>
+		<div style={{
+			width: '100%',
+		}}>
 			<h1>HTTP Server</h1>
 			{loading ? <div style={{
 				display: 'flex',
 				gap: '10px',
-				alignItems: 'center'
+				alignItems: 'center',
 			}}>
 				<Ring />
 				<Progress />
@@ -76,8 +78,12 @@ function HTTPServer() {
 					html: event.currentTarget.value ?? '',
 				});
 			}} placeholder='Render HTML'>
-
 			</textarea>
+
+			<Ring />
+			<Ring />
+			<Ring />
+			<Ring />
 
 			{serverRunning ? <Browser url="http://localhost:8090" /> : null}
 		</div>
@@ -178,7 +184,7 @@ export default function Root() {
 
 	return (
 		<App center flowDirection={'row'}>
-			<NavigationView sideBar={<Button>Login</Button>} router={router} sideRail={[
+			<NavigationView sideBar={<HTTPServer />} router={router} sideRail={[
 				{
 					icon: {
 						src: 'fluent:home-16-regular',
@@ -231,14 +237,14 @@ export default function Root() {
 									label: 'Start HTTP Server',
 									action: () => {
 										service.executeTask('server:start', {});
-										emter.emit('u')
+										emter.emit('u');
 									},
 								},
 								{
 									label: 'Stop HTTP Server',
 									action: () => {
 										service.executeTask('server:stop', {});
-										emter.emit('u')
+										emter.emit('u');
 									},
 								},
 							],

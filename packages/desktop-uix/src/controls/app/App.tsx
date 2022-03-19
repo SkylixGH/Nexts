@@ -129,6 +129,13 @@ const App = React.forwardRef<Ref, Props>((props) => {
 		};
 	});
 
+	const appProcess = typeof process !== 'undefined' ? process : null;
+
+	const AppIcon = () => <img draggable={false} src={appProcess?.env.NEXTS_DEV_ICON_LIGHT_FRAME || appProcess?.env.NEXTS_DEV_ICON_DARK_FRAME ?
+		(themeType === 'dark' ? process.env.NEXTS_DEV_ICON_DARK_FRAME : process.env.NEXTS_DEV_ICON_LIGHT_FRAME) :
+		'https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg'} alt={'-'}
+	/>;
+
 	return (
 		<div className={styles.root}>
 			{ titleBarVisible && <div className={styles.titleBar}>
@@ -180,10 +187,7 @@ const App = React.forwardRef<Ref, Props>((props) => {
 							],
 						});
 					}}>
-						<img draggable={false} src={process.env.NEXTS_DEV_ICON_LIGHT_FRAME || process.env.NEXTS_DEV_ICON_DARK_FRAME ?
-							(themeType === 'dark' ? process.env.NEXTS_DEV_ICON_DARK_FRAME : process.env.NEXTS_DEV_ICON_LIGHT_FRAME) :
-							'https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg'} alt={'-'}
-						/>
+						<AppIcon />
 					</div>
 
 					<span style={{
@@ -226,6 +230,10 @@ const App = React.forwardRef<Ref, Props>((props) => {
 
 			<div onClick={() => setReactError(null)} className={`${styles.errorBox} ${reactError ? '' : styles.errorBox_hide}`}>
 				<Icon icon={ErrorCircle16Regular} />
+			</div>
+
+			<div className={`${styles.loadingFrame} ${titleBarVisible ? styles.loadingFrame_titleBarVisible : ''}`}>
+				<AppIcon />
 			</div>
 
 			<Menu onCommandHide={() => {

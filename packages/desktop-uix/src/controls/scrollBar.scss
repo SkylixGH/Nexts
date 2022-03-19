@@ -1,0 +1,18 @@
+@import "./config";
+
+&::-webkit-scrollbar-track {
+  background: $layerSolid2;
+  margin: 10px;
+}
+
+&::-webkit-scrollbar-thumb {
+  background: $text1;
+  border: 3px solid $layerSolid2;
+  background: $text1;
+  border-radius: 10px;
+}
+
+&::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}

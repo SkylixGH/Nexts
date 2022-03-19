@@ -10,7 +10,7 @@ const handleTheme = () => {
 	}
 
 	const theme = new Theme(localStorage.getItem('theme') === 'dark' ? {
-		...themePacks.lightTheme,
+		...themePacks.darkTheme,
 	} : themePacks.lightTheme);
 
 	theme.load();

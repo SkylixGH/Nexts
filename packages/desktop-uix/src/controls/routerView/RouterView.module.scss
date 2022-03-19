@@ -12,6 +12,8 @@
 	animation-duration: 0.3s;
 	animation-fill-mode: forwards;
 	transition: 300ms;
+
+	@import "../scrollBar";
 }
 
 @keyframes :local(slideUp) {

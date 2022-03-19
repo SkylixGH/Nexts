@@ -29,7 +29,7 @@
 
 .sideBar_railButton {
   width: 50px;
-  height: 50px;
+  height: 40px;
   transition: 100ms;
   overflow: hidden;
   border-radius: 3px;
@@ -104,17 +104,10 @@
   display: flex;
   padding: 10px;
   position: relative;
+  overflow: auto;
+  border-right: 1px solid $subtle2;
 
-  &:after {
-	  content: '';
-	  display: flex;
-	  position: absolute;
-	  width: 1px;
-	  height: calc(100% - 40px);
-	  background: $subtle1;
-	  top: 20px;
-	  right: 0;
-  }
+  @import "../scrollBar";
 }
 
 .content {
@@ -131,6 +124,8 @@
   overflow: auto;
   padding: 20px;
   transition: 1000ms;
+
+  @import "../scrollBar";
 }
 
 .content_bodyMetaBarHide {
