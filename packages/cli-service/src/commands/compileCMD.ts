@@ -51,6 +51,24 @@ export default function compileCMD(program: Argv) {
 			let buildsStarted = 0;
 			let tsBuildsFinished = 0;
 			let loggedTSStarting = false;
+
+			if ((projects.apps ?? []).length === 0 && (projects.packages ??[]).length === 0) {
+				logger.error('There are no packages or apps to compile.');
+				process.exit(1);
+			}
+
+			if ((projects.apps ?? []).length > 0) {
+				logger.log('Generating cache for apps');
+				for (const app of projects.apps ?? []) {
+					await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path));
+				}
+			}
+
+			if ((projects.packages ?? []).length === 0) {
+				logger.success(`Successfully compiled project after ${Math.round(performance.now() - startTime)}ms`);
+				return;
+			}
+
 			logger.log('Starting ESBuild compiler');
 
 			const generalESBuildConfig: BuildOptions = {
@@ -62,10 +80,6 @@ export default function compileCMD(program: Argv) {
 				sourcemap: true,
 				platform: 'node',
 			};
-
-			for (const app of projects.apps ?? []) {
-				await generateAppPkg(config, app, path.join(process.cwd(), argv.path, app.path));
-			}
 
 			for (const pkg of projects.packages ?? []) {
 				const mainPathExact = path.join(process.cwd(), argv.path, pkg.path, pkg.main);

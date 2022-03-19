@@ -53,29 +53,29 @@ export default defineConfig({
         // },
     ],
     packages: [
-        {
-            path: './packages/api-interfaces',
-            name: 'api-interfaces',
-            // org: 'xfaon-foundation',
-            main: 'src/main/index.ts',
-            description: 'This is a package for the API types',
-            keywords: ['api', 'package'],
-        },
-        {
-            path: './packages/api-client',
-            name: 'api-client-xf-founders',
-            // org: 'xfaon-foundation',
-            main: 'src/index.ts',
-            description: 'This is a package for the API client',
-            keywords: ['api', 'package'],
-        },
-        {
-            path: './packages/my-ext',
-            name: 'my-ext',
-            main: 'plugin.ts',
-            dependencies: {
-                '@nexts-stack/desktop-plugin': '../../../packages/desktop-plugin',
-            },
-        },
+    // {
+    // 	path: './packages/api-interfaces',
+    // 	name: 'api-interfaces',
+    // 	// org: 'xfaon-foundation',
+    // 	main: 'src/main/index.ts',
+    // 	description: 'This is a package for the API types',
+    // 	keywords: ['api', 'package'],
+    // },
+    // {
+    // 	path: './packages/api-client',
+    // 	name: 'api-client-xf-founders',
+    // 	// org: 'xfaon-foundation',
+    // 	main: 'src/index.ts',
+    // 	description: 'This is a package for the API client',
+    // 	keywords: ['api', 'package'],
+    // },
+    // {
+    // 	path: './packages/my-ext',
+    // 	name: 'my-ext',
+    // 	main: 'plugin.ts',
+    // 	dependencies: {
+    // 		'@nexts-stack/desktop-plugin': '../../../packages/desktop-plugin',
+    // 	},
+    // },
     ],
 });
