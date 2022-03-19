@@ -54,7 +54,7 @@ export default class Node implements DevServer {
 
 			this.#esBuilder = await esbuild.build({
 				entryPoints: [path.join(appExactPath, (appConfig as AppNode).main)],
-				outfile: path.join(appExactPath, 'dist', 'main.node.mjs'),
+				outfile: path.join(appExactPath, 'build', 'main.node.mjs'),
 				format: 'esm',
 				target: 'ESNext',
 				bundle: true,
