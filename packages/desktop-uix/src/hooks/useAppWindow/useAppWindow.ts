@@ -149,6 +149,7 @@ export default function useAppWindow() {
 	const currentWindow = getCurrentWindow();
 	const windowID = currentWindow?.id ?? 0;
 	const [currentWindowState, setCurrentWindowState] = useState(getWindowState());
+	const isDesktop = typeof window !== 'undefined' && window.process && window.process.type;
 
 	useEffect(() => {
 		const windowEvent = () => {
@@ -205,6 +206,11 @@ export default function useAppWindow() {
 		maximize,
 		minimize,
 		getWindowState,
+
+		/**
+		 * If the app is running in a desktop application or web browser.
+		 */
+		isDesktop,
 
 		/**
 		 * The current state of the window.

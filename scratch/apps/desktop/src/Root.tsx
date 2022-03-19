@@ -187,8 +187,9 @@ export default function Root() {
 			<NavigationView sideBar={<HTTPServer />} router={router} sideRail={[
 				{
 					icon: {
-						src: 'fluent:home-16-regular',
+						src: 'https://avatars.githubusercontent.com/u/96595613?s=400&u=44f1348ed2de89f4188524435d8a1bca61d99995&v=4',
 						size: 16,
+						type: 'image',
 					},
 					action: () => {
 						router.navigate('/');

@@ -110,16 +110,16 @@ const NavigationView = React.forwardRef<Ref, Props>((props) => {
 									props.router.navigate(button.action);
 								}
 							}} key={`sideRail_button_${index}`} className={`${styles.sideBar_railButton} ${isActive ? styles.sideBar_railButtonActive : ''}`}>
-								<svg className={styles.sideBar_railButtonCursor} width={3} height={15}>
-									<rect ry={2} fill={'var(--accent1)'} width={3} height={15}/>
-								</svg>
-
 								{button.icon.type === 'image' ? <div className={styles.sideBar_railButtonImage}>
-									<img alt={''} src={button.icon.src} />
+									<img draggable={false} alt={''} src={button.icon.src} />
 								</div> :
 									<Icon icon={button.icon.src} style={{
 										fontSize: button.icon.size || 16,
 									}} />}
+
+								<svg className={styles.sideBar_railButtonCursor} width={3} height={15}>
+									<rect ry={2} width={3} height={15}/>
+								</svg>
 							</button>
 						);
 					})}

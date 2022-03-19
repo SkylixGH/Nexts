@@ -184,7 +184,7 @@ export const darkTheme: NextsControlsTheme = {
 	subtleDarker4: 'rgba(0, 0, 0, 30%)',
 
 	accent1: '#ffffff',
-	accent2: '#dcdcdc',
+	accent2: '#bababa',
 
 	accentText1: '#121212',
 	accentText2: 'rgba(18, 18, 18, 40%)',
