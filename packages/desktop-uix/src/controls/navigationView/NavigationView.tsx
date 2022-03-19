@@ -115,7 +115,7 @@ const NavigationView = React.forwardRef<Ref, Props>((props) => {
 								</svg>
 
 								{button.icon.type === 'image' ? <div className={styles.sideBar_railButtonImage}>
-									<Icon icon={button.icon.src} />
+									<img alt={''} src={button.icon.src} />
 								</div> :
 									<Icon icon={button.icon.src} style={{
 										fontSize: button.icon.size || 16,
